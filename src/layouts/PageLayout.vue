@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import PageHeader from '../components/page/PageHeader'
+import PageHeader from '../comps/page/PageHeader'
 export default {
   name: 'PageLayout',
   components: {PageHeader},

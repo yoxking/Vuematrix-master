@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import Result from '../../components/result/Result'
-import DetailList from '../../components/tool/DetailList'
-import AStepItem from '../../components/tool/AStepItem'
+import Result from '../../comps/result/Result'
+import DetailList from '../../comps/tool/DetailList'
+import AStepItem from '../../comps/tool/AStepItem'
 
 const AStepItemGroup = AStepItem.Group
 const DetailListItem = DetailList.Item

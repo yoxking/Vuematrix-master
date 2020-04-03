@@ -1,9 +1,9 @@
 <template>
-  <exception-page type="404" />
+  <exception-page type="403" />
 </template>
 
 <script>
-import ExceptionPage from '../../components/exception/ExceptionPage'
+import ExceptionPage from '../../comps/exception/ExceptionPage'
 export default {
   components: {ExceptionPage}
 }

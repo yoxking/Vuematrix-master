@@ -25,7 +25,7 @@
 
 <script>
 import GlobalLayout from './GlobalLayout'
-import Contextmenu from '../components/menu/Contextmenu'
+import Contextmenu from '../comps/menu/Contextmenu'
 export default {
   name: 'MenuView',
   components: {Contextmenu, GlobalLayout},

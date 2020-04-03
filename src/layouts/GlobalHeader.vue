@@ -28,7 +28,7 @@
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderlAvatar'
-import IMenu from '../components/menu/menu'
+import IMenu from '../comps/menu/menu'
 
 export default {
   name: 'GlobalHeader',

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import enquireScreen from './utils/device'
+import enquireScreen from './myutil/device'
 
 export default {
   name: 'App',

@@ -7,7 +7,7 @@ import 'ant-design-vue/dist/antd.css'
 import Antd from 'ant-design-vue'
 import axios from 'axios'
 import '@/mock'
-import store from './store'
+import store from './stores'
 import PouchDB from 'pouchdb'
 
 Vue.prototype.$axios = axios

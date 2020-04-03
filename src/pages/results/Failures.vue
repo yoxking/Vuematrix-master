@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Result from '../../components/result/Result'
+import Result from '../../comps/result/Result'
 export default {
   name: 'Error',
   components: {Result},

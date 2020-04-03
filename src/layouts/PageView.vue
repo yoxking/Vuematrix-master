@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import PageHeader from '../components/page/PageHeader'
+import PageHeader from '../comps/page/PageHeader'
 import PageLayout from './PageLayout'
 export default {
   name: 'PageView',
