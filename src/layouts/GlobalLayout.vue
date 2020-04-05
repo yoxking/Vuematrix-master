@@ -25,7 +25,7 @@
 <script>
 import GlobalHeader from './GlobalHeader'
 import GlobalFooter from './GlobalFooter'
-import Drawer from '../comps/tool/Drawer'
+import Drawer from '../comps/tools/Drawer'
 import SiderMenu from '../comps/menu/SiderMenu'
 import Setting from '../comps/setting/Setting'
 

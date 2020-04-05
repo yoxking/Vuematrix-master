@@ -10,6 +10,8 @@ import '@/mock'
 import store from './stores'
 import PouchDB from 'pouchdb'
 
+import './comm/authcut' // permission access control
+
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(Antd)

@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import account from './modules/account'
+import suser from './modules/suser'
+import menu from './modules/menu'
 import setting from './modules/setting'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    account,
+    suser,
+    menu,
     setting
   }
 })
