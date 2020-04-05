@@ -2,10 +2,11 @@ import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/myutil/cookie'
 
 const suser = {
+  namespaced: true,
   state: {
     token: getToken(),
-    uname: '',
-    avatar: '',
+    uname: 'admin',
+    avatar: '/assets/image/profile.jpg',
     roles: [],
     permits: []
   },

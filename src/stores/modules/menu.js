@@ -3,6 +3,7 @@ import { getRouters } from '@/api/menu'
 // import Layout from '@/layout/index'
 
 const menu = {
+  namespaced: true,
   state: {
     routes: [],
     addRoutes: []

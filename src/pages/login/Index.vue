@@ -13,16 +13,12 @@
           <a-tabs size="large" :tabBarStyle="{textAlign: 'center'}" style="padding: 0 2px;">
             <a-tab-pane tab="账户密码登录" key="1">
               <a-alert type="error" :closable="true" v-show="error" :message="error" showIcon style="margin-bottom: 24px;" />
-              <a-form-item
-                fieldDecoratorId="name"
-              >
+              <a-form-item>
                 <a-input size="large" placeholder="admin" >
                   <a-icon slot="prefix" type="user" />
                 </a-input>
               </a-form-item>
-              <a-form-item
-                fieldDecoratorId="password"
-              >
+              <a-form-item>
                 <a-input size="large" placeholder="888888" type="password">
                   <a-icon slot="prefix" type="lock" />
                 </a-input>
@@ -62,7 +58,7 @@
           </a-tabs>
           <div>
             <a-checkbox >自动登录</a-checkbox>
-            <a style="float: right">忘记密码</a>
+            <a style="float: right" href="/#/forgetpwd">忘记密码</a>
           </div>
           <a-form-item>
             <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit" type="primary">登录</a-button>

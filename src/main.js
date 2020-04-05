@@ -6,11 +6,9 @@ import router from './router'
 import 'ant-design-vue/dist/antd.css'
 import Antd from 'ant-design-vue'
 import axios from 'axios'
-import '@/mock'
 import store from './stores'
-import PouchDB from 'pouchdb'
 
-import './comm/authcut' // permission access control
+import './comm/authority' // permission access control
 
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
@@ -24,9 +22,5 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    var db = new PouchDB('admindb')
-    db.get('currUser').then(doc => {
-      this.$store.commit('account/setuser', doc.user)
-    })
   }
 })

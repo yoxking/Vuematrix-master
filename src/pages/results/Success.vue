@@ -36,8 +36,8 @@
 
 <script>
 import Result from '../../comps/result/Result'
-import DetailList from '../../comps/tool/DetailList'
-import AStepItem from '../../comps/tool/AStepItem'
+import DetailList from '../../comps/tools/DetailList'
+import AStepItem from '../../comps/tools/AStepItem'
 
 const AStepItemGroup = AStepItem.Group
 const DetailListItem = DetailList.Item

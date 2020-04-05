@@ -27,7 +27,7 @@
 <script>
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
-import HeaderAvatar from './HeaderlAvatar'
+import HeaderAvatar from './HeaderAvatar'
 import IMenu from '../comps/menu/menu'
 
 export default {

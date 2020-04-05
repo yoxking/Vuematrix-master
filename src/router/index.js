@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import PageView from '@/layouts/PageView'
-import RouteView from '@/layouts/RouteView'
+// import RouteView from '@/layouts/RouteView'
 import MenuView from '@/layouts/MenuView'
 import Login from '@/pages/login/Index'
 
@@ -16,17 +16,82 @@ export const constRoutes = [
     invisible: true
   },
   {
+    path: '/forgetpwd',
+    name: '找回密码',
+    component: () => import('@/pages/sysuser/ForgetPwd'),
+    invisible: true
+  },
+  {
+    path: '/success',
+    name: '成功',
+    component: () => import('@/pages/results/Success'),
+    invisible: true
+  },
+  {
+    path: '/failure',
+    name: '失败',
+    component: () => import('@/pages/results/Failure'),
+    invisible: true
+  },
+  {
+    path: '/403',
+    name: '403',
+    component: () => import('@/pages/errors/403'),
+    invisible: true
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/pages/errors/404'),
+    invisible: true
+  },
+  {
+    path: '/500',
+    name: '500',
+    component: () => import('@/pages/errors/500'),
+    invisible: true
+  },
+  {
     path: '/',
-    name: '首页',
+    name: '主控制台',
     component: MenuView,
     redirect: '/login',
     icon: 'none',
     invisible: true,
     children: [
       {
+        path: '/account',
+        name: '基本信息',
+        component: PageView,
+        redirect: '/account/userprofile',
+        icon: 'dashboard',
+        invisible: true,
+        children: [
+          {
+            path: '/account/userprofile',
+            name: '个人中心',
+            component: () => import('@/pages/sysuser/UserProfile'),
+            invisible: true
+          },
+          {
+            path: '/account/resetpwd',
+            name: '设置密码',
+            component: () => import('@/pages/sysuser/ResetPwd'),
+            invisible: true
+          },
+          {
+            path: '/account/syssetting',
+            name: '基本设置',
+            component: () => import('@/pages/sysuser/SysSetting'),
+            invisible: true
+          }
+        ]
+      },
+      {
         path: '/home',
         name: '工作台',
-        component: RouteView,
+        component: PageView,
+        redirect: '/home/index',
         icon: 'dashboard',
         children: [
           {
@@ -41,6 +106,7 @@ export const constRoutes = [
         path: '/system',
         name: '系统管理',
         component: PageView,
+        redirect: '/system/config',
         icon: 'form',
         children: [
           {
@@ -68,9 +134,15 @@ export const constRoutes = [
             icon: 'none'
           },
           {
-            path: '/system/user',
+            path: '/system/ruser',
             name: '用户信息',
-            component: () => import('@/pages/system/user/Index'),
+            component: () => import('@/pages/system/ruser/Index'),
+            icon: 'none'
+          },
+          {
+            path: '/system/suser',
+            name: '管理员信息',
+            component: () => import('@/pages/system/suser/Index'),
             icon: 'none'
           },
           {
@@ -91,6 +163,7 @@ export const constRoutes = [
         path: '/monitor',
         name: '系统监控',
         component: PageView,
+        redirect: '/monitor/druids',
         icon: 'form',
         children: [
           {
@@ -146,6 +219,9 @@ export const constRoutes = [
         ]
       }
     ]
+  },
+  {
+    path: '*', redirect: '/404', hidden: true
   }
 ]
 
