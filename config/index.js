@@ -11,11 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: { 
-      [process.env.BASE_API]: {
+      '/api': {
         target: 'http://127.0.0.1:8093',  //目标接口域名
         changeOrigin: true,  //是否跨域
         pathRewrite: {
-          ['^'+process.env.BASE_API]: ''   //重写接口
+         '^/api': ''   //重写接口
         }
       },
     cssSourceMap: false

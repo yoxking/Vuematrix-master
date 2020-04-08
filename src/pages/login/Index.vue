@@ -31,7 +31,7 @@
                   </a-input>
                   </a-col>
                   <a-col :span="8" style="padding-left: 4px">
-                    <a-button style="width: 100%" class="captcha-button" size="large">验证码</a-button>
+                    <img :src="codeUrl" @click="getCode" />
                   </a-col>
                 </a-row>
               </a-form-item>
@@ -58,7 +58,7 @@
           </a-tabs>
           <div>
             <a-checkbox >自动登录</a-checkbox>
-            <a style="float: right" href="/#/forgetpwd">忘记密码</a>
+            <router-link style="float: right" :to="{ path: '/forgetpwd' }">忘记密码</router-link>
           </div>
           <a-form-item>
             <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit" type="primary">登录</a-button>
@@ -72,13 +72,14 @@
 
 <script>
 import GlobalFooter from '../../layouts/GlobalFooter'
-import { getTest } from '@/api/login'
+import { getTest, getCodeImg } from '@/api/login'
 
 export default {
   name: 'Login',
   components: {GlobalFooter},
   data () {
     return {
+      codeUrl: '',
       logging: false,
       error: ''
     }
@@ -94,7 +95,16 @@ export default {
       return this.$store.state.setting.copyright
     }
   },
+  created () {
+    this.getCode()
+  },
   methods: {
+    getCode () {
+      getCodeImg().then(res => {
+        this.codeUrl = 'data:image/gif;base64,' + res.img
+        // this.loginForm.uuid = res.uuid
+      })
+    },
     onSubmit (e) {
       e.preventDefault()
       getTest().then(res => {

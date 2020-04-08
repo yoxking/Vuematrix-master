@@ -71,7 +71,7 @@
                       class="register-button">注册
             </a-button>
             <router-link class="login-link"
-                         to="/login">使用已有账户登录</router-link>
+                         :to="{ path: '/login' }">使用已有账户登录</router-link>
           </a-form-item>
 
         </a-form>
