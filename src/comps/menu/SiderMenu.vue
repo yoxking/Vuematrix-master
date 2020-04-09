@@ -1,8 +1,8 @@
 <template>
   <a-layout-sider :class="[theme, 'sider', isMobile ? null : 'shadow']" width="256px" :collapsible="collapsible" v-model="collapsed" :trigger="null">
     <div :class="['logo', theme]">
-      <router-link to="/dashboard/workplace">
-        <img src="static/img/vue-antd-logo.png">
+      <router-link to="/home/index">
+        <img src="static/images/vmatrix-logo.png">
         <h1>{{systemName}}</h1>
       </router-link>
     </div>

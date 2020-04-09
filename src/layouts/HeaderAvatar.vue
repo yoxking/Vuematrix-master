@@ -48,11 +48,17 @@ export default {
   },
   methods: {
     handleLogout () {
+      var that = this
       this.$confirm({
         title: '提示',
         content: '真的要注销登录吗 ?',
+        okText: '确认',
+        cancelText: '取消',
         onOk () {
-          window.location.href = '/'
+          that.$store
+            .dispatch('suser/Logout').then(() => {
+              location.reload()
+            })
         },
         onCancel () {
         }

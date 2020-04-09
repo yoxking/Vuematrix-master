@@ -5,7 +5,7 @@
         <div class="header">
           <img alt="logo"
                class="logo"
-               src="static/img/vue-antd-logo.png" />
+               src="static/images/vmatrix-logo.png" />
           <span class="title">{{systemName}}</span>
         </div>
         <div class="desc">基云后台管理系统 v1.0</div>
