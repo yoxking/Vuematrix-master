@@ -55,7 +55,7 @@ export const constRoutes = [
     path: '/',
     name: '主控制台',
     component: MenuView,
-    redirect: '/login',
+    redirect: '/home/index',
     icon: 'none',
     invisible: true,
     children: [

@@ -59,7 +59,7 @@ const suser = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_UNAME', user.username)
+          commit('SET_UNAME', user.userCnname)
           commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {
@@ -84,7 +84,7 @@ const suser = {
     },
 
     // 前端 登出
-    FedLogOut ({ commit }) {
+    FedLogout ({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()

@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import store from '@/stores'
+import store from '@/stores'
 import { message, notification, Modal } from 'ant-design-vue'
 import { getToken } from './cookie'
 
@@ -32,8 +32,12 @@ service.interceptors.response.use(res => {
     Modal.confirm({
       title: '系统提示',
       content: '登录状态已过期，您可以继续留在该页面，或者重新登录',
+      okText: '确认',
+      cancelText: '取消',
       onOk () {
-        console.log('Ok')
+        store.dispatch('suser/Logout').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
       },
       onCancel () {
         console.log('Cancel')

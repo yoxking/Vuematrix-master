@@ -2,7 +2,7 @@ import { constRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
 // import Layout from '@/layout/index'
 
-const menu = {
+const menus = {
   namespaced: true,
   state: {
     routes: [],
@@ -52,4 +52,4 @@ export const loadView = (view) => { // 路由懒加载
   // return () => import(`@/views/${view}`)
 }
 
-export default menu
+export default menus
