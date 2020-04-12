@@ -6,7 +6,7 @@ import { getToken } from '@/myutil/cookie'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/auth-redirect', '/forgetpwd']
+const whiteList = ['/login', '/forgetpwd']
 
 // 访问权限控制切入
 router.beforeEach((to, from, next) => {
@@ -21,17 +21,12 @@ router.beforeEach((to, from, next) => {
         // 拉取user_info
         store.dispatch('suser/GetInfo').then(res => {
           // 根据父菜单生成可访问的路由表
-          store.dispatch('menus/GenertTopMenu').then(() => {
-            if (store.state.menus.tMenuChanged) {
-            // 根据父菜单生成可访问的路由表
-              store.dispatch('menus/GenertRoutes', store.state.menus.tMenuIndexNo).then(accessRoutes => {
-                router.options.routes = []
-                router.options.routes = store.state.menus.routes
-                router.addRoutes(accessRoutes) // 动态添加可访问路由表
-                store.dispatch('menus/TopMenuChanged', false)
-                next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-              })
-            }
+          store.dispatch('menus/GenertRoutes', '0').then(accessRoutes => {
+            router.options.routes = []
+            router.options.routes = store.state.menus.routes
+            router.addRoutes(accessRoutes) // 动态添加可访问路由表
+
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         })
           .catch(e => {
@@ -40,19 +35,7 @@ router.beforeEach((to, from, next) => {
             })
           })
       } else {
-        if (store.state.menus.tMenuChanged) {
-          // 根据父菜单生成可访问的路由表
-          store.dispatch('menus/GenertRoutes', store.state.menus.tMenuIndexNo).then(accessRoutes => {
-            router.options.routes = []
-            router.options.routes = store.state.menus.routes
-            router.addRoutes(accessRoutes) // 动态添加可访问路由表
-            store.dispatch('menus/TopMenuChanged', false)
-            console.log(router)
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-          })
-        } else {
-          next()
-        }
+        next()
       }
     }
   } else {

@@ -1,5 +1,5 @@
 import { constRoutes } from '@/router'
-import { getRouters, getTopMenu } from '@/api/menu'
+import { getRouters } from '@/api/menu'
 import MenuView from '@/layouts/MenuView'
 import PageView from '@/layouts/PageView'
 
@@ -7,24 +7,12 @@ const menus = {
   namespaced: true,
   state: {
     routes: [],
-    addRoutes: [],
-    tMenuList: [],
-    tMenuIndexNo: '0',
-    tMenuChanged: false
+    addRoutes: []
   },
   mutations: {
     SET_ROUTES: (state, routes) => {
       state.addRoutes = routes
       state.routes = constRoutes.concat(routes)
-    },
-    SET_TMENULIST: (state, tMenuList) => {
-      state.tMenuList = tMenuList
-    },
-    SET_TMENUINDEXNO: (state, tMenuIndexNo) => {
-      state.tMenuIndexNo = tMenuIndexNo
-    },
-    SET_TMENUCHANGED: (state, tMenuChanged) => {
-      state.tMenuChanged = tMenuChanged
     }
   },
   actions: {
@@ -34,30 +22,11 @@ const menus = {
         // 向后端请求路由数据
         getRouters(menuId).then(res => {
           const accessedRoutes = filterAsyncRouter(res.data)
-          // accessedRoutes.push({ path: '*', redirect: '/404', invisible: true })
+          accessedRoutes.push({ path: '*', redirect: '/404', invisible: true })
           commit('SET_ROUTES', accessedRoutes)
           resolve(accessedRoutes)
         })
       })
-    },
-    GenertTopMenu ({commit}) {
-      return new Promise((resolve, reject) => {
-        // 向后端请求路由数据
-        getTopMenu().then(res => {
-          commit('SET_TMENULIST', res.data)
-          commit('SET_TMENUINDEXNO', res.data[0].no)
-          commit('SET_TMENUCHANGED', true)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-    TopMenuIndexNo ({commit}, value) {
-      commit('SET_TMENUINDEXNO', value)
-    },
-    TopMenuChanged ({commit}, value) {
-      commit('SET_TMENUCHANGED', value)
     }
   }
 }

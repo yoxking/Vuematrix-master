@@ -78,14 +78,6 @@ export default {
   beforeCreate () {
     const routes = this.$router.options.routes.find((item) => item.path === '/')
     menuData = (routes && routes.children) || []
-  },
-  watch: {
-    '$route': function () {
-      const routes = this.$router.options.routes.find((item) => item.path === '/')
-      menuData = (routes && routes.children) || []
-      console.log('xxxxxxxxxxx')
-      console.log(menuData)
-    }
   }
 }
 </script>

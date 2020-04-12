@@ -10,7 +10,6 @@
       <div v-if="layout === 'head'" class="global-header-menu">
         <i-menu style="height: 64px; line-height: 64px;" :theme="theme" mode="horizontal" :menuData="menuData" @select="onSelect"/>
       </div>
-        <header-tmenu></header-tmenu>
       <div :class="['global-header-right', theme]">
           <header-search class="header-item" />
           <a-tooltip class="header-item" title="帮助文档" placement="bottom" >
@@ -26,7 +25,6 @@
 </template>
 
 <script>
-import HeaderTmenu from './HeaderTmenu'
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderAvatar'
@@ -34,7 +32,7 @@ import IMenu from '../comps/menu/menu'
 
 export default {
   name: 'GlobalHeader',
-  components: {IMenu, HeaderTmenu, HeaderAvatar, HeaderNotice, HeaderSearch},
+  components: {IMenu, HeaderAvatar, HeaderNotice, HeaderSearch},
   props: ['collapsed', 'menuData'],
   computed: {
     isMobile () {

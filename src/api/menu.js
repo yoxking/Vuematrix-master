@@ -7,11 +7,3 @@ export function getRouters (menuId) {
     method: 'get'
   })
 }
-
-// 获取顶部菜单信息
-export function getTopMenu () {
-  return request({
-    url: '/getTopMenu',
-    method: 'get'
-  })
-}
