@@ -17,11 +17,22 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      if (store.state.suser.roles.length === 0) {
+      if (store.state.suser.permits.length === 0) {
+        // 拉取user_info
         store.dispatch('suser/GetInfo').then(res => {
-          // 拉取user_info
-          // const roles = res.roles
-          next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+          // 根据父菜单生成可访问的路由表
+          store.dispatch('menus/GenertTopMenu').then(() => {
+            if (store.state.menus.tMenuChanged) {
+            // 根据父菜单生成可访问的路由表
+              store.dispatch('menus/GenertRoutes', store.state.menus.tMenuIndexNo).then(accessRoutes => {
+                router.options.routes = []
+                router.options.routes = store.state.menus.routes
+                router.addRoutes(accessRoutes) // 动态添加可访问路由表
+                store.dispatch('menus/TopMenuChanged', false)
+                next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+              })
+            }
+          })
         })
           .catch(e => {
             store.dispatch('suser/FedLogout').then(() => {
@@ -29,7 +40,19 @@ router.beforeEach((to, from, next) => {
             })
           })
       } else {
-        next()
+        if (store.state.menus.tMenuChanged) {
+          // 根据父菜单生成可访问的路由表
+          store.dispatch('menus/GenertRoutes', store.state.menus.tMenuIndexNo).then(accessRoutes => {
+            router.options.routes = []
+            router.options.routes = store.state.menus.routes
+            router.addRoutes(accessRoutes) // 动态添加可访问路由表
+            store.dispatch('menus/TopMenuChanged', false)
+            console.log(router)
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+          })
+        } else {
+          next()
+        }
       }
     }
   } else {
