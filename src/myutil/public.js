@@ -422,3 +422,9 @@ export function camelCase (str) {
 export function isNumberStr (str) {
   return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
 }
+
+export function sleep (ms) {
+  return new Promise(resolve =>
+    setTimeout(resolve, ms)
+  )
+}
