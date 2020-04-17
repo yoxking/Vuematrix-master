@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import ExceptionPage from '../../comps/exception/ExceptionPage'
+import exceptionPage from '../../comps/exception/ExceptionPage'
 export default {
-  components: {ExceptionPage}
+  components: {exceptionPage}
 }
 </script>
 

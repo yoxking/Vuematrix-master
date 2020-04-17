@@ -2,7 +2,6 @@
   <div class="exception">
     <div class="img">
       <img :src="config[type].img" />
-      <!--<div class="ele" :style="{backgroundImage: `url(${config[type].img})`}"/>-->
     </div>
     <div class="content">
       <h1>{{config[type].title}}</h1>
@@ -15,14 +14,14 @@
 </template>
 
 <script>
-import Config from './typeConfig'
+import exceptionType from './ExceptionType'
 
 export default {
   name: 'ExceptionPage',
   props: ['type'],
   data () {
     return {
-      config: Config
+      config: exceptionType
     }
   }
 }

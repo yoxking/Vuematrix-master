@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <contextmenu :itemList="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect" />
+    <context-menu :itemList="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect" />
     <a-tabs
       @contextmenu.native="e => onContextmenu(e)"
       v-if="multipage"
@@ -25,10 +25,10 @@
 
 <script>
 import GlobalLayout from './GlobalLayout'
-import Contextmenu from '../comps/menu/Contextmenu'
+import ContextMenu from '../comps/menu/ContextMenu'
 export default {
   name: 'MenuView',
-  components: {Contextmenu, GlobalLayout},
+  components: {ContextMenu, GlobalLayout},
   data () {
     return {
       pageList: [],

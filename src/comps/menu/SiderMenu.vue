@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import IMenu from './menu'
+import IMenu from './AntdMenu'
 export default {
   name: 'SiderMenu',
   components: {IMenu},

@@ -1,9 +1,9 @@
 import request from '@/myutil/request'
 
 // 获取路由
-export function getRouters (menuId) {
+export function getRouters (parentId) {
   return request({
-    url: '/getRouters/' + menuId,
+    url: '/sys/getRouters/' + parentId,
     method: 'get'
   })
 }

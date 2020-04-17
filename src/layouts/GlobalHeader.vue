@@ -28,7 +28,7 @@
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderAvatar'
-import IMenu from '../comps/menu/menu'
+import IMenu from '../comps/menu/AntdMenu'
 
 export default {
   name: 'GlobalHeader',
