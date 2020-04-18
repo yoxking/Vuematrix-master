@@ -1,34 +1,26 @@
 import request from '@/myutil/request'
 
 // 查询部门列表
-export function listDept (query) {
+export function listDept (data) {
   return request({
-    url: '/system/dept/list',
-    method: 'get',
-    params: query
+    url: '/sys/deptment/list',
+    method: 'post',
+    data: data
   })
 }
 
 // 查询部门详细
 export function getDept (deptId) {
   return request({
-    url: '/system/dept/' + deptId,
+    url: '/sys/deptment/' + deptId,
     method: 'get'
   })
 }
 
 // 查询部门下拉树结构
-export function treeselect () {
+export function treeDept () {
   return request({
-    url: '/system/dept/treeselect',
-    method: 'get'
-  })
-}
-
-// 根据角色ID查询部门树结构
-export function roleDeptTreeselect (roleId) {
-  return request({
-    url: '/system/dept/roleDeptTreeselect/' + roleId,
+    url: '/sys/deptment/treeselect',
     method: 'get'
   })
 }
@@ -36,25 +28,25 @@ export function roleDeptTreeselect (roleId) {
 // 新增部门
 export function addDept (data) {
   return request({
-    url: '/system/dept',
+    url: '/sys/deptment',
     method: 'post',
     data: data
   })
 }
 
 // 修改部门
-export function updateDept (data) {
+export function uptDept (data) {
   return request({
-    url: '/system/dept',
+    url: '/sys/deptment',
     method: 'put',
     data: data
   })
 }
 
 // 删除部门
-export function delDept (deptId) {
+export function delDept (deptIds) {
   return request({
-    url: '/system/dept/' + deptId,
+    url: '/sys/deptment/' + deptIds,
     method: 'delete'
   })
 }
