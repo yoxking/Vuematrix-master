@@ -70,6 +70,17 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="model.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <a-divider />
     <div class="btnbox">
@@ -95,7 +106,8 @@ export default {
         orderNo: 1,
         leader: '',
         telephone: '13888888888',
-        email: ''
+        email: '',
+        comments: ''
       }
     }
   },

@@ -9,57 +9,7 @@
               <a-form-item label="部门名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
-                <a-input placeholder="请输入" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="使用状态"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-select placeholder="请选择">
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="调用次数"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-input-number style="width: 100%"
-                                placeholder="请输入" />
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row v-if="advanced">
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="更新日期"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-date-picker style="width: 100%"
-                               placeholder="请输入更新日期" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="使用状态"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-select placeholder="请选择">
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="描述"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-input placeholder="请输入" />
+                <a-input placeholder="请输入" v-model="queryParam.deptName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -117,7 +67,7 @@
 </template>
 
 <script>
-import { listDept, delDept } from '@/api/system/dept'
+import { listDept, delDept, exptDept } from '@/api/system/dept'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -149,12 +99,16 @@ export default {
   name: 'QueryList',
   data () {
     return {
-      advanced: true,
+      advanced: false,
       columns: columns,
       dataSource: [],
       selectedRowKeys: [],
       // 查询参数
       queryParam: {
+        deptName: ''
+      },
+      // 查询参数
+      pageParam: {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         condition: ''
@@ -176,6 +130,12 @@ export default {
       this.advanced = !this.advanced
     },
     doQuery () {
+      if (this.queryParam.deptName !== '') {
+        this.pageParam.pageIndex = 1
+        this.pageParam.condition = " dept_name like '%" + this.queryParam.deptName + "%'"
+      } else {
+        this.pageParam.condition = ''
+      }
       this.getDataSource()
     },
     doReset () {
@@ -238,10 +198,13 @@ export default {
       })
     },
     handleMenu (e) {
+      const that = this
       if (e.key === 'audit') {
-        console.log('audit')
-      } else {
-        console.log('export')
+        console.log(this.pagination)
+      } else if (e.key === 'export') {
+        exptDept(this.pageParam).then(response => {
+          that.$message.success('导出成功!')
+        })
       }
     },
     onSelectChange (selectedRowKeys) {
@@ -250,16 +213,15 @@ export default {
     onPagingChange (pagination) {
       this.pagination.current = pagination.current
       this.pagination.pageSize = pagination.pageSize
-      this.queryParam.pageIndex = pagination.current
-      this.queryParam.pageSize = pagination.pageSize
+      this.pageParam.pageIndex = pagination.current
+      this.pageParam.pageSize = pagination.pageSize
       this.getDataSource()
     },
     // 调用查询接口为dataSource 赋值
     getDataSource () {
       const that = this
       this.loading = true
-
-      listDept(this.queryParam).then(response => {
+      listDept(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pagination.total = response.total
         that.loading = false

@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { listDept, delDept } from '@/api/system/dept'
+import { treeDept, delDept, exptDept } from '@/api/system/dept'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -198,10 +198,13 @@ export default {
       })
     },
     handleMenu (e) {
+      const that = this
       if (e.key === 'audit') {
-        console.log('audit')
-      } else {
-        console.log('export')
+        console.log(this.pagination)
+      } else if (e.key === 'export') {
+        exptDept(this.pageParam).then(response => {
+          that.$message.success('导出成功!')
+        })
       }
     },
     onSelectChange (selectedRowKeys) {
@@ -218,7 +221,8 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listDept(this.pageParam).then(response => {
+
+      treeDept().then(response => {
         that.dataSource = response.rows
         that.pagination.total = response.total
         that.loading = false
