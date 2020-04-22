@@ -8,6 +8,9 @@ import Antd from 'ant-design-vue'
 import vDialogs from 'v-dialogs'
 import axios from 'axios'
 import store from './stores'
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/index.css'
 
 import './comm/authority' // permission access control
 
@@ -15,6 +18,7 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(vDialogs)
+Vue.use(VXETable)
 
 /* eslint-disable no-new */
 new Vue({
