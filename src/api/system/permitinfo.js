@@ -9,6 +9,14 @@ export function listPermitinfo (data) {
   })
 }
 
+// 查询部门下拉树结构
+export function treePermitinfo () {
+  return request({
+    url: '/sys/permitinfo/tree',
+    method: 'get'
+  })
+}
+
 // 查询菜单权限详细
 export function getPermitinfo (id) {
   return request({

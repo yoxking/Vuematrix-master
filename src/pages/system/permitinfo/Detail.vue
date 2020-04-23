@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.permitNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,17 +16,17 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="菜单名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.permitName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="菜单类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
+            {{model.permitType}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -39,39 +39,93 @@
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="负责人"
+          <a-form-item label="是否外链"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.linkType}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="权限标识"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.permitCode}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="组件路径"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.component}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="页面地址"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.pathUrl}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
-          </a-form-item>
+          <a-form-model-item label="菜单图标"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.menuIcon}}
+          </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-model-item label="是否外链"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.linkType}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="重定向"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.redirect}}
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="打开方式"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.target}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="显示状态"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.visible}}
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="菜单状态"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +146,21 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        permitNo: '0',
+        permitName: '',
+        permitCode: '',
+        permitType: 'M',
+        parentNo: '1',
+        orderNo: '1',
+        linkType: '0',
+        menuIcon: 'none',
+        pathUrl: '',
+        component: 'MenuView/PageView',
+        redirect: 'noredirect',
+        target: 'menuItem',
+        visible: '0',
+        checkState: '1',
+        comments: ''
       }
     }
   },

@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="菜单名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.permitName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -47,56 +47,46 @@
       </div>
       <vxe-table ref="myTable"
                  border
-                 stripe
+                 tree-config
                  resizable
                  highlight-current-row
                  highlight-hover-row
                  :loading="loading"
-                 class="mytable-scrollbar"
-                 height="400"
                  :data="dataSource">
         <vxe-table-column type="checkbox"
                           width="60"></vxe-table-column>
-        <vxe-table-column type="seq"
-                          title="序号"
-                          width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
-                          title="编号"
-                          width="120"
+        <vxe-table-column field="permitName"
+                          title="菜单名称" tree-node
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="orderNo"
+                          title="排序"></vxe-table-column>
+        <vxe-table-column field="menuIcon"
+                          title="图标"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="permitCode"
+                          title="权限标识"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="component"
+                          title="组件路径"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        @click="handleEdt(row.permitNo)">编辑</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.permitNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
-      <vxe-pager border
-                 size="medium"
-                 :loading="loading"
-                 :current-page="pageParam.pageIndex"
-                 :page-size="pageParam.pageSize"
-                 :total="pageParam.pageTotal"
-                 :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
-                 @page-change="onPageChange">
-      </vxe-pager>
     </div>
   </a-card>
 </template>
 
 <script>
-import { listPermitinfo, delPermitinfo, exptPermitinfo } from '@/api/system/permitinfo'
+import { treePermitinfo, delPermitinfo, exptPermitinfo } from '@/api/system/permitinfo'
 import edit from './Edit'
 import detail from './Detail'
+import index from './Index'
 
 export default {
   name: 'List',
@@ -106,7 +96,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        permitName: ''
       },
       // 查询参数
       pageParam: {
@@ -126,8 +116,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.permitName !== '') {
+        this.pageParam.condition = " permit_name like '%" + this.queryParam.permitName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -135,6 +125,11 @@ export default {
     },
     doReset () {
       console.log('reset')
+      this.$dlg.modal(index, {
+        title: '新增',
+        width: 950,
+        height: 700
+      })
     },
     handleAdd () {
       const that = this
@@ -146,7 +141,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -162,7 +159,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.permitNo)
             })
             delPermitinfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -183,7 +180,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -207,16 +206,11 @@ export default {
         })
       }
     },
-    onPageChange ({ currentPage, pageSize }) {
-      this.pageParam.pageIndex = currentPage
-      this.pageParam.pageSize = pageSize
-      this.getDataSource()
-    },
     // 调用查询接口为dataSource 赋值
     getDataSource () {
       const that = this
       this.loading = true
-      listPermitinfo(this.pageParam).then(response => {
+      treePermitinfo(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false
@@ -241,31 +235,5 @@ export default {
   .fold {
     width: 100%;
   }
-}
-/*滚动条整体部分*/
-.mytable-scrollbar div::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-/*滚动条的轨道*/
-.mytable-scrollbar div::-webkit-scrollbar-track {
-  background-color: #ffffff;
-}
-/*滚动条里面的小方块，能向上向下移动*/
-.mytable-scrollbar div::-webkit-scrollbar-thumb {
-  background-color: #bfbfbf;
-  border-radius: 5px;
-  border: 1px solid #f1f1f1;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.mytable-scrollbar div::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8;
-}
-.mytable-scrollbar div::-webkit-scrollbar-thumb:active {
-  background-color: #787878;
-}
-/*边角，即两个滚动条的交汇处*/
-.mytable-scrollbar div::-webkit-scrollbar-corner {
-  background-color: #ffffff;
 }
 </style>

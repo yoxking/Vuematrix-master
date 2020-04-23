@@ -45,11 +45,9 @@
           </a-button>
         </a-dropdown>
       </div>
-      <vxe-table
-          ref="myTable"
-          border
-                 stripe
-          tree-config
+      <vxe-table ref="myTable"
+                 border
+                 tree-config
                  resizable
                  highlight-current-row
                  highlight-hover-row
@@ -59,12 +57,16 @@
                  :data="dataSource">
         <vxe-table-column type="checkbox"
                           width="60"></vxe-table-column>
-        <vxe-table-column type="seq" title="序号"
+        <vxe-table-column type="seq"
+                          title="序号"
                           width="60"></vxe-table-column>
         <vxe-table-column field="deptNo"
-                          title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
+                          title="编号"
+                          width="120"
+                          show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column field="deptName"
-                          title="部门名称" tree-node></vxe-table-column>
+                          title="部门名称"
+                          tree-node></vxe-table-column>
         <vxe-table-column field="leader"
                           title="负责人"></vxe-table-column>
         <vxe-table-column field="telephone"
@@ -72,8 +74,10 @@
                           show-overflow></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.deptNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.deptNo)">详细</vxe-button>
+            <vxe-button type="text"
+                        @click="handleEdt(row.deptNo)">编辑</vxe-button>
+            <vxe-button type="text"
+                        @click="handleDet(row.deptNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>

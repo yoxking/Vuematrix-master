@@ -155,7 +155,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.classNo)
             })
             delDictclass(selectedRowKeys).then(response => {
               that.getDataSource()

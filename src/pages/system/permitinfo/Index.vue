@@ -1,6 +1,6 @@
 <template>
   <div>
-    test
+    index
   </div>
 </template>
 
@@ -14,6 +14,5 @@ export default {
   }
 }
 </script>
-
 <style lang="less" scoped>
 </style>

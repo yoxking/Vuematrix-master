@@ -142,7 +142,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -158,7 +160,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.branchNo)
             })
             delBranchinfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -179,7 +181,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },

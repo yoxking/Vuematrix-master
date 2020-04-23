@@ -39,8 +39,7 @@
           <a-form-item label="排序"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            <a-input placeholder="排序"
-                     v-model="model.orderNo" />
+            <a-input-number v-model="form.orderNo" />
           </a-form-item>
         </a-col>
         <a-col :span="12">
