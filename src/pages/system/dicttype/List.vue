@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.dictName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,23 +60,23 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="dictNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="dictName"
+                          title="字典名称"></vxe-table-column>
+        <vxe-table-column field="dictType"
+                          title="字典类型"></vxe-table-column>
+        <vxe-table-column field="checkState"
+                          title="状态"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        @click="handleEdt(row.dictNo)">编辑</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.dictNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { listDictinfo, delDictinfo, exptDictinfo } from '@/api/system/dictinfo'
+import { listDicttype, delDicttype, exptDicttype } from '@/api/system/dicttype'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -106,12 +106,12 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        dictName: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -126,8 +126,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.dictName !== '') {
+        this.pageParam.condition = " dict_name like '%" + this.queryParam.dictName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -146,7 +146,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -162,9 +164,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.dictNo)
             })
-            delDictinfo(selectedRowKeys).then(response => {
+            delDicttype(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -183,7 +185,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -202,7 +206,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptDictinfo(this.pageParam).then(response => {
+        exptDicttype(this.pageParam).then(response => {
           that.$message.success('导出成功!')
         })
       }
@@ -216,7 +220,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listDictinfo(this.pageParam).then(response => {
+      listDicttype(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

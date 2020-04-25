@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.deptName" />
+                         v-model="queryParam.configName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,19 +60,19 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="deptNo"
+        <vxe-table-column field="configNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="deptName"
-                          title="部门名称"></vxe-table-column>
-        <vxe-table-column field="leader"
-                          title="负责人"></vxe-table-column>
-        <vxe-table-column field="telephone"
-                          title="电话"
+        <vxe-table-column field="configName"
+                          title="参数名称"></vxe-table-column>
+        <vxe-table-column field="configType"
+                          title="参数类型"></vxe-table-column>
+        <vxe-table-column field="configKey"
+                          title="参数键名"
                           show-overflow></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.deptNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.deptNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.configNo)">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.configNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -102,12 +102,12 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        deptName: ''
+        configName: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -122,8 +122,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.deptName !== '') {
-        this.pageParam.condition = " dept_name like '%" + this.queryParam.deptName + "%'"
+      if (this.queryParam.configName !== '') {
+        this.pageParam.condition = " config_name like '%" + this.queryParam.configName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -142,7 +142,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -158,7 +160,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.configNo)
             })
             delConfiginfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -179,7 +181,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },

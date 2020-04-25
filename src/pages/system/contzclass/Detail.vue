@@ -27,10 +27,10 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="24">
           <a-form-item label="备注"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
             {{model.comments}}
           </a-form-item>
         </a-col>

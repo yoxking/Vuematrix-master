@@ -15,63 +15,80 @@
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="24">
+          <a-form-item label="标题"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.title}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="作者"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.author}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-item label="类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
+            {{model.classNo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="海报"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.poster}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="摘要"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.abstracts}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="正文"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.ncontents}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="排序"
+          <a-form-item label="发布时间"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.orderNo}}
+            {{model.pubdate}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="负责人"
+          <a-form-item label="状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.checkState}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +109,16 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        contzNo: '0',
+        title: '',
+        classNo: '',
+        author: '',
+        pubdate: '',
+        poster: '',
+        abstracts: '',
+        ncontents: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },

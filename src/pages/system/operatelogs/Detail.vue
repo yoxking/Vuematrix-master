@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.oplogNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,62 +16,86 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="系统模块"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.oplogTitle}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="请求方式"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.requestType}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="登录信息"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.opertName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="请求方式"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.opertUrl}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="操作方法"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.methodName}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="请求参数"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.jsonResult}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="返回参数"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.errorMsg}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="简介"
+          <a-form-item label="操作状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.summary}}
+            {{model.opertStatus}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-item label="操作时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.opertTime}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +116,23 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        oplogNo: '0',
+        oplogTitle: '',
+        oplogType: '',
+        methodName: '',
+        requestType: '',
+        opertType: '',
+        opertName: '',
+        deptName: '',
+        opertUrl: '',
+        opertIp: '',
+        opertLocation: '',
+        opertParams: '',
+        jsonResult: '',
+        opertStatus: '',
+        errorMsg: '',
+        opertTime: '',
+        comments: ''
       }
     }
   },

@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.tableName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,23 +60,28 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="tableNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="tableName"
+                          title="表名称"></vxe-table-column>
+        <vxe-table-column field="tableComment"
+                          title="表描述"></vxe-table-column>
+        <vxe-table-column field="className"
+                          title="实体"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        >预览</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        >编辑</vxe-button>
+            <vxe-button type="text"
+                        >生成代码</vxe-button>
+            <vxe-button type="text"
+                        @click="handleDet(row.tableNo)"
+                        >详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -106,12 +111,12 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        tableName: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -126,8 +131,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.tableName !== '') {
+        this.pageParam.condition = " table_name like '%" + this.queryParam.tableName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -146,7 +151,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -162,7 +169,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.tableNo)
             })
             delTableinfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -183,7 +190,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },

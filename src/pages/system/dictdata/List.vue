@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="类型名称"
+              <a-form-item label="分支名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.className" />
+                         v-model="queryParam.dictKey" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,16 +60,26 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="classNo"
-                          title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="className"
-                          title="类型名称"></vxe-table-column>
-        <vxe-table-column field="comments"
-                          title="备注" show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="dataNo"
+                          title="编号"
+                          width="120"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="dictCode"
+                          title="字典编码"></vxe-table-column>
+        <vxe-table-column field="dictType"
+                          title="字典类型"></vxe-table-column>
+        <vxe-table-column field="dictKey"
+                          title="字典键名"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="dictValue"
+                          title="字典键值"
+                          show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.classNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.classNo)">详细</vxe-button>
+            <vxe-button type="text"
+                        @click="handleEdt(row.dataNo)">编辑</vxe-button>
+            <vxe-button type="text"
+                        @click="handleDet(row.dataNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -87,7 +97,7 @@
 </template>
 
 <script>
-import { listDictclass, delDictclass, exptDictclass } from '@/api/system/dictclass'
+import { listDictdata, delDictdata, exptDictdata } from '@/api/system/dictdata'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -99,12 +109,12 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        className: ''
+        dictKey: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -119,8 +129,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.className !== '') {
-        this.pageParam.condition = " class_name like '%" + this.queryParam.className + "%'"
+      if (this.queryParam.dictKey !== '') {
+        this.pageParam.condition = " dict_key like '%" + this.queryParam.dictKey + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -139,7 +149,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -155,9 +167,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.classNo)
+              selectedRowKeys.push(item.dataNo)
             })
-            delDictclass(selectedRowKeys).then(response => {
+            delDictdata(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -176,7 +188,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -195,7 +209,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptDictclass(this.pageParam).then(response => {
+        exptDictdata(this.pageParam).then(response => {
           that.$message.success('导出成功!')
         })
       }
@@ -209,7 +223,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listDictclass(this.pageParam).then(response => {
+      listDictdata(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

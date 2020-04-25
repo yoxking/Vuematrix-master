@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询代码生成业务列表
 export function listTableinfo (data) {
   return request({
-    url: '/sys/tableinfo/list',
+    url: '/gen/tableinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listTableinfo (data) {
 // 查询代码生成业务详细
 export function getTableinfo (id) {
   return request({
-    url: '/sys/tableinfo/' + id,
+    url: '/gen/tableinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTableinfo (id) {
 // 新增代码生成业务
 export function addTableinfo (data) {
   return request({
-    url: '/sys/tableinfo',
+    url: '/gen/tableinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTableinfo (data) {
 // 修改代码生成业务
 export function uptTableinfo (data) {
   return request({
-    url: '/sys/tableinfo',
+    url: '/gen/tableinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptTableinfo (data) {
 // 删除代码生成业务
 export function delTableinfo (ids) {
   return request({
-    url: '/sys/tableinfo/' + ids,
+    url: '/gen/tableinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delTableinfo (ids) {
 // 导出代码生成业务
 export function exptTableinfo (data) {
   return request({
-    url: '/sys/tableinfo/export',
+    url: '/gen/tableinfo/export',
     method: 'post',
     data: data
   })

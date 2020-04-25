@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="branchNo"
-                             ref="branchNo">
-            <a-input v-model="form.branchNo" />
+                             prop="organizNo"
+                             ref="organizNo">
+            <a-input v-model="form.organizNo" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,18 +20,52 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="名称"
-                             prop="branchName"
-                             ref="branchName">
-            <a-input v-model="form.branchName" />
+          <a-form-model-item label="机构名称"
+                             prop="organizName"
+                             ref="organizName">
+            <a-input v-model="form.organizName" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="branchType"
-                             ref="branchType">
-            <a-input v-model="form.branchType" />
+          <a-form-model-item label="上级机构"
+                             prop="parentNo"
+                             ref="parentNo">
+            <treeselect v-model="form.parentNo"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
           </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="排序"
+                             prop="orderNo"
+                             ref="orderNo">
+            <a-input-number v-model="form.orderNo" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="状态"
+                             prop="checkState"
+                             ref="checkState">
+            <a-radio-group v-model="form.checkState">
+              <a-radio value="1">正常</a-radio>
+              <a-radio value="0">停用</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -45,10 +79,13 @@
 </template>
 
 <script>
-import { getOrganizinfo, addOrganizinfo, uptOrganizinfo } from '@/api/system/organizinfo'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { getOrganizinfo, treeOrganizinfo, addOrganizinfo, uptOrganizinfo } from '@/api/system/organizinfo'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -56,24 +93,19 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
+        organizNo: '0',
+        organizName: '',
+        parentNo: '',
         orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        checkState: '1',
+        comments: ''
       },
       rules: {
-        branchName: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 3, max: 5, message: '名称长度小于5', trigger: 'change' }
-        ],
-        branchType: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+        organizName: [
+          { required: true, message: '请输入机构名称', trigger: 'change' }
         ]
-      }
+      },
+      options: []
     }
   },
   methods: {
@@ -81,7 +113,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.organizNo === '0') {
             addOrganizinfo(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
@@ -103,12 +135,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getOrganizinfo(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeOrganizinfo().then(response => {
+      that.options = response.rows
+    })
   }
 }
 </script>

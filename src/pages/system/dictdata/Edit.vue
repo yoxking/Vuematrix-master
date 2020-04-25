@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="configNo"
-                             ref="configNo">
-            <a-input v-model="form.configNo" readOnly/>
+                             prop="dataNo"
+                             ref="dataNo">
+            <a-input v-model="form.dataNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,40 +20,48 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="参数名称"
-                             prop="configName"
-                             ref="configName">
-            <a-input v-model="form.configName" />
+          <a-form-model-item label="编码"
+                             prop="dictCode"
+                             ref="dictCode">
+            <a-input v-model="form.dictCode" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="类型"
-                             prop="configType"
-                             ref="configType">
-            <a-radio-group v-model="form.configType">
-              <a-radio value="Y">内置</a-radio>
-              <a-radio value="N">外置</a-radio>
-            </a-radio-group>
+                             prop="dictType"
+                             ref="dictType">
+            <treeselect v-model="form.dictType"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="参数键名"
-                             prop="configKey"
-                             ref="configKey">
-            <a-input v-model="form.configKey" />
+          <a-form-model-item label="名称"
+                             prop="dictKey"
+                             ref="dictKey">
+            <a-input v-model="form.dictKey" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="参数键值"
-                             prop="configValue"
-                             ref="configValue">
-            <a-input v-model="form.configValue" />
+          <a-form-model-item label="键值"
+                             prop="dictValue"
+                             ref="dictValue">
+            <a-input v-model="form.dictValue" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="显示排序"
+                             prop="orderNo"
+                             ref="orderNo">
+            <a-input-number v-model="form.orderNo" />
+          </a-form-model-item>
+        </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="状态"
                              prop="checkState"
@@ -63,9 +71,6 @@
               <a-radio value="0">停用</a-radio>
             </a-radio-group>
           </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -90,10 +95,13 @@
 </template>
 
 <script>
-import { getConfiginfo, addConfiginfo, uptConfiginfo } from '@/api/system/configinfo'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { getDictdata, getTypelist, addDictdata, uptDictdata } from '@/api/system/dictdata'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -101,25 +109,24 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        configNo: '0',
-        configName: '',
-        configType: 'Y',
-        configKey: '',
-        configValue: '',
+        dataNo: '0',
+        dictType: '',
+        dictCode: '',
+        dictKey: '',
+        dictValue: '',
+        orderNo: 1,
         checkState: '1',
         comments: ''
       },
       rules: {
-        configName: [
-          { required: true, message: '请输入参数名称', trigger: 'change' }
+        dictKey: [
+          { required: true, message: '请输入名称', trigger: 'change' }
         ],
-        configKey: [
-          { required: true, message: '请输入参数键名', trigger: 'change' }
-        ],
-        configValue: [
-          { required: true, message: '请输入参数键值', trigger: 'change' }
+        dictValue: [
+          { required: true, message: '请输入键值', trigger: 'change' }
         ]
-      }
+      },
+      options: []
     }
   },
   methods: {
@@ -127,13 +134,13 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.configNo === '0') {
-            addConfiginfo(that.form).then(response => {
+          if (that.form.dataNo === '0') {
+            addDictdata(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
           } else {
-            uptConfiginfo(that.form).then(response => {
+            uptDictdata(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
@@ -149,12 +156,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
-      getConfiginfo(this.id).then(response => {
+      getDictdata(this.id).then(response => {
         that.form = response.data
       })
     }
+    getTypelist().then(response => {
+      that.options = response.rows
+    })
   }
 }
 </script>

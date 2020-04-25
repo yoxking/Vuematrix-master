@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.tableNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,62 +16,82 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="表名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.tableName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="表描述"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.tableComment}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="实体"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.className}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="模板"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.tplCategory}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="简介"
+          <a-form-item label="包名"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.summary}}
+            {{model.packageName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-item label="模块名称"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.moduleName}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="业务名称"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.businessName}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="功能名称"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.functionName}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="选项"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.options}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="功能作者"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.functionAuthor}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +112,17 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        tableNo: '0',
+        tableName: '',
+        tableComment: '',
+        className: '',
+        tplCategory: '',
+        packageName: '',
+        moduleName: '',
+        businessName: '',
+        functionName: '',
+        functionAuthor: '',
+        options: ''
       }
     }
   },

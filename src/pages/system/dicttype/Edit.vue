@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="classNo"
-                             ref="classNo">
-            <a-input v-model="form.classNo" readOnly/>
+                             prop="dictNo"
+                             ref="dictNo">
+            <a-input v-model="form.dictNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,10 +20,29 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="名称"
-                             prop="className"
-                             ref="className">
-            <a-input v-model="form.className" />
+          <a-form-model-item label="字典名称"
+                             prop="dictName"
+                             ref="dictName">
+            <a-input v-model="form.dictName" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="字典类型"
+                             prop="dictType"
+                             ref="dictType">
+            <a-input v-model="form.dictType" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="状态"
+                             prop="checkState"
+                             ref="checkState">
+            <a-radio-group v-model="form.checkState">
+              <a-radio value="1">正常</a-radio>
+              <a-radio value="0">停用</a-radio>
+            </a-radio-group>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -52,7 +71,7 @@
 </template>
 
 <script>
-import { getContzclass, addContzclass, uptContzclass } from '@/api/system/contzclass'
+import { getDicttype, addDicttype, uptDicttype } from '@/api/system/dicttype'
 
 export default {
   name: 'Edit',
@@ -63,13 +82,18 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        classNo: '0',
-        className: '',
+        dictNo: '0',
+        dictName: '',
+        dictType: '',
+        checkState: '1',
         comments: ''
       },
       rules: {
-        className: [
-          { required: true, message: '请输入类型名称', trigger: 'change' }
+        dictName: [
+          { required: true, message: '请输入字典名称', trigger: 'change' }
+        ],
+        dictType: [
+          { required: true, message: '请输入字典类型', trigger: 'change' }
         ]
       }
     }
@@ -79,13 +103,13 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.classNo === '0') {
-            addContzclass(that.form).then(response => {
+          if (that.form.dictNo === '0') {
+            addDicttype(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
           } else {
-            uptContzclass(that.form).then(response => {
+            uptDicttype(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
@@ -103,7 +127,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getContzclass(this.id).then(response => {
+      getDicttype(this.id).then(response => {
         that.form = response.data
       })
     }

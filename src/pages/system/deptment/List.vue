@@ -52,8 +52,6 @@
                  highlight-current-row
                  highlight-hover-row
                  :loading="loading"
-                 class="mytable-scrollbar"
-                 height="400"
                  :data="dataSource">
         <vxe-table-column type="checkbox"
                           width="60"></vxe-table-column>
@@ -138,7 +136,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -175,7 +175,6 @@ export default {
           id: val
         },
         callback: data => {
-          console.log(data)
           if (data !== undefined && data.code === 200) {
             that.getDataSource()
           }
@@ -231,31 +230,5 @@ export default {
   .fold {
     width: 100%;
   }
-}
-/*滚动条整体部分*/
-.mytable-scrollbar div::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-/*滚动条的轨道*/
-.mytable-scrollbar div::-webkit-scrollbar-track {
-  background-color: #ffffff;
-}
-/*滚动条里面的小方块，能向上向下移动*/
-.mytable-scrollbar div::-webkit-scrollbar-thumb {
-  background-color: #bfbfbf;
-  border-radius: 5px;
-  border: 1px solid #f1f1f1;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.mytable-scrollbar div::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8;
-}
-.mytable-scrollbar div::-webkit-scrollbar-thumb:active {
-  background-color: #787878;
-}
-/*边角，即两个滚动条的交汇处*/
-.mytable-scrollbar div::-webkit-scrollbar-corner {
-  background-color: #ffffff;
 }
 </style>

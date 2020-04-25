@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.roleNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,17 +16,17 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="角色名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.roleName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="角色编码"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
+            {{model.roleCode}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -39,39 +39,20 @@
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="负责人"
+          <a-form-item label="状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.checkState}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +73,13 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
+        roleNo: '0',
+        roleName: '',
+        roleCode: '',
         orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        dataScope: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },

@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.taskLogno}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,62 +16,61 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="任务名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.taskName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="任务分组"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.taskGroup}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="调用目标"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.invokeTarget}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="结果状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.resultStatus}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
+        <a-col :span="24">
+          <a-form-item label="任务消息"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.taskMessage}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="异常信息"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.exceptionInfo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +91,15 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        taskLogno: '0',
+        taskName: '',
+        taskGroup: '',
+        invokeTarget: '',
+        taskMessage: '',
+        resultStatus: '',
+        exceptionInfo: '',
+        checkState: '',
+        comments: ''
       }
     }
   },

@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.title" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -30,8 +30,6 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
         <a-button @click="handleDel">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
@@ -60,23 +58,24 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="oplogNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="title"
+                          title="模块名称"></vxe-table-column>
+        <vxe-table-column field="oplogType"
+                          title="日志类型"></vxe-table-column>
+        <vxe-table-column field="requestType"
+                          title="请求方式"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="opertIp"
+                          title="操作IP"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
-            <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.oplogNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -95,7 +94,6 @@
 
 <script>
 import { listOperatelogs, delOperatelogs, exptOperatelogs } from '@/api/system/operatelogs'
-import edit from './Edit'
 import detail from './Detail'
 
 export default {
@@ -106,12 +104,12 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        title: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -126,8 +124,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.title !== '') {
+        this.pageParam.condition = " title like '%" + this.queryParam.title + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -135,20 +133,6 @@ export default {
     },
     doReset () {
       console.log('reset')
-    },
-    handleAdd () {
-      const that = this
-      this.$dlg.modal(edit, {
-        title: '新增',
-        width: 950,
-        height: 700,
-        params: {
-          id: ''
-        },
-        callback: data => {
-          that.getDataSource()
-        }
-      })
     },
     handleDel () {
       const that = this
@@ -162,7 +146,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.oplogNo)
             })
             delOperatelogs(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -172,20 +156,6 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
-    },
-    handleEdt (val) {
-      const that = this
-      this.$dlg.modal(edit, {
-        title: '编辑',
-        width: 950,
-        height: 700,
-        params: {
-          id: val
-        },
-        callback: data => {
-          that.getDataSource()
-        }
-      })
     },
     handleDet (val) {
       this.$dlg.modal(detail, {

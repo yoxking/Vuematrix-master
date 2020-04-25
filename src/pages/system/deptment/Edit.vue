@@ -1,72 +1,88 @@
 <template>
   <div class="wrapbox">
     <a-divider />
-    <a-form>
+    <a-form-model ref="ruleForm"
+                  :model="form"
+                  :rules="rules"
+                  :label-col="labelCol"
+                  :wrapper-col="wrapperCol">
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="编号"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="编号"
-                     readOnly
-                     v-model="model.deptNo" />
-          </a-form-item>
+        <a-col :span="spanCol">
+          <a-form-model-item label="编号"
+                             prop="deptNo"
+                             ref="deptNo">
+            <a-input v-model="form.deptNo" readOnly/>
+          </a-form-model-item>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           &nbsp;
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="部门名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="部门名称"
-                     v-model="model.deptName" />
-          </a-form-item>
+        <a-col :span="spanCol">
+          <a-form-model-item label="部门名称"
+                             prop="deptName"
+                             ref="deptName">
+            <a-input v-model="form.deptName" />
+          </a-form-model-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label="上级部门"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="上级部门"
-                     v-model="model.parentNo" />
-          </a-form-item>
+        <a-col :span="spanCol">
+          <a-form-model-item label="上级菜单"
+                             prop="parentNo"
+                             ref="parentNo">
+            <treeselect v-model="form.parentNo"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+        <a-col :span="spanCol">
+          <a-form-model-item label="负责人"
+                             prop="leader"
+                             ref="leader">
+            <a-input v-model="form.leader" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="排序"
+                             prop="orderNo"
+                             ref="orderNo">
             <a-input-number v-model="form.orderNo" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="负责人"
-                     v-model="model.leader" />
-          </a-form-item>
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="电话"
-                     v-model="model.telephone" />
-          </a-form-item>
+        <a-col :span="spanCol">
+          <a-form-model-item label="电话"
+                             prop="telephone"
+                             ref="telephone">
+            <a-input v-model="form.telephone" />
+          </a-form-model-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            <a-input placeholder="邮箱"
-                     v-model="model.email" />
-          </a-form-item>
+        <a-col :span="spanCol">
+          <a-form-model-item label="邮箱"
+                             prop="email"
+                             ref="email">
+            <a-input v-model="form.email" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="状态"
+                             prop="checkState"
+                             ref="checkState">
+            <a-radio-group v-model="form.checkState">
+              <a-radio value="1">正常</a-radio>
+              <a-radio value="0">停用</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -74,13 +90,13 @@
           <a-form-item label="备注"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            <a-textarea v-model="model.comments"
+            <a-textarea v-model="form.comments"
                         placeholder="备注信息"
                         :autoSize="{ minRows: 3, maxRows: 5 }" />
           </a-form-item>
         </a-col>
       </a-row>
-    </a-form>
+    </a-form-model>
     <a-divider />
     <div class="btnbox">
       <a-button @click="doOk"
@@ -91,51 +107,74 @@
 </template>
 
 <script>
-import { getDeptment, addDeptment, uptDeptment } from '@/api/system/deptment'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { getDeptment, treeDeptment, addDeptment, uptDeptment } from '@/api/system/deptment'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
-      model: {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 16 },
+      spanCol: 12,
+      form: {
         deptNo: '0',
         deptName: '',
-        parentNo: '',
-        orderNo: 1,
+        parentNo: '0',
+        orderNo: '1',
         leader: '',
-        telephone: '13888888888',
+        telephone: '',
         email: '',
+        checkState: '1',
         comments: ''
-      }
+      },
+      rules: {
+        deptName: [
+          { required: true, message: '请输入部门名称', trigger: 'change' }
+        ]
+      },
+      options: []
     }
   },
   methods: {
     doOk () {
       const that = this
-      if (this.model.deptNo === '0') {
-        addDeptment(this.model).then(response => {
-          that.$message.success(response.msg)
-          this.$emit('close', { code: response.code })
-        })
-      } else {
-        uptDeptment(this.model).then(response => {
-          that.$message.success(response.msg)
-          this.$emit('close', { code: response.code })
-        })
-      }
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          if (that.form.deptNo === '0') {
+            addDeptment(that.form).then(response => {
+              that.$message.success(response.msg)
+              that.$emit('close', { code: response.code })
+            })
+          } else {
+            uptDeptment(that.form).then(response => {
+              that.$message.success(response.msg)
+              that.$emit('close', { code: response.code })
+            })
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     doCancel () {
-      this.$emit('close')
+      this.$emit('close', { code: 202 })
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getDeptment(this.id).then(response => {
-        that.model = response.data
+        that.form = response.data
       })
     }
+    treeDeptment().then(response => {
+      that.options = response.rows
+    })
   }
 }
 </script>

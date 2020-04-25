@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="branchNo"
-                             ref="branchNo">
-            <a-input v-model="form.branchNo" />
+                             prop="taskNo"
+                             ref="taskNo">
+            <a-input v-model="form.taskNo" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,18 +20,92 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="名称"
-                             prop="branchName"
-                             ref="branchName">
-            <a-input v-model="form.branchName" />
+          <a-form-model-item label="任务名称"
+                             prop="taskName"
+                             ref="taskName">
+            <a-input v-model="form.taskName" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="branchType"
-                             ref="branchType">
-            <a-input v-model="form.branchType" />
+          <a-form-model-item label="任务分组"
+                             prop="taskGroup"
+                             ref="taskGroup">
+            <a-radio-group v-model="form.taskGroup">
+              <a-radio value="0">默认</a-radio>
+              <a-radio value="1">系统</a-radio>
+            </a-radio-group>
           </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="调用方法"
+                             prop="invokeTarget"
+                             ref="invokeTarget"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            <a-input v-model="form.invokeTarget" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="表达式"
+                             prop="cronExpression"
+                             ref="cronExpression"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            <a-input v-model="form.cronExpression" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="错误策略"
+                             prop="misfirePolicy"
+                             ref="misfirePolicy">
+            <a-radio-group v-model="form.misfirePolicy">
+              <a-radio value="1">立即执行</a-radio>
+              <a-radio value="2">执行一次</a-radio>
+              <a-radio value="3">放弃执行</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="是否并发"
+                             prop="concurrent"
+                             ref="concurrent">
+            <a-radio-group v-model="form.concurrent">
+              <a-radio value="1">允许</a-radio>
+              <a-radio value="0">禁止</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="状态"
+                             prop="checkState"
+                             ref="checkState">
+            <a-radio-group v-model="form.checkState">
+              <a-radio value="1">正常</a-radio>
+              <a-radio value="0">停用</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -56,22 +130,22 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        taskNo: '0',
+        taskName: '',
+        taskGroup: '0',
+        invokeTarget: '',
+        cronExpression: '',
+        misfirePolicy: '1',
+        concurrent: '1',
+        checkState: '1',
+        comments: ''
       },
       rules: {
-        branchName: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 3, max: 5, message: '名称长度小于5', trigger: 'change' }
+        taskName: [
+          { required: true, message: '请输入任务名称', trigger: 'change' }
         ],
-        branchType: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+        taskGroup: [
+          { required: true, message: '请输入分组名称', trigger: 'change' }
         ]
       }
     }
@@ -81,7 +155,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.taskNo === '0') {
             addTaskinfo(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })

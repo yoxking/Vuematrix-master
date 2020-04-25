@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.classNo}}
+            {{model.dictNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,21 +16,37 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="字典名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.className}}
+            {{model.dictName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
+          <a-form-item label="字典类型"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.dictType}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           &nbsp;
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="24">
           <a-form-item label="备注"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
             {{model.comments}}
           </a-form-item>
         </a-col>
@@ -44,7 +60,7 @@
 </template>
 
 <script>
-import { getDictclass } from '@/api/system/dictclass'
+import { getDicttype } from '@/api/system/dicttype'
 
 export default {
   name: 'Detail',
@@ -53,21 +69,23 @@ export default {
     return {
       spanCol: 12,
       model: {
-        classNo: '0',
-        className: '',
+        dictNo: '0',
+        dictName: '',
+        dictType: '',
+        checkState: '1',
         comments: ''
       }
     }
   },
   methods: {
     doClose () {
-      this.$dlg.closeAll()
+      this.$emit('close', { code: 202 })
     }
   },
   mounted () {
     if (this.id !== '') {
       const that = this
-      getDictclass(this.id).then(response => {
+      getDicttype(this.id).then(response => {
         that.model = response.data
       })
     }

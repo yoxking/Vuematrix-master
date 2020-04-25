@@ -9,6 +9,14 @@ export function listOrganizinfo (data) {
   })
 }
 
+// 查询部门下拉树结构
+export function treeOrganizinfo () {
+  return request({
+    url: '/sys/organizinfo/tree',
+    method: 'get'
+  })
+}
+
 // 查询机构信息详细
 export function getOrganizinfo (id) {
   return request({

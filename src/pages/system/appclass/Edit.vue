@@ -11,7 +11,7 @@
           <a-form-model-item label="编号"
                              prop="classNo"
                              ref="classNo">
-            <a-input v-model="form.classNo" />
+            <a-input v-model="form.classNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -27,11 +27,18 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="备注"
-                             prop="comments"
-                             ref="comments">
-            <a-input v-model="form.comments" />
-          </a-form-model-item>
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -62,8 +69,7 @@ export default {
       },
       rules: {
         className: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 3, max: 5, message: '名称长度小于5', trigger: 'change' }
+          { required: true, message: '请输入类型名称', trigger: 'change' }
         ]
       }
     }

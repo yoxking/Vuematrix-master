@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.loginNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,62 +16,80 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="登录用户"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.loginName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="登录时间"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.loginTime}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="IP地址"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.ipAddress}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="浏览器"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.browser}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="简介"
+          <a-form-item label="登录地点"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.summary}}
+            {{model.location}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="操作系统"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.os}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="登录状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.status}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="消息"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.message}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +110,16 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        loginNo: '0',
+        loginName: '',
+        loginTime: '',
+        ipAddress: '',
+        location: '',
+        browser: '',
+        os: '',
+        status: '',
+        message: '',
+        comments: ''
       }
     }
   },

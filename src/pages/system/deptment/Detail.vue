@@ -16,7 +16,7 @@
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="名称"
+          <a-form-item label="部门名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.deptName}}
@@ -32,17 +32,17 @@
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
           <a-form-item label="负责人"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.leader}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="排序"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.orderNo}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -60,6 +60,18 @@
                        :wrapperCol="{span: 16}">
             {{model.email}}
           </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -88,13 +100,15 @@ export default {
   data () {
     return {
       model: {
-        deptNo: '2',
+        deptNo: '0',
         deptName: '',
-        parentNo: '',
-        orderNo: 1,
+        parentNo: '0',
+        orderNo: '1',
         leader: '',
-        telephone: '13888888888',
-        email: ''
+        telephone: '',
+        email: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },

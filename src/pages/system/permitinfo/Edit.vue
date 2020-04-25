@@ -11,7 +11,7 @@
           <a-form-model-item label="编号"
                              prop="permitNo"
                              ref="permitNo">
-            <a-input v-model="form.permitNo" />
+            <a-input v-model="form.permitNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -129,8 +129,8 @@
                              prop="visible"
                              ref="visible">
             <a-radio-group v-model="form.visible">
-              <a-radio value="0">显示</a-radio>
-              <a-radio value="1">隐藏</a-radio>
+              <a-radio value="1">显示</a-radio>
+              <a-radio value="0">隐藏</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -193,7 +193,7 @@ export default {
         component: 'MenuView/PageView',
         redirect: 'noredirect',
         target: 'menuItem',
-        visible: '0',
+        visible: '1',
         checkState: '1',
         comments: ''
       },

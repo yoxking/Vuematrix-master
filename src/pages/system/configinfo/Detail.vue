@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.deptNo}}
+            {{model.configNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,49 +16,54 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="参数名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.deptName}}
+            {{model.configName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="上级部门"
+          <a-form-item label="参数类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.parentNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.leader}}
+            {{model.configType}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="电话"
+          <a-form-item label="参数键名"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.telephone}}
+            {{model.configKey}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="邮箱"
+          <a-form-item label="参数键值"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.email}}
+            {{model.configValue}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -80,13 +85,13 @@ export default {
     return {
       spanCol: 12,
       model: {
-        deptNo: '2',
-        deptName: '',
-        parentNo: '',
-        orderNo: 1,
-        leader: '',
-        telephone: '13888888888',
-        email: ''
+        configNo: '0',
+        configName: '',
+        configType: 'Y',
+        configKey: '',
+        configValue: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },

@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.organizName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -47,7 +47,7 @@
       </div>
       <vxe-table ref="myTable"
                  border
-                 stripe
+                 tree-config
                  resizable
                  highlight-current-row
                  highlight-hover-row
@@ -60,41 +60,33 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="organizNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
-                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="organizName"
+                          title="机构名称" tree-node></vxe-table-column>
+        <vxe-table-column field="parentNo"
+                          title="上级机构"></vxe-table-column>
+        <vxe-table-column field="orderNo"
+                          title="排序"></vxe-table-column>
+        <vxe-table-column field="checkState"
+                          title="状态"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        @click="handleEdt(row.organizNo)">编辑</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.organizNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
-      <vxe-pager border
-                 size="medium"
-                 :loading="loading"
-                 :current-page="pageParam.pageIndex"
-                 :page-size="pageParam.pageSize"
-                 :total="pageParam.pageTotal"
-                 :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
-                 @page-change="onPageChange">
-      </vxe-pager>
     </div>
   </a-card>
 </template>
 
 <script>
-import { listOrganizinfo, delOrganizinfo, exptOrganizinfo } from '@/api/system/organizinfo'
+import { treeOrganizinfo, delOrganizinfo, exptOrganizinfo } from '@/api/system/organizinfo'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -106,7 +98,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        organizName: ''
       },
       // 查询参数
       pageParam: {
@@ -126,8 +118,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.organizName !== '') {
+        this.pageParam.condition = " organiz_name like '%" + this.queryParam.organizName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -146,7 +138,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -162,7 +156,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.organizNo)
             })
             delOrganizinfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -183,7 +177,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -216,7 +212,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listOrganizinfo(this.pageParam).then(response => {
+      treeOrganizinfo().then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

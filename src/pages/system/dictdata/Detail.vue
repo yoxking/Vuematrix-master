@@ -7,11 +7,27 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.dataNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="编码"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.dictCode}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="类型"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.dictType}}
+          </a-form-item>
         </a-col>
       </a-row>
       <a-row>
@@ -19,59 +35,40 @@
           <a-form-item label="名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.dictKey}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="键值"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
+            {{model.dictValue}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="排序"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.orderNo}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
+        <a-col :span="12">
+          <a-form-item label="状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.checkState}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
     </a-form>
@@ -83,7 +80,7 @@
 </template>
 
 <script>
-import { getDictinfo } from '@/api/system/dictinfo'
+import { getDictdata } from '@/api/system/dictdata'
 
 export default {
   name: 'Detail',
@@ -92,26 +89,26 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
+        dataNo: '0',
+        dictType: '',
+        dictCode: '',
+        dictKey: '',
+        dictValue: '',
         orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        checkState: '1',
+        comments: ''
       }
     }
   },
   methods: {
     doClose () {
-      this.$dlg.closeAll()
+      this.$emit('close', { code: 202 })
     }
   },
   mounted () {
     if (this.id !== '') {
       const that = this
-      getDictinfo(this.id).then(response => {
+      getDictdata(this.id).then(response => {
         that.model = response.data
       })
     }

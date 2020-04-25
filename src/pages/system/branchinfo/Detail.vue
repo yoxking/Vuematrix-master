@@ -31,30 +31,30 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="负责人"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.master}}
           </a-form-item>
         </a-col>
+        <a-col :span="12">
+          <a-form-item label="排序"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.orderNo}}
+          </a-form-item>
+        </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="电话"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.telephone}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="邮箱"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
@@ -63,15 +63,33 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="24">
           <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
             {{model.summary}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -94,12 +112,14 @@ export default {
       model: {
         branchNo: '0',
         branchName: '',
-        branchType: '',
+        branchType: '00',
         orderNo: 1,
         master: '',
-        telephone: '13888888888',
+        telephone: '',
         email: '',
-        summary: ''
+        summary: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },
