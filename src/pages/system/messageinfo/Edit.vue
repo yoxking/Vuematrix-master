@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="branchNo"
-                             ref="branchNo">
-            <a-input v-model="form.branchNo" />
+                             prop="mssgNo"
+                             ref="mssgNo">
+            <a-input v-model="form.mssgNo" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,18 +20,89 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="名称"
-                             prop="branchName"
-                             ref="branchName">
-            <a-input v-model="form.branchName" />
+          <a-form-model-item label="消息类型"
+                             prop="mssgType"
+                             ref="mssgType">
+            <a-radio-group v-model="form.mssgType">
+              <a-radio value="0">系统消息</a-radio>
+              <a-radio value="1">普通消息</a-radio>
+            </a-radio-group>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="branchType"
-                             ref="branchType">
-            <a-input v-model="form.branchType" />
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="标题"
+                             prop="mtitle"
+                             ref="mtitle"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            <a-input v-model="form.mtitle" />
           </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="收件人"
+                             prop="mreceiver"
+                             ref="mreceiver">
+            <a-input v-model="form.mreceiver" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="发件人"
+                             prop="msender"
+                             ref="msender">
+            <a-input v-model="form.msender" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="消息内容"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.mcontent"
+                        placeholder="消息内容"
+                        :autoSize="{ minRows: 5, maxRows: 8 }" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="附件"
+                             prop="poster"
+                             ref="poster"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            <a-input v-model="form.attachfile" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="发送时间"
+                             prop="sendTime"
+                             ref="sendTime">
+            <a-input v-model="form.sendTime" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -56,22 +127,25 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        mssgNo: '0',
+        mtitle: '',
+        mssgType: '1',
+        mreceiver: '',
+        msender: '',
+        mcontent: '',
+        attachfile: '',
+        readState: '0',
+        receiveTime: '',
+        sendTime: '',
+        checkState: '1',
+        comments: ''
       },
       rules: {
-        branchName: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 3, max: 5, message: '名称长度小于5', trigger: 'change' }
+        mtitle: [
+          { required: true, message: '请输入消息标题', trigger: 'change' }
         ],
-        branchType: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+        mreceiver: [
+          { required: true, message: '请输入收件人', trigger: 'change' }
         ]
       }
     }
@@ -81,7 +155,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.mssgNo === '0') {
             addMessageinfo(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })

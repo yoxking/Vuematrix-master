@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="branchNo"
-                             ref="branchNo">
-            <a-input v-model="form.branchNo" />
+                             prop="userNo"
+                             ref="userNo">
+            <a-input v-model="form.userNo" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,18 +20,98 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="名称"
-                             prop="branchName"
-                             ref="branchName">
-            <a-input v-model="form.branchName" />
+          <a-form-model-item label="账号"
+                             prop="loginName"
+                             ref="loginName">
+            <a-input v-model="form.loginName" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="branchType"
-                             ref="branchType">
-            <a-input v-model="form.branchType" />
+          <a-form-model-item label="用户类型"
+                             prop="userType"
+                             ref="userType">
+            <a-radio-group v-model="form.userType">
+              <a-radio value="00">系统</a-radio>
+              <a-radio value="01">普通</a-radio>
+            </a-radio-group>
           </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="姓名"
+                             prop="userCnname"
+                             ref="userCnname">
+            <a-input v-model="form.userCnname" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="部门"
+                             prop="deptNo"
+                             ref="deptNo">
+            <a-input v-model="form.deptNo" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="性别"
+                             prop="sex"
+                             ref="sex">
+            <a-radio-group v-model="form.sex">
+              <a-radio value="1">男</a-radio>
+              <a-radio value="0">女</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="头像"
+                             prop="avatar"
+                             ref="avatar">
+            <a-input v-model="form.avatar" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="电话"
+                             prop="telephone"
+                             ref="telephone">
+            <a-input v-model="form.telephone" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="邮箱"
+                             prop="email"
+                             ref="email">
+            <a-input v-model="form.email" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="状态"
+                             prop="checkState"
+                             ref="checkState">
+            <a-radio-group v-model="form.checkState">
+              <a-radio value="1">正常</a-radio>
+              <a-radio value="0">停用</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            <a-textarea v-model="form.comments"
+                        placeholder="备注信息"
+                        :autoSize="{ minRows: 3, maxRows: 5 }" />
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -56,22 +136,28 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
+        userNo: '0',
+        loginName: '',
+        userCnname: '',
+        userEnname: '',
+        deptNo: '',
+        userType: '01',
+        telephone: '',
         email: '',
-        summary: ''
+        sex: '1',
+        avatar: '',
+        checkState: '1',
+        comments: ''
       },
       rules: {
-        branchName: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 3, max: 5, message: '名称长度小于5', trigger: 'change' }
+        loginName: [
+          { required: true, message: '请输账号', trigger: 'change' }
         ],
-        branchType: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+        userCnname: [
+          { required: true, message: '请输入中文姓名', trigger: 'change' }
+        ],
+        telephone: [
+          { required: true, message: '请输入电话', trigger: 'change' }
         ]
       }
     }
@@ -81,7 +167,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.userNo === '0') {
             addRuserinfo(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })

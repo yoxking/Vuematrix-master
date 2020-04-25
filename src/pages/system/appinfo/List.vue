@@ -62,7 +62,7 @@
                           width="60"></vxe-table-column>
         <vxe-table-column field="appNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="appCnName"
+        <vxe-table-column field="appCnname"
                           title="应用名称"></vxe-table-column>
         <vxe-table-column field="appCode"
                           title="应用编码"></vxe-table-column>
@@ -99,6 +99,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {

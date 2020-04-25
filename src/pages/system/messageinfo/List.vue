@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.mtitle" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,23 +60,29 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="mssgNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="mtitle"
+                          title="标题"
                           show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="mssgType"
+                          title="消息类型"></vxe-table-column>
+        <vxe-table-column field="msender"
+                          title="发件人"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="sendTime"
+                          title="发件时间"
+                          show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="readState"
+                          title="阅读状态"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        @click="handleEdt(row.mssgNo)">编辑</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.mssgNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -103,15 +109,16 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        mtitle: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -126,8 +133,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.mtitle !== '') {
+        this.pageParam.condition = " mtitle like '%" + this.queryParam.mtitle + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -162,7 +169,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.mssgNo)
             })
             delMessageinfo(selectedRowKeys).then(response => {
               that.getDataSource()

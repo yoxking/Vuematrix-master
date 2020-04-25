@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.userCnname" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,23 +60,25 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="userNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="userCnname"
+                          title="姓名"></vxe-table-column>
+        <vxe-table-column field="loginName"
+                          title="账号"></vxe-table-column>
+        <vxe-table-column field="deptNo"
+                          title="部门"
                           show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="telephone"
+                          title="电话"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.branchNo)">编辑</vxe-button>
+                        @click="handleEdt(row.userNo)">编辑</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.branchNo)">详细</vxe-button>
+                        @click="handleDet(row.userNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -103,6 +105,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
@@ -111,7 +114,7 @@ export default {
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }
@@ -126,8 +129,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.userCnname !== '') {
+        this.pageParam.condition = " user_cnname like '%" + this.queryParam.userCnname + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -146,7 +149,9 @@ export default {
           id: ''
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },
@@ -162,7 +167,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.deptNo)
+              selectedRowKeys.push(item.userNo)
             })
             delRuserinfo(selectedRowKeys).then(response => {
               that.getDataSource()
@@ -183,7 +188,9 @@ export default {
           id: val
         },
         callback: data => {
-          that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
       })
     },

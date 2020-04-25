@@ -108,6 +108,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {

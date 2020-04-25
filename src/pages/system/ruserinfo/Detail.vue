@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.userNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,33 +16,49 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="账号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.loginName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
+          <a-form-item label="用户类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
+            {{model.userType}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="排序"
+          <a-form-item label="姓名"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.orderNo}}
+            {{model.userCnname}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="负责人"
+          <a-form-item label="部门"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.deptNo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="性别"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.sex}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="头像"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.avatar}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -64,14 +80,23 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
-          </a-form-item>
+          <a-form-model-item label="状态"
+                             :labelCol="{span: 6}"
+                             :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +117,18 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
+        userNo: '0',
+        loginName: '',
+        userCnname: '',
+        userEnname: '',
+        deptNo: '',
+        userType: '1',
+        telephone: '',
         email: '',
-        summary: ''
+        sex: '',
+        avatar: '',
+        checkState: '',
+        comments: ''
       }
     }
   },

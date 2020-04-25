@@ -93,6 +93,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
@@ -101,7 +102,7 @@ export default {
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
-        pageSize: 2, // 每页中显示数据的条数
+        pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
         condition: ''
       }

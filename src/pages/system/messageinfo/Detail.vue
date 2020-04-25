@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.mssgNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -15,63 +15,95 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.branchName}}
-          </a-form-item>
-        </a-col>
         <a-col :span="spanCol">
           <a-form-item label="类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="排序"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
+            {{model.mssgType}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="标题"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.mtitle}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="收件人"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.mreceiver}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="发件人"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.msender}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="消息内容"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.mcontent}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="消息附件"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.attachfile}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="发送时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.sendTime}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="收件时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.receiveTime}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="阅读状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.readState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
@@ -92,14 +124,18 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '',
-        orderNo: 1,
-        master: '',
-        telephone: '13888888888',
-        email: '',
-        summary: ''
+        mssgNo: '0',
+        mtitle: '',
+        mssgType: '',
+        mreceiver: 1,
+        msender: '',
+        mcontent: '',
+        attachfile: '',
+        readState: '',
+        receiveTime: '',
+        sendTime: '',
+        checkState: '',
+        comments: ''
       }
     }
   },
