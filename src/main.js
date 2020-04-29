@@ -9,8 +9,10 @@ import vDialogs from 'v-dialogs'
 import axios from 'axios'
 import store from './stores'
 import 'xe-utils'
+import VueCropper from 'vue-cropper'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
+import JDatePicker from 'vue-jlunar-datepicker'
 
 import './comm/authority' // permission access control
 
@@ -19,6 +21,8 @@ Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(vDialogs)
 Vue.use(VXETable)
+Vue.use(VueCropper)
+Vue.component('j-date-picker', JDatePicker)
 
 /* eslint-disable no-new */
 new Vue({

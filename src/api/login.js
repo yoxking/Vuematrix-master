@@ -9,7 +9,7 @@ export function login (username, password, code, uuid) {
     uuid
   }
   return request({
-    url: '/sys/login',
+    url: '/web/login',
     method: 'post',
     params: data
   })
@@ -18,7 +18,7 @@ export function login (username, password, code, uuid) {
 // 退出方法
 export function logout () {
   return request({
-    url: '/sys/logout',
+    url: '/web/logout',
     method: 'post'
   })
 }
@@ -26,7 +26,7 @@ export function logout () {
 // 获取用户详细信息
 export function getInfo () {
   return request({
-    url: '/sys/getInfo',
+    url: '/web/getInfo',
     method: 'get'
   })
 }
@@ -34,7 +34,7 @@ export function getInfo () {
 // 获取验证码
 export function getCodeImg () {
   return request({
-    url: '/sys/codeImage',
+    url: '/web/codeImage',
     method: 'get'
   })
 }

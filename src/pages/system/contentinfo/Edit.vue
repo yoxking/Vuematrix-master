@@ -57,7 +57,7 @@
           <a-form-model-item label="发布时间"
                              prop="pubdate"
                              ref="pubdate">
-            <a-input v-model="form.pubdate" />
+            <j-date-picker v-model="form.pubdate" ></j-date-picker>
           </a-form-model-item>
         </a-col>
       </a-row>
