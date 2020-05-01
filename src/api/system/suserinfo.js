@@ -17,6 +17,14 @@ export function getSuserinfo (id) {
   })
 }
 
+// 查询注册用户信息详细2
+export function getUserProfile () {
+  return request({
+    url: '/sys/suserinfo/profile?rand=' + Date.now(),
+    method: 'get'
+  })
+}
+
 // 新增系统用户信息
 export function addSuserinfo (data) {
   return request({
@@ -32,6 +40,19 @@ export function uptSuserinfo (data) {
     url: '/sys/suserinfo',
     method: 'put',
     data: data
+  })
+}
+
+// 修改系统用户信息
+export function uptSuserpswd (oldPswd, newPswd) {
+  const data = {
+    oldPswd,
+    newPswd
+  }
+  return request({
+    url: '/sys/suserinfo/password',
+    method: 'put',
+    params: data
   })
 }
 

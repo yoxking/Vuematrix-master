@@ -5,23 +5,24 @@
              :lg="7">
         <a-card :bordered="false">
           <div class="account-center-avatarHolder">
-            <div class="avatar" @click="uptAvatar">
-              <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png">
+            <div class="avatar"
+                 @click="uptAvatar">
+              <img :src="userInfo.avatar">
             </div>
-            <div class="username">dfdsfsdf</div>
+            <div class="username">{{userInfo.loginName}}</div>
             <div class="bio">海纳百川，有容乃大</div>
           </div>
           <div class="account-center-detail">
             <p>
-              <i class="title"></i>交互专家
+              <i class="title"></i>类型：{{userInfo.userType}}
             </p>
             <p>
-              <i class="group"></i>技术部
+              <i class="group"></i>部门：{{userInfo.deptNo}}
             </p>
             <p>
               <i class="address"></i>
-              <span>浙江省</span>
-              <span>杭州市</span>
+              <span>重庆市</span>
+              <span>沙坪坝</span>
             </p>
           </div>
           <a-divider />
@@ -34,66 +35,85 @@
           <a-tabs defaultActiveKey="1">
             <a-tab-pane tab="基本资料"
                         key="1">
-              <a-form>
-                <a-form-item label="姓名"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input placeholder="姓名" />
-                </a-form-item>
-                <a-form-item label="性别"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-radio-group name="radioGroup"
-                                 :defaultValue="1">
-                    <a-radio :value="1">男</a-radio>
-                    <a-radio :value="0">女</a-radio>
+              <a-form-model ref="ruleForm1"
+                            :model="userInfo"
+                            :rules="rules1"
+                            :label-col="labelCol"
+                            :wrapper-col="wrapperCol">
+                <a-form-model-item label="姓名"
+                                   prop="userCnname"
+                                   ref="userCnname">
+                  <a-input v-model="userInfo.userCnname"
+                           placeholder="姓名" />
+                </a-form-model-item>
+                <a-form-model-item label="性别"
+                                   prop="sex"
+                                   ref="sex">
+                  <a-radio-group v-model="userInfo.sex">
+                    <a-radio value="1">男</a-radio>
+                    <a-radio value="0">女</a-radio>
                   </a-radio-group>
-                </a-form-item>
-                <a-form-item label="手机"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input placeholder="手机" />
-                </a-form-item>
-                <a-form-item label="邮箱"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input placeholder="邮箱" />
-                </a-form-item>
-                <a-form-item label="简介"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 16}">
-                  <a-textarea rows="4"
-                              placeholder="个人简介" />
-                </a-form-item>
-                <a-form-item :wrapperCol="{span: 10, offset: 3}">
-                  <a-button type="primary">保存</a-button>
+                </a-form-model-item>
+                <a-form-model-item label="手机"
+                                   prop="telephone"
+                                   ref="telephone">
+                  <a-input v-model="userInfo.telephone"
+                           placeholder="手机" />
+                </a-form-model-item>
+                <a-form-model-item label="邮箱"
+                                   prop="email"
+                                   ref="email">
+                  <a-input v-model="userInfo.email"
+                           placeholder="邮箱" />
+                </a-form-model-item>
+                <a-form-model-item label="简介"
+                                   prop="comments"
+                                   ref="comments">
+                  <a-textarea v-model="userInfo.comments"
+                              placeholder="个人简介"
+                              :autoSize="{ minRows: 3, maxRows: 5 }" />
+                </a-form-model-item>
+                <a-form-model-item :wrapperCol="{span: 10, offset: 3}">
+                  <a-button type="primary"
+                            @click="saveProfile">保存</a-button>
                   <a-button style="margin-left: 8px">关闭</a-button>
-                </a-form-item>
-              </a-form>
+                </a-form-model-item>
+              </a-form-model>
             </a-tab-pane>
             <a-tab-pane tab="修改密码"
                         key="2">
-              <a-form>
-                <a-form-item label="旧密码"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input type="password" placeholder="旧密码" />
-                </a-form-item>
-                <a-form-item label="新密码"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input type="password" placeholder="新密码" />
-                </a-form-item>
-                <a-form-item label="确认密码"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 10}">
-                  <a-input type="password" placeholder="确认密码" />
-                </a-form-item>
-                <a-form-item :wrapperCol="{span: 10, offset: 3}">
-                  <a-button type="primary">保存</a-button>
-                  <a-button style="margin-left: 8px">关闭</a-button>
-                </a-form-item>
-              </a-form>
+              <a-form-model ref="ruleForm2"
+                            :model="pswdInfo"
+                            :rules="rules2"
+                            :label-col="labelCol"
+                            :wrapper-col="wrapperCol">
+                <a-form-model-item label="旧密码"
+                                   prop="oldpsword"
+                                   ref="oldpsword">
+                  <a-input type="password"
+                           v-model="pswdInfo.oldpsword"
+                           placeholder="旧密码" />
+                </a-form-model-item>
+                <a-form-model-item label="新密码"
+                                   prop="newpsword"
+                                   ref="newpsword">
+                  <a-input type="password"
+                           v-model="pswdInfo.newpsword"
+                           placeholder="新密码" />
+                </a-form-model-item>
+                <a-form-model-item label="确认密码"
+                                   prop="retpsword"
+                                   ref="retpsword">
+                  <a-input type="password"
+                           v-model="pswdInfo.retpsword"
+                           placeholder="确认密码" />
+                </a-form-model-item>
+                <a-form-model-item :wrapperCol="{span: 10, offset: 3}">
+                  <a-button type="primary"
+                            @click="savePassword">保存</a-button>
+                  <a-button style="margin-left: 8px" >关闭</a-button>
+                </a-form-model-item>
+              </a-form-model>
             </a-tab-pane>
           </a-tabs>
         </a-card>
@@ -104,11 +124,59 @@
 
 <script>
 import avatarUpdt from './AvatarUpdt'
+import { getUserProfile, uptSuserinfo, uptSuserpswd } from '@/api/system/suserinfo'
 
 export default {
+  name: 'UserProfile',
   data () {
     return {
+      labelCol: { span: 3 },
+      wrapperCol: { span: 10 },
+      userInfo: {
+        userNo: '',
+        deptNo: '',
+        loginName: '',
+        password: '',
+        userCnname: '',
+        userType: '',
+        sex: '1',
+        telephone: '',
+        email: '',
+        avatar: '',
+        checkState: '1',
+        comments: ''
+      },
+      pswdInfo: {
+        oldpsword: '',
+        newpsword: '',
+        retpsword: ''
+      },
+      rules1: {
+        userCnname: [
+          { required: true, message: '请输姓名', trigger: 'change' }
+        ],
+        telephone: [
+          { required: true, message: '请输入电话', trigger: 'change' }
+        ],
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'change' }
+        ]
+      },
+      rules2: {
+        oldpsword: [
+          { required: true, message: '请输入原密码', trigger: 'change' }
+        ],
+        newpsword: [
+          { required: true, message: '请输入新密码', trigger: 'change' }
+        ],
+        retpsword: [
+          { required: true, message: '请输入确认密码', trigger: 'change' }
+        ]
+      }
     }
+  },
+  created () {
+    this.getUserInfo()
   },
   methods: {
     uptAvatar () {
@@ -118,6 +186,48 @@ export default {
         width: 800,
         height: 490
       })
+    },
+    getUserInfo () {
+      const that = this
+      getUserProfile().then(response => {
+        that.userInfo = response.data
+        console.log(that.userInfo)
+      })
+    },
+    saveProfile () {
+      const that = this
+      this.$refs.ruleForm1.validate(valid => {
+        if (valid) {
+          uptSuserinfo(that.userInfo).then(response => {
+            that.getUserInfo()
+            that.$message.success(response.msg)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    savePassword () {
+      const that = this
+
+      if (this.pswdInfo.newpsword === this.pswdInfo.retpsword) {
+        this.$refs.ruleForm2.validate(valid => {
+          if (valid) {
+            uptSuserpswd(that.pswdInfo.oldpsword, that.pswdInfo.newpsword).then(response => {
+              that.$message.success(response.msg)
+              that.pswdInfo.oldpsword = ''
+              that.pswdInfo.newpsword = ''
+              that.pswdInfo.retpsword = ''
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      } else {
+        this.$message.warn('两次输入的新密码不相同!')
+      }
     }
   }
 }

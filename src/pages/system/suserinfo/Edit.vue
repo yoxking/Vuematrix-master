@@ -151,7 +151,7 @@ export default {
       },
       rules: {
         loginName: [
-          { required: true, message: '请输账号', trigger: 'change' }
+          { required: true, message: '请输入账号', trigger: 'change' }
         ],
         userCnname: [
           { required: true, message: '请输入中文姓名', trigger: 'change' }
