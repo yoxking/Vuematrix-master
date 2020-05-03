@@ -46,7 +46,11 @@
           <a-form-model-item label="应用类型"
                              prop="classNo"
                              ref="classNo">
-            <a-input v-model="form.classNo" />
+            <treeselect v-model="form.classNo"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -111,17 +115,17 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="注册时间"
+          <a-form-model-item label="注册日期"
                              prop="registDate"
                              ref="registDate">
-            <a-input v-model="form.registDate" />
+            <j-date-picker v-model="form.registDate" ></j-date-picker>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="有效期至"
                              prop="activeDate"
                              ref="activeDate">
-            <a-input v-model="form.activeDate" />
+            <j-date-picker v-model="form.activeDate" ></j-date-picker>
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -178,10 +182,13 @@
 </template>
 
 <script>
-import { getAppinfo, addAppinfo, uptAppinfo } from '@/api/system/appinfo'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { getAppinfo, getClasslist, addAppinfo, uptAppinfo } from '@/api/system/appinfo'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -214,7 +221,8 @@ export default {
         appCode: [
           { required: true, message: '请输入编码', trigger: 'change' }
         ]
-      }
+      },
+      options: []
     }
   },
   methods: {
@@ -244,12 +252,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getAppinfo(this.id).then(response => {
         that.form = response.data
       })
     }
+    getClasslist().then(response => {
+      that.options = response.rows
+    })
   }
 }
 </script>

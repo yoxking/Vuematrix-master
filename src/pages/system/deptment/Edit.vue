@@ -27,7 +27,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="上级菜单"
+          <a-form-model-item label="上级部门"
                              prop="parentNo"
                              ref="parentNo">
             <treeselect v-model="form.parentNo"

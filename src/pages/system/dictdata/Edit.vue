@@ -119,6 +119,9 @@ export default {
         comments: ''
       },
       rules: {
+        dictCode: [
+          { required: true, message: '请输入编码', trigger: 'change' }
+        ],
         dictKey: [
           { required: true, message: '请输入名称', trigger: 'change' }
         ],

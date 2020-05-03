@@ -68,11 +68,17 @@
                           title="角色名称"></vxe-table-column>
         <vxe-table-column field="roleCode"
                           title="角色标识"></vxe-table-column>
+        <vxe-table-column field="dataScope"
+                          title="权限范围"></vxe-table-column>
         <vxe-table-column field="checkState"
                           title="状态"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
+            <vxe-button type="text"
+                        @click="allotUser(row.roleNo)">指定用户</vxe-button>
+            <vxe-button type="text"
+                        @click="allotPmt(row.roleNo)">分配权限</vxe-button>
             <vxe-button type="text"
                         @click="handleEdt(row.roleNo)">编辑</vxe-button>
             <vxe-button type="text"
@@ -97,6 +103,8 @@
 import { listRoleinfo, delRoleinfo, exptRoleinfo } from '@/api/system/roleinfo'
 import edit from './Edit'
 import detail from './Detail'
+import allotPmt from './AllotPmt'
+import allotUser from './AllotUser'
 
 export default {
   name: 'List',
@@ -175,6 +183,26 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
+    },
+    allotUser (val) {
+      this.$dlg.modal(allotUser, {
+        title: '指定用户',
+        width: 950,
+        height: 700,
+        params: {
+          id: val
+        }
+      })
+    },
+    allotPmt (val) {
+      this.$dlg.modal(allotPmt, {
+        title: '分配权限',
+        width: 950,
+        height: 700,
+        params: {
+          id: val
+        }
+      })
     },
     handleEdt (val) {
       const that = this

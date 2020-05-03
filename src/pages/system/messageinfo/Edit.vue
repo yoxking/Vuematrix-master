@@ -72,14 +72,21 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="18">
           <a-form-model-item label="附件"
-                             prop="poster"
-                             ref="poster"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 20}">
+                             prop="attachfile"
+                             ref="attachfile"
+                             :labelCol="{span: 4}"
+                             :wrapperCol="{span: 19}">
             <a-input v-model="form.attachfile" />
           </a-form-model-item>
+        </a-col>
+        <a-col :span="6">
+          <a-upload name="file"
+                    :multiple="true">
+            <a-button>
+              <a-icon type="upload" /> 上传附件</a-button>
+          </a-upload>
         </a-col>
       </a-row>
       <a-row>
@@ -87,7 +94,7 @@
           <a-form-model-item label="发送时间"
                              prop="sendTime"
                              ref="sendTime">
-            <a-input v-model="form.sendTime" />
+            <j-date-picker v-model="form.sendTime" ></j-date-picker>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">

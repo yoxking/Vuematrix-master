@@ -9,6 +9,14 @@ export function listAppinfo (data) {
   })
 }
 
+// 查询内容信息列表
+export function getClasslist () {
+  return request({
+    url: '/sys/appinfo/classlist',
+    method: 'get'
+  })
+}
+
 // 查询应用信息详细
 export function getAppinfo (id) {
   return request({

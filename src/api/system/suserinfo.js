@@ -18,10 +18,19 @@ export function getSuserinfo (id) {
 }
 
 // 查询注册用户信息详细2
-export function getUserProfile () {
+export function getSuserprofile () {
   return request({
     url: '/sys/suserinfo/profile?rand=' + Date.now(),
     method: 'get'
+  })
+}
+
+// 用户头像上传
+export function uploadAvatar (data) {
+  return request({
+    url: '/sys/suserinfo/uploadAvatar',
+    method: 'post',
+    data: data
   })
 }
 

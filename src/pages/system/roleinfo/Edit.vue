@@ -27,10 +27,26 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
           <a-form-model-item label="角色编码"
                              prop="roleCode"
                              ref="roleCode">
             <a-input v-model="form.roleCode" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="权限范围"
+                             prop="dataScope"
+                             ref="dataScope">
+            <treeselect v-model="form.dataScope"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -75,10 +91,13 @@
 </template>
 
 <script>
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getRoleinfo, addRoleinfo, uptRoleinfo } from '@/api/system/roleinfo'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -101,7 +120,19 @@ export default {
         roleCode: [
           { required: true, message: '请输入角色标识', trigger: 'change' }
         ]
-      }
+      },
+      options: [
+        {
+          id: '1',
+          label: '全部数据权限'
+        }, {
+          id: '3',
+          label: '本部门数据权限'
+        }, {
+          id: '4',
+          label: '本部门及以下数据权限'
+        }
+      ]
     }
   },
   methods: {

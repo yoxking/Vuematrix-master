@@ -11,7 +11,8 @@
           <a-form-model-item label="编号"
                              prop="contzNo"
                              ref="contzNo">
-            <a-input v-model="form.contzNo" readOnly/>
+            <a-input v-model="form.contzNo"
+                     readOnly />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -57,19 +58,26 @@
           <a-form-model-item label="发布时间"
                              prop="pubdate"
                              ref="pubdate">
-            <j-date-picker v-model="form.pubdate" ></j-date-picker>
+            <j-date-picker v-model="form.pubdate"></j-date-picker>
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="18">
           <a-form-model-item label="海报"
                              prop="poster"
                              ref="poster"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 20}">
+                             :labelCol="{span: 4}"
+                             :wrapperCol="{span: 19}">
             <a-input v-model="form.poster" />
           </a-form-model-item>
+        </a-col>
+        <a-col :span="6">
+          <a-upload name="file"
+                    :multiple="true">
+            <a-button>
+              <a-icon type="upload" /> 上传图片</a-button>
+          </a-upload>
         </a-col>
       </a-row>
       <a-row>

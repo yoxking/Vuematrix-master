@@ -49,7 +49,11 @@
           <a-form-model-item label="部门"
                              prop="deptNo"
                              ref="deptNo">
-            <a-input v-model="form.deptNo" />
+            <treeselect v-model="form.deptNo"
+                        :multiple="false"
+                        :clearable="false"
+                        :searchable="false"
+                        :options="options" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -65,11 +69,25 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="18">
           <a-form-model-item label="头像"
                              prop="avatar"
-                             ref="avatar">
+                             ref="avatar"
+                             :labelCol="{span: 4}"
+                             :wrapperCol="{span: 19}">
             <a-input v-model="form.avatar" />
           </a-form-model-item>
+        </a-col>
+        <a-col :span="6">
+          <a-upload name="file"
+                    :multiple="true">
+            <a-button>
+              <a-icon type="upload" /> 上传图片</a-button>
+          </a-upload>
         </a-col>
       </a-row>
       <a-row>
@@ -125,10 +143,14 @@
 </template>
 
 <script>
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { treeDeptment } from '@/api/system/deptment'
 import { getSuserinfo, addSuserinfo, uptSuserinfo } from '@/api/system/suserinfo'
 
 export default {
   name: 'Edit',
+  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -159,7 +181,8 @@ export default {
         telephone: [
           { required: true, message: '请输入电话', trigger: 'change' }
         ]
-      }
+      },
+      options: []
     }
   },
   methods: {
@@ -189,12 +212,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getSuserinfo(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeDeptment().then(response => {
+      that.options = response.rows
+    })
   }
 }
 </script>

@@ -123,8 +123,8 @@
 </template>
 
 <script>
-import avatarUpdt from './AvatarUpdt'
-import { getUserProfile, uptSuserinfo, uptSuserpswd } from '@/api/system/suserinfo'
+import upldAvatar from './UpldAvatar'
+import { getSuserprofile, uptSuserinfo, uptSuserpswd } from '@/api/system/suserinfo'
 
 export default {
   name: 'UserProfile',
@@ -180,7 +180,7 @@ export default {
   },
   methods: {
     uptAvatar () {
-      this.$dlg.modal(avatarUpdt, {
+      this.$dlg.modal(upldAvatar, {
         title: '修改头像',
         maxButton: false,
         width: 800,
@@ -189,9 +189,8 @@ export default {
     },
     getUserInfo () {
       const that = this
-      getUserProfile().then(response => {
+      getSuserprofile().then(response => {
         that.userInfo = response.data
-        console.log(that.userInfo)
       })
     },
     saveProfile () {
