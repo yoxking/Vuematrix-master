@@ -37,13 +37,15 @@
     </a-form>
     <a-divider />
     <div class="btnbox">
+      <a-button @click="doOk"
+                type="primary">确定</a-button>
       <a-button @click="doClose">关闭</a-button>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleinfo } from '@/api/system/roleinfo'
+import { getRoleinfo, getRolesusers, uptRolesusers } from '@/api/system/roleinfo'
 
 export default {
   name: 'Detail',
@@ -65,36 +67,34 @@ export default {
     }
   },
   methods: {
+    doOk () {
+      if (this.targetKeys.length > 0) {
+        const that = this
+        uptRolesusers(this.id, this.targetKeys.join(',')).then(response => {
+          that.$message.success(response.msg)
+          that.$emit('close', { code: response.code })
+        })
+      } else {
+        this.$message.warn('请至少选择一条记录')
+      }
+    },
     doClose () {
       this.$dlg.closeAll()
     },
-    getMock () {
-      const targetKeys = []
-      const mockData = []
-      for (let i = 0; i < 20; i++) {
-        const data = {
-          key: i.toString(),
-          title: `content${i + 1}`,
-          description: `description of content${i + 1}`,
-          chosen: Math.random() * 2 > 1
-        }
-        if (data.chosen) {
-          targetKeys.push(data.key)
-        }
-        mockData.push(data)
-      }
-      this.sourceData = mockData
-      this.targetKeys = targetKeys
+    getRoleSusers () {
+      const that = this
+      getRolesusers(this.id).then(response => {
+        that.sourceData = response.data.sourceData
+        that.targetKeys = response.data.targetKeys
+      })
     },
     filterOption (inputValue, option) {
-      return option.description.indexOf(inputValue) > -1
+      return option.title.indexOf(inputValue) > -1
     },
     handleChange (targetKeys, direction, moveKeys) {
-      console.log(targetKeys, direction, moveKeys)
       this.targetKeys = targetKeys
     },
     handleSearch (dir, value) {
-      console.log('search:', dir, value)
     }
   },
   mounted () {
@@ -104,7 +104,7 @@ export default {
         that.model = response.data
       })
     }
-    this.getMock()
+    this.getRoleSusers()
   }
 }
 </script>

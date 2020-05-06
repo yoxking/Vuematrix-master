@@ -51,3 +51,43 @@ export function exptRoleinfo (data) {
     data: data
   })
 }
+
+// 查询角色信息详细
+export function getRolesusers (roleNo) {
+  return request({
+    url: '/sys/roleinfo/suersource/' + roleNo,
+    method: 'get'
+  })
+}
+
+// 查询角色信息详细
+export function getRolepermit (roleNo) {
+  return request({
+    url: '/sys/roleinfo/permittree/' + roleNo,
+    method: 'get'
+  })
+}
+
+// 查询角色信息详细
+export function uptRolesusers (roleNo, suserNos) {
+  const data = {
+    roleNo, suserNos
+  }
+  return request({
+    url: '/sys/roleinfo/updateSusers',
+    method: 'post',
+    params: data
+  })
+}
+
+// 查询角色信息详细
+export function uptRolepermit (roleNo, permitNos) {
+  const data = {
+    roleNo, permitNos
+  }
+  return request({
+    url: '/sys/roleinfo/updatePermits',
+    method: 'post',
+    params: data
+  })
+}

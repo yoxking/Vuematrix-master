@@ -73,7 +73,7 @@
         <vxe-table-column field="checkState"
                           title="状态"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column title="操作">
+        <vxe-table-column title="操作" width="300">
           <template v-slot="{ row }">
             <vxe-button type="text"
                         @click="allotUser(row.roleNo)">指定用户</vxe-button>

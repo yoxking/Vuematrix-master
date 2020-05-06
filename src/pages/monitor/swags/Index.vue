@@ -5,10 +5,10 @@
 </template>
 <script>
 export default {
-  name: 'Druid',
+  name: 'Swagger',
   data () {
     return {
-      src: process.env.BASE_API + '/druid/index.html',
+      src: process.env.BASE_API + '/swagger-ui.html',
       height: document.documentElement.clientHeight - 94.5 + 'px;',
       loading: true
     }

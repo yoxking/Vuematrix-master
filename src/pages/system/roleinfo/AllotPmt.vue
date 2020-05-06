@@ -26,10 +26,11 @@
             <a-card style="width: 700px">
               <a-tree v-model="checkedKeys"
                       checkable
+                      :default-expand-all="true"
                       :expanded-keys="expandedKeys"
                       :auto-expand-parent="autoExpandParent"
                       :selected-keys="selectedKeys"
-                      :tree-data="treeData"
+                      :tree-data="pmttreeData"
                       @expand="onExpand"
                       @select="onSelect" />
             </a-card>
@@ -39,56 +40,15 @@
     </a-form>
     <a-divider />
     <div class="btnbox">
+      <a-button @click="doOk"
+                type="primary">确定</a-button>
       <a-button @click="doClose">关闭</a-button>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleinfo } from '@/api/system/roleinfo'
-const treeData = [
-  {
-    title: '0-0',
-    key: '0-0',
-    children: [
-      {
-        title: '0-0-0',
-        key: '0-0-0',
-        children: [
-          { title: '0-0-0-0', key: '0-0-0-0' },
-          { title: '0-0-0-1', key: '0-0-0-1' },
-          { title: '0-0-0-2', key: '0-0-0-2' }
-        ]
-      },
-      {
-        title: '0-0-1',
-        key: '0-0-1',
-        children: [
-          { title: '0-0-1-0', key: '0-0-1-0' },
-          { title: '0-0-1-1', key: '0-0-1-1' },
-          { title: '0-0-1-2', key: '0-0-1-2' }
-        ]
-      },
-      {
-        title: '0-0-2',
-        key: '0-0-2'
-      }
-    ]
-  },
-  {
-    title: '0-1',
-    key: '0-1',
-    children: [
-      { title: '0-1-0-0', key: '0-1-0-0' },
-      { title: '0-1-0-1', key: '0-1-0-1' },
-      { title: '0-1-0-2', key: '0-1-0-2' }
-    ]
-  },
-  {
-    title: '0-2',
-    key: '0-2'
-  }
-]
+import { getRoleinfo, getRolepermit, uptRolepermit } from '@/api/system/roleinfo'
 
 export default {
   name: 'Detail',
@@ -105,35 +65,44 @@ export default {
         checkState: '1',
         comments: ''
       },
-      expandedKeys: ['0-0-0', '0-0-1'],
+      expandedKeys: [],
       autoExpandParent: true,
-      checkedKeys: ['0-0-0'],
+      checkedKeys: [],
       selectedKeys: [],
-      treeData
-    }
-  },
-  watch: {
-    checkedKeys (val) {
-      console.log('onCheck', val)
+      pmttreeData: []
     }
   },
   methods: {
+    doOk () {
+      const that = this
+      uptRolepermit(this.id, this.checkedKeys.join(',')).then(response => {
+        that.$message.success(response.msg)
+        that.$emit('close', { code: response.code })
+      })
+    },
     doClose () {
       this.$dlg.closeAll()
     },
+    getRolePermit () {
+      const that = this
+      getRolepermit(this.id).then(response => {
+        that.pmttreeData = response.data.pmttreeData
+        that.checkedKeys = response.data.checkedKeys
+      })
+    },
     onExpand (expandedKeys) {
-      console.log('onExpand', expandedKeys)
+      // console.log('onExpand', expandedKeys)
       // if not set autoExpandParent to false, if children expanded, parent can not collapse.
       // or, you can remove all expanded children keys.
       this.expandedKeys = expandedKeys
       this.autoExpandParent = false
     },
     onCheck (checkedKeys) {
-      console.log('onCheck', checkedKeys)
+      // console.log('onCheck', checkedKeys)
       this.checkedKeys = checkedKeys
     },
     onSelect (selectedKeys, info) {
-      console.log('onSelect', info)
+      // console.log('onSelect', info)
       this.selectedKeys = selectedKeys
     }
   },
@@ -144,6 +113,7 @@ export default {
         that.model = response.data
       })
     }
+    this.getRolePermit()
   }
 }
 </script>
