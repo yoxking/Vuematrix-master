@@ -44,7 +44,7 @@
           <a-form-item label="表达式"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.cronExpression}}
+            {{model.taskExpress}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -53,7 +53,7 @@
           <a-form-item label="错误策略"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.misfirePolicy}}
+            {{model.errorsPolicy}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -105,11 +105,11 @@ export default {
       model: {
         taskNo: '0',
         taskName: '',
-        taskGroup: '',
+        taskGroup: '0',
+        taskExpress: '',
         invokeTarget: '',
-        cronExpression: '',
-        misfirePolicy: '',
-        concurrent: '',
+        errorsPolicy: '1',
+        concurrent: '1',
         checkState: '1',
         comments: ''
       }

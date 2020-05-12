@@ -60,7 +60,23 @@
           <a-form-item label="异常信息"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.exceptionInfo}}
+            {{model.errorsMessage}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="开始时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.startTime}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="完成时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.enditTime}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -94,10 +110,12 @@ export default {
         taskLogno: '0',
         taskName: '',
         taskGroup: '',
-        invokeTarget: '',
         taskMessage: '',
+        invokeTarget: '',
         resultStatus: '',
-        exceptionInfo: '',
+        errorsMessage: '',
+        startTime: '',
+        enditTime: '',
         checkState: '',
         comments: ''
       }

@@ -51,20 +51,20 @@
       <a-row>
         <a-col :span="24">
           <a-form-model-item label="表达式"
-                             prop="cronExpression"
-                             ref="cronExpression"
+                             prop="taskExpress"
+                             ref="taskExpress"
                              :labelCol="{span: 3}"
                              :wrapperCol="{span: 20}">
-            <a-input v-model="form.cronExpression" />
+            <a-input v-model="form.taskExpress" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="错误策略"
-                             prop="misfirePolicy"
-                             ref="misfirePolicy">
-            <a-radio-group v-model="form.misfirePolicy">
+                             prop="errorsPolicy"
+                             ref="errorsPolicy">
+            <a-radio-group v-model="form.errorsPolicy">
               <a-radio value="1">立即执行</a-radio>
               <a-radio value="2">执行一次</a-radio>
               <a-radio value="3">放弃执行</a-radio>
@@ -89,7 +89,7 @@
                              ref="checkState">
             <a-radio-group v-model="form.checkState">
               <a-radio value="1">正常</a-radio>
-              <a-radio value="0">停用</a-radio>
+              <a-radio value="0">暂停</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -133,9 +133,9 @@ export default {
         taskNo: '0',
         taskName: '',
         taskGroup: '0',
+        taskExpress: '',
         invokeTarget: '',
-        cronExpression: '',
-        misfirePolicy: '1',
+        errorsPolicy: '1',
         concurrent: '1',
         checkState: '1',
         comments: ''

@@ -71,11 +71,13 @@
         <vxe-table-column field="invokeTarget"
                           title="调用目标"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="cronExpression"
+        <vxe-table-column field="taskExpress"
                           title="表达式"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
+            <vxe-button type="text"
+                        @click="startTask(row.taskNo)">执行</vxe-button>
             <vxe-button type="text"
                         @click="handleEdt(row.taskNo)">编辑</vxe-button>
             <vxe-button type="text"
@@ -97,7 +99,7 @@
 </template>
 
 <script>
-import { listTaskinfo, delTaskinfo, exptTaskinfo } from '@/api/system/taskinfo'
+import { listTaskinfo, delTaskinfo, exptTaskinfo, startTaskinfo } from '@/api/system/taskinfo'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -178,6 +180,19 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
+    },
+    startTask (val) {
+      this.$confirm({
+        title: '提示',
+        content: '您确认要立即执行一次任务吗?',
+        okText: '确认',
+        cancelText: '取消',
+        onOk () {
+          startTaskinfo(val).then(response => {
+            console.log(response)
+          })
+        }
+      })
     },
     handleEdt (val) {
       const that = this
