@@ -1,11 +1,12 @@
 <template>
   <div>
       <a-button type="primary" @click="openNode">添加节点</a-button>
+      <a-button type="primary" @click="openForm">添加表单</a-button>
   </div>
 </template>
 
 <script>
-import flow from './Flow'
+import form from './Form'
 
 export default {
   name: 'Index',
@@ -15,8 +16,10 @@ export default {
   },
   methods: {
     openNode: function () {
-      this.$dlg.modal(flow, {
-        title: '流程设计',
+    },
+    openForm: function () {
+      this.$dlg.modal(form, {
+        title: '表单设计',
         width: 1280,
         height: 750
       })

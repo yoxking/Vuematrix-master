@@ -1,0 +1,53 @@
+import request from '@/myutil/request'
+
+// 查询内容类型列表
+export function listConteeclass (data) {
+  return request({
+    url: '/sys/conteeclass/list',
+    method: 'post',
+    data: data
+  })
+}
+
+// 查询内容类型详细
+export function getConteeclass (id) {
+  return request({
+    url: '/sys/conteeclass/' + id,
+    method: 'get'
+  })
+}
+
+// 新增内容类型
+export function addConteeclass (data) {
+  return request({
+    url: '/sys/conteeclass',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改内容类型
+export function uptConteeclass (data) {
+  return request({
+    url: '/sys/conteeclass',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除内容类型
+export function delConteeclass (ids) {
+  return request({
+    url: '/sys/conteeclass/' + ids,
+    method: 'delete'
+  })
+}
+
+// 导出内容类型
+export function exptConteeclass (data) {
+  return request({
+    url: '/sys/conteeclass/export',
+    method: 'post',
+    data: data
+  })
+}
