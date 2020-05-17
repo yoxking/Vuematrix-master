@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="工作组名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.groupName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,19 +60,19 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="groupNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="groupName"
+                          title="工作组名称"></vxe-table-column>
+        <vxe-table-column field="orderNo"
+                          title="排序"></vxe-table-column>
+        <vxe-table-column field="comments"
+                          title="备注"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.branchNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.branchNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.groupNo)">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.groupNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -99,10 +99,11 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        groupName: ''
       },
       // 查询参数
       pageParam: {
@@ -122,8 +123,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.groupName !== '') {
+        this.pageParam.condition = " group_name like '%" + this.queryParam.groupName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -160,7 +161,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.branchNo)
+              selectedRowKeys.push(item.groupNo)
             })
             delWorkgroup(selectedRowKeys).then(response => {
               that.getDataSource()

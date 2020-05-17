@@ -6,7 +6,7 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="工作流名称"
+              <a-form-item label="流程名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
@@ -63,11 +63,11 @@
         <vxe-table-column field="flowNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column field="flowName"
-                          title="分支名称"></vxe-table-column>
+                          title="流程名称"></vxe-table-column>
         <vxe-table-column field="flowType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="flowManager"
-                          title="简介"
+                          title="流程类型"></vxe-table-column>
+        <vxe-table-column field="checkState"
+                          title="状态"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
@@ -101,6 +101,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
@@ -162,7 +163,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.branchNo)
+              selectedRowKeys.push(item.flowNo)
             })
             delWorkflows(selectedRowKeys).then(response => {
               that.getDataSource()

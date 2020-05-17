@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { getFlowarchives, addFlowarchives, uptFlowarchives } from '@/api/wkflow/flowarchives'
+import { getFlowarchivs, addFlowarchivs, uptFlowarchivs } from '@/api/wkflow/flowarchivs'
 
 export default {
   name: 'Edit',
@@ -152,12 +152,12 @@ export default {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           if (that.form.branchNo === '0') {
-            addFlowarchives(that.form).then(response => {
+            addFlowarchivs(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
           } else {
-            uptFlowarchives(that.form).then(response => {
+            uptFlowarchivs(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })
             })
@@ -175,7 +175,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getFlowarchives(this.id).then(response => {
+      getFlowarchivs(this.id).then(response => {
         that.form = response.data
       })
     }

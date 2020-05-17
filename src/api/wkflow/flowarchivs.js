@@ -1,52 +1,52 @@
 import request from '@/myutil/request'
 
 // 查询【请填写功能名称】列表
-export function listFlowarchives (data) {
+export function listFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchives/list',
+    url: '/flow/flowarchivs/list',
     method: 'post',
     data: data
   })
 }
 
 // 查询【请填写功能名称】详细
-export function getFlowarchives (id) {
+export function getFlowarchivs (id) {
   return request({
-    url: '/flow/flowarchives/' + id,
+    url: '/flow/flowarchivs/' + id,
     method: 'get'
   })
 }
 
 // 新增【请填写功能名称】
-export function addFlowarchives (data) {
+export function addFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchives',
+    url: '/flow/flowarchivs',
     method: 'post',
     data: data
   })
 }
 
 // 修改【请填写功能名称】
-export function uptFlowarchives (data) {
+export function uptFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchives',
+    url: '/flow/flowarchivs',
     method: 'put',
     data: data
   })
 }
 
 // 删除【请填写功能名称】
-export function delFlowarchives (ids) {
+export function delFlowarchivs (ids) {
   return request({
-    url: '/flow/flowarchives/' + ids,
+    url: '/flow/flowarchivs/' + ids,
     method: 'delete'
   })
 }
 
 // 导出【请填写功能名称】
-export function exptFlowarchives (data) {
+export function exptFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchives/export',
+    url: '/flow/flowarchivs/export',
     method: 'post',
     data: data
   })

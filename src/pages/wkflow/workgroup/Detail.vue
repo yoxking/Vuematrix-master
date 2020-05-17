@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.groupNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -19,25 +19,14 @@
           <a-form-item label="名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.groupName}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
+         &nbsp;
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="负责人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.master}}
-          </a-form-item>
-        </a-col>
         <a-col :span="12">
           <a-form-item label="排序"
                        :labelCol="{span: 6}"
@@ -45,30 +34,8 @@
             {{model.orderNo}}
           </a-form-item>
         </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="12">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="简介"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.summary}}
-          </a-form-item>
+         &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -110,14 +77,11 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '00',
+        groupNo: '0',
+        groupName: '',
+        members: '00',
+        users: '',
         orderNo: 1,
-        master: '',
-        telephone: '',
-        email: '',
-        summary: '',
         checkState: '1',
         comments: ''
       }

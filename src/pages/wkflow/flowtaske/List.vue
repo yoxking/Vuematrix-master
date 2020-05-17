@@ -60,19 +60,19 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="taskNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="taskTitle"
+                          title="任务名称"></vxe-table-column>
+        <vxe-table-column field="taskType"
+                          title="类型"></vxe-table-column>
+        <vxe-table-column field="flowName"
+                          title="流程名称"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.branchNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.branchNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.taskNo)">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.taskNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -99,6 +99,7 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
@@ -160,7 +161,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.branchNo)
+              selectedRowKeys.push(item.taskNo)
             })
             delFlowtaske(selectedRowKeys).then(response => {
               that.getDataSource()

@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="branchNo"
-                             ref="branchNo">
-            <a-input v-model="form.branchNo" readOnly/>
+                             prop="groupNo"
+                             ref="groupNo">
+            <a-input v-model="form.groupNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -21,30 +21,16 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="名称"
-                             prop="branchName"
-                             ref="branchName">
-            <a-input v-model="form.branchName" />
+                             prop="groupName"
+                             ref="groupName">
+            <a-input v-model="form.groupName" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="branchType"
-                             ref="branchType">
-            <a-radio-group v-model="form.branchType">
-              <a-radio value="00">行政</a-radio>
-              <a-radio value="01">市场</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item label="负责人"
-                             prop="master"
-                             ref="master">
-            <a-input v-model="form.master" />
-          </a-form-model-item>
-        </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="排序"
                              prop="orderNo"
@@ -52,32 +38,8 @@
             <a-input-number v-model="form.orderNo" />
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="电话"
-                             prop="telephone"
-                             ref="telephone">
-            <a-input v-model="form.telephone" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-model-item label="邮箱"
-                             prop="email"
-                             ref="email">
-            <a-input v-model="form.email" />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="简介"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            <a-textarea v-model="form.summary"
-                        placeholder="简介"
-                        :autoSize="{ minRows: 3, maxRows: 5 }" />
-          </a-form-item>
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -128,14 +90,11 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '00',
+        groupNo: '0',
+        groupName: '',
+        members: '00',
+        users: '',
         orderNo: 1,
-        master: '',
-        telephone: '',
-        email: '',
-        summary: '',
         checkState: '1',
         comments: ''
       },
@@ -151,7 +110,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.groupNo === '0') {
             addWorkgroup(that.form).then(response => {
               that.$message.success(response.msg)
               that.$emit('close', { code: response.code })

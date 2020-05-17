@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { getFlowarchives } from '@/api/wkflow/flowarchives'
+import { getFlowarchivs } from '@/api/wkflow/flowarchivs'
 
 export default {
   name: 'Detail',
@@ -131,7 +131,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getFlowarchives(this.id).then(response => {
+      getFlowarchivs(this.id).then(response => {
         that.model = response.data
       })
     }

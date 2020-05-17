@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchNo}}
+            {{model.btnNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,26 +16,22 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="标题"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.branchName}}
+            {{model.btnTitle}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.branchType}}
-          </a-form-item>
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="负责人"
+          <a-form-item label="图标"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.master}}
+            {{model.btnIcon}}
           </a-form-item>
         </a-col>
         <a-col :span="12">
@@ -47,27 +43,11 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="电话"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.telephone}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="邮箱"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="24">
-          <a-form-item label="简介"
+          <a-form-item label="脚本"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.summary}}
+            {{model.btnScript}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -110,14 +90,11 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '00',
+        btnNo: '0',
+        btnTitle: '',
+        btnIcon: '00',
         orderNo: 1,
-        master: '',
-        telephone: '',
-        email: '',
-        summary: '',
+        btnScript: '',
         checkState: '1',
         comments: ''
       }

@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="流程名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.branchName" />
+                         v-model="queryParam.flowName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,19 +60,19 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="branchNo"
+        <vxe-table-column field="archvNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="branchName"
-                          title="分支名称"></vxe-table-column>
-        <vxe-table-column field="branchType"
-                          title="分支类型"></vxe-table-column>
-        <vxe-table-column field="summary"
-                          title="简介"
+        <vxe-table-column field="flowName"
+                          title="流程名称"></vxe-table-column>
+        <vxe-table-column field="stepName"
+                          title="步骤名称"></vxe-table-column>
+        <vxe-table-column field="contents"
+                          title="内容"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.branchNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.branchNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.archvNo)">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.archvNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { listFlowarchives, delFlowarchives, exptFlowarchives } from '@/api/wkflow/flowarchives'
+import { listFlowarchivs, delFlowarchivs, exptFlowarchivs } from '@/api/wkflow/flowarchivs'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -99,10 +99,11 @@ export default {
   data () {
     return {
       advanced: false,
+      loading: false,
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        flowName: ''
       },
       // 查询参数
       pageParam: {
@@ -122,8 +123,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.flowName !== '') {
+        this.pageParam.condition = " flow_name like '%" + this.queryParam.flowName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -160,9 +161,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.branchNo)
+              selectedRowKeys.push(item.archvNo)
             })
-            delFlowarchives(selectedRowKeys).then(response => {
+            delFlowarchivs(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -202,7 +203,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptFlowarchives(this.pageParam).then(response => {
+        exptFlowarchivs(this.pageParam).then(response => {
           that.$message.success('导出成功!')
         })
       }
@@ -216,7 +217,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listFlowarchives(this.pageParam).then(response => {
+      listFlowarchivs(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false
