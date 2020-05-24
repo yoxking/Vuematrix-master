@@ -5,6 +5,8 @@
             :body-style="{ padding: 0 }" style="text-align:right;">
       <a-button type="primary" @click="addNode">添加节点</a-button>
       <a-button type="primary" @click="saveData">保存流程</a-button>
+      <a-button type="primary" >安装</a-button>
+      <a-button type="primary" >卸载</a-button>
     </a-card>
     <a-divider />
     <div id="flowContainer" class="container">

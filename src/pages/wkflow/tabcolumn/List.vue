@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="流程名称"
+              <a-form-item label="分支名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.flowName" />
+                         v-model="queryParam.columnName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -60,20 +60,19 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="flowNo"
+        <vxe-table-column field="columnNo"
                           title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="flowName"
-                          title="流程名称"></vxe-table-column>
-        <vxe-table-column field="flowType"
-                          title="流程类型"></vxe-table-column>
-        <vxe-table-column field="checkState"
-                          title="状态"
+        <vxe-table-column field="columnName"
+                          title="字段名称"></vxe-table-column>
+        <vxe-table-column field="columnCode"
+                          title="字段"></vxe-table-column>
+        <vxe-table-column field="columnType"
+                          title="字段类型"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column title="操作" width="300">
+        <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="designFlow(row.flowNo)">设计流程</vxe-button>
-            <vxe-button type="text" @click="handleEdt(row.flowNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.flowNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.columnNo)">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.columnNo)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -91,8 +90,7 @@
 </template>
 
 <script>
-import { listWorkflows, delWorkflows, exptWorkflows } from '@/api/wkflow/workflows'
-import flow from './Flow'
+import { listTabcolumn, delTabcolumn, exptTabcolumn } from '@/api/wkflow/tabcolumn'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -105,7 +103,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        flowName: ''
+        branchName: ''
       },
       // 查询参数
       pageParam: {
@@ -125,8 +123,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.flowName !== '') {
-        this.pageParam.condition = " flow_name like '%" + this.queryParam.flowName + "%'"
+      if (this.queryParam.columnName !== '') {
+        this.pageParam.condition = " column_name like '%" + this.queryParam.columnName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -163,9 +161,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.flowNo)
+              selectedRowKeys.push(item.columnNo)
             })
-            delWorkflows(selectedRowKeys).then(response => {
+            delTabcolumn(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -173,14 +171,6 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
-    },
-    designFlow (val) {
-      // const that = this
-      this.$dlg.modal(flow, {
-        title: '流程设计',
-        width: 1280,
-        height: 750
-      })
     },
     handleEdt (val) {
       const that = this
@@ -213,7 +203,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptWorkflows(this.pageParam).then(response => {
+        exptTabcolumn(this.pageParam).then(response => {
           that.$message.success('导出成功!')
         })
       }
@@ -227,7 +217,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listWorkflows(this.pageParam).then(response => {
+      listTabcolumn(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

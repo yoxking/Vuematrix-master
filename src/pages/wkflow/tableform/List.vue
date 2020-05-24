@@ -69,8 +69,10 @@
         <vxe-table-column field="checkState"
                           title="状态"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column title="操作">
+        <vxe-table-column title="操作" width="300">
           <template v-slot="{ row }">
+            <vxe-button type="text">设计字段</vxe-button>
+            <vxe-button type="text">设计表单</vxe-button>
             <vxe-button type="text" @click="handleEdt(row.formNo)">编辑</vxe-button>
             <vxe-button type="text" @click="handleDet(row.formNo)">详细</vxe-button>
           </template>
