@@ -72,7 +72,7 @@
         <vxe-table-column title="操作" width="300">
           <template v-slot="{ row }">
             <vxe-button type="text">设计字段</vxe-button>
-            <vxe-button type="text">设计表单</vxe-button>
+            <vxe-button type="text" @click="designForm(row.formNo)">设计表单</vxe-button>
             <vxe-button type="text" @click="handleEdt(row.formNo)">编辑</vxe-button>
             <vxe-button type="text" @click="handleDet(row.formNo)">详细</vxe-button>
           </template>
@@ -95,6 +95,7 @@
 import { listTableform, delTableform, exptTableform } from '@/api/wkflow/tableform'
 import edit from './Edit'
 import detail from './Detail'
+import formDisign from '../../../comps/workform/designer'
 
 export default {
   name: 'List',
@@ -173,6 +174,18 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
+    },
+    designForm () {
+      this.$dlg.modal(formDisign, {
+        title: '表单设计',
+        width: 1280,
+        height: 750,
+        params: {
+          id: ''
+        },
+        callback: data => {
+        }
+      })
     },
     handleEdt (val) {
       const that = this

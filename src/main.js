@@ -14,6 +14,7 @@ import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
 import JDatePicker from 'vue-jlunar-datepicker'
 
+import './assets/icons' // icon
 import './comm/authority' // permission access control
 
 Vue.prototype.$axios = axios

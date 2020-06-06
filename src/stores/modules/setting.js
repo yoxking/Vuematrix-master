@@ -5,7 +5,7 @@ export default {
     theme: 'dark',
     layout: 'side',
     multipage: true,
-    systemName: '基云管理',
+    systemName: '热度空间',
     copyright: '2020 BENET CORP.',
     footerLinks: [
       {link: 'https://www.benet.com', name: '百纳云纪科技'}
