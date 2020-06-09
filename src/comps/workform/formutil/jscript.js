@@ -7,10 +7,12 @@ const units = {
   GB: '1024 / 1024 / 1024'
 }
 let confGlobal
+/*
 const inheritAttrs = {
   file: '',
   dialog: 'inheritAttrs: false,'
 }
+*/
 
 /**
  * 组装js 【入口函数】
@@ -66,8 +68,8 @@ function buildAttributes (scheme, dataList, ruleList, optionsList, methodList, p
     buildProps(scheme, propsList)
   }
 
-  // 处理el-upload的action
-  if (scheme.action && config.tag === 'el-upload') {
+  // 处理a-upload的action
+  if (scheme.action && config.tag === 'a-upload') {
     uploadVarList.push(
       `${scheme.__vModel__}Action: '${scheme.action}',
       ${scheme.__vModel__}fileList: [],`
@@ -91,7 +93,7 @@ function buildAttributes (scheme, dataList, ruleList, optionsList, methodList, p
 function mixinMethod (type) {
   const list = []; const
     minxins = {
-      file: confGlobal.formBtns ? {
+      file: confGlobal.formButtons ? {
         submitForm: `submitForm() {
         this.$refs['${confGlobal.formRef}'].validate(valid => {
           if(!valid) return
@@ -225,7 +227,6 @@ function buildOptionMethod (methodName, model, methodList) {
 // js整体拼接
 function buildexport (conf, type, data, rules, selectOptions, uploadVar, props, methods) {
   const str = `${exportDefault}{
-  ${inheritAttrs[type]}
   components: {},
   props: [],
   data () {

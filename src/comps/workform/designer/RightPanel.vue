@@ -4,50 +4,80 @@
       <a-tab-pane key="1" tab="组件属性">
         <div class="field-box">
           <!-- 组件属性 -->
-        <a-form-model :layout="layout" :label-col="labelCol" :wrapper-col="wrapperCol">
-          <a-form-model-item v-if="activeData.__vModel__!==undefined" label="字段名">
-            <a-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />
+          <a-form-model :layout="layout"
+                        :label-col="labelCol"
+                        :wrapper-col="wrapperCol">
+            <a-form-model-item v-if="activeData.__vModel__!==undefined"
+                               label="字段名">
+              <a-input v-model="activeData.__vModel__"
+                       placeholder="请输入字段名（v-model）" />
+            </a-form-model-item>
+            <a-form-model-item v-if="activeData.__config__.componentName!==undefined"
+                               label="组件名">
+              {{ activeData.__config__.componentName }}
+            </a-form-model-item>
+            <a-form-model-item v-if="activeData.__config__.label!==undefined"
+                               label="标题">
+              <a-input v-model="activeData.__config__.label"
+                       placeholder="请输入标题" />
+            </a-form-model-item>
+            <a-form-model-item v-if="activeData.placeholder!==undefined"
+                               label="占位提示">
+              <a-input v-model="activeData.placeholder"
+                       placeholder="请输入占位提示" />
+            </a-form-model-item>
+            <a-form-model-item v-if="activeData.__vModel__!==undefined"
+                               label="默认值">
+              <a-input v-model="activeData.__config__.defaultValue"
+                       placeholder="请输入默认值" />
+            </a-form-model-item>
+          <a-form-model-item v-if="activeData.min!==undefined" label="最小值">
+            <a-input-number v-model="activeData.min" placeholder="最小值" />
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.componentName!==undefined" label="组件名">
-            {{ activeData.__config__.componentName }}
+          <a-form-model-item v-if="activeData.max!==undefined" label="最大值">
+            <a-input-number v-model="activeData.max" placeholder="最大值" />
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.label!==undefined" label="标题">
-            <a-input v-model="activeData.__config__.label" placeholder="请输入标题" />
+          <a-form-model-item v-if="activeData.step!==undefined" label="步长">
+            <a-input-number v-model="activeData.step" placeholder="步数" />
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.placeholder!==undefined" label="占位提示">
-            <a-input v-model="activeData.placeholder" placeholder="请输入占位提示" />
+          <a-form-model-item v-if="activeData.maxLength !== undefined" label="最多输入">
+            <a-input-number v-model="activeData.maxLength" placeholder="请输入字符长度" />
           </a-form-model-item>
-          <a-form-model-item v-if="activeData['start-placeholder']!==undefined" label="开始占位">
-            <a-input v-model="activeData['start-placeholder']" placeholder="请输入占位提示" />
+          <a-form-model-item
+            v-if="activeData.type !== undefined && activeData.__config__.tag === 'a-button'"
+            label="按钮类型">
+            <a-select v-model="activeData.type" :style="{ width: '100%' }">
+              <a-select-option value="primary" >primary</a-select-option>
+              <a-select-option value="dashed" >dashed</a-select-option>
+              <a-select-option value="danger" >danger</a-select-option>
+              <a-select-option value="link" >link</a-select-option>
+            </a-select>
           </a-form-model-item>
-          <a-form-model-item v-if="activeData['end-placeholder']!==undefined" label="结束占位">
-            <a-input v-model="activeData['end-placeholder']" placeholder="请输入占位提示" />
-          </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.span!==undefined" label="表单栅格">
-            <a-slider v-model="activeData.__config__.span" :max="24" :min="1" :marks="{12:''}" />
-          </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.layout==='rowFormItem'" label="栅格间隔">
-            <a-input-number v-model="activeData.gutter" :min="0" placeholder="栅格间隔" />
-          </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.layout==='rowFormItem'" label="布局模式">
-            <a-radio-group v-model="activeData.type">
-              <a-radio-button value="default" />
-              <a-radio-button value="flex" />
+          <a-form-model-item
+            v-if="activeData.size !== undefined"
+            label="组件尺寸">
+            <a-radio-group v-model="activeData.size">
+              <a-radio-button value="large">较大</a-radio-button>
+              <a-radio-button value="default">默认</a-radio-button>
+              <a-radio-button value="small">较小</a-radio-button>
             </a-radio-group>
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">
-            <a-input v-model.number="activeData.__config__.labelWidth" type="number" placeholder="请输入标签宽度" />
+          <a-form-model-item v-if="activeData.__config__.optionType !== undefined" label="选项样式">
+            <a-radio-group v-model="activeData.__config__.optionType">
+              <a-radio-button value="default">默认</a-radio-button>
+              <a-radio-button value="button">按钮</a-radio-button>
+            </a-radio-group>
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.style&&activeData.style.width!==undefined" label="组件宽度">
-            <a-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable />
+          <a-form-model-item v-if="activeData.count!== undefined" label="评分取值">
+            <a-input-number v-model="activeData.count" placeholder="评分取值" />
           </a-form-model-item>
-          <a-form-model-item v-if="activeData.__vModel__!==undefined" label="默认值">
-            <a-input
-              :value="activeData.__config__.defaultValue"
-              placeholder="请输入默认值"
-            />
+          <a-form-model-item v-if="activeData.readonly !== undefined" label="是否只读">
+            <a-switch v-model="activeData.readonly" />
           </a-form-model-item>
-        </a-form-model>
+          <a-form-model-item v-if="activeData.disabled !== undefined" label="是否禁用">
+            <a-switch v-model="activeData.disabled" />
+          </a-form-model-item>
+          </a-form-model>
         </div>
       </a-tab-pane>
       <a-tab-pane key="2" tab="表单属性">
@@ -68,22 +98,26 @@
               <a-input v-model="formConf.formRules"
                        placeholder="请输入校验模型" />
             </a-form-model-item>
-            <a-form-model-item label="表单尺寸">
-              <a-radio-group v-model="formConf.size">
-                <a-radio-button value="medium">中等</a-radio-button>
-                <a-radio-button value="small">较小</a-radio-button>
-                <a-radio-button value="mini">迷你</a-radio-button>
-              </a-radio-group>
-            </a-form-model-item>
             <a-form-model-item label="标签对齐">
               <a-radio-group v-model="formConf.labelAlign">
                 <a-radio-button value="left">左对齐</a-radio-button>
                 <a-radio-button value="right">右对齐</a-radio-button>
-                <a-radio-button value="top">顶部对齐</a-radio-button>
+              </a-radio-group>
+            </a-form-model-item>
+            <a-form-model-item label="表单布局">
+              <a-radio-group v-model="formConf.layout">
+                <a-radio-button value="horizontal">横向</a-radio-button>
+                <a-radio-button value="vertical">纵向</a-radio-button>
+                <a-radio-button value="inline">行内</a-radio-button>
               </a-radio-group>
             </a-form-model-item>
             <a-form-model-item label="标签宽度">
-              <a-input-number v-model="formConf.labelWidth"
+              <a-input-number v-model="formConf.labelCol.span"
+                              :min="0"
+                              placeholder="标签宽度" />
+            </a-form-model-item>
+            <a-form-model-item label="控件宽度">
+              <a-input-number v-model="formConf.wrapperCol.span"
                               :min="0"
                               placeholder="标签宽度" />
             </a-form-model-item>
@@ -123,6 +157,9 @@ export default {
       return (
         this.activeData.__config__.document || 'https://www.antdv.com/docs/vue/introduce-cn/'
       )
+    },
+    activeTag () {
+      return this.activeData.__config__.tag
     }
   },
   watch: {
@@ -134,6 +171,18 @@ export default {
     }
   },
   methods: {
+    addRuleItem () {
+      this.activeData.__config__.regList.push({
+        pattern: '',
+        message: ''
+      })
+    },
+    addSelectItem () {
+      this.activeData.__slot__.options.push({
+        label: '',
+        value: ''
+      })
+    }
   }
 }
 </script>

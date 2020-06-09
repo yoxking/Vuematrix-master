@@ -25,8 +25,6 @@ const layouts = {
     const config = element.__config__
     let className = this.activeId === config.formId ? 'drawing-item active-form-item' : 'drawing-item'
     if (this.formConf.unFocusedComponentBorder) className += ' unfocus-bordered'
-    // let labelCol = config.labelCol ? `${config.labelCol}` : '{}'
-    // if (config.showLabel === false) labelCol = '{ span: 0 }'
     return (
       <a-col span={config.span} class={className}
         nativeOnClick={event => { activeItem(element); event.stopPropagation() }}>
@@ -42,9 +40,7 @@ const layouts = {
   },
   rowFormItem (h, element, index, parent) {
     const { activeItem } = this.$listeners
-    const className = this.activeId === element.__config__.formId
-      ? 'drawing-row-item active-form-item'
-      : 'drawing-row-item'
+    const className = this.activeId === element.__config__.formId ? 'drawing-row-item active-form-item' : 'drawing-row-item'
     let child = renderChildren.apply(this, arguments)
     if (element.type === 'flex') {
       child = <a-row type={element.type} justify={element.justify} align={element.align}>

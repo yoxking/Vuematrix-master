@@ -66,11 +66,9 @@ function renderChildren (h, scheme) {
 const layouts = {
   colFormItem (h, scheme) {
     const config = scheme.__config__
-    let labelCol = config.labelCol ? `${config.labelCol}` : {}
-    if (config.showLabel === false) labelCol = '{span: 0}'
     return (
       <a-col span={config.span}>
-        <a-form-model-item label-col={labelCol} prop={scheme.__vModel__}
+        <a-form-model-item prop={scheme.__vModel__}
           label={config.showLabel ? config.label : ''}>
           <render conf={scheme} onInput={ event => {
             this.$set(config, 'defaultValue', event)

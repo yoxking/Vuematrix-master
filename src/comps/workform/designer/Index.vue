@@ -41,20 +41,14 @@
 
     <div class="center-board">
       <div class="action-bar">
-        <a-button type="link" @click="run">
-          运行
+        <a-button type="link" @click="preview">
+          预览
         </a-button>
-        <a-button type="link" @click="showJson">
-          查看json
-        </a-button>
-        <a-button type="link" @click="download">
-          导出vue文件
-        </a-button>
-        <a-button type="link" @click="copy">
-          复制代码
-        </a-button>
-        <a-button type="link" class="delete-btn"  @click="empty">
+        <a-button type="link" class="delete-btn"  @click="clearall">
           清空
+        </a-button>
+        <a-button type="primary" @click="savejson">
+          保存
         </a-button>
       </div>
       <div class="center-scrollbar">
@@ -63,6 +57,7 @@
             :layout="formConf.layout"
             :label-col="formConf.labelCol"
             :wrapper-col="formConf.wrapperCol"
+            :label-align="formConf.labelAlign"
             :disabled="formConf.disabled"
           >
             <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup">
@@ -99,23 +94,17 @@
 
 <script>
 import draggable from 'vuedraggable'
-import Clipboard from 'clipboard'
-import render from '../render/render'
-import RightPanel from './RightPanel'
+import draggableItem from './DraggItem'
+import rightPanel from './RightPanel'
+
 import drawingDefalut from '../formutil/draw'
 
-import {
-  inputComponents, selectComponents, layoutComponents, formConf
-} from '../formutil/config'
-import {
-  titleCase
-} from '../formutil/index'
-import {
-  makeUpHtml, vueTemplate, vueScript, cssStyle
-} from '../formutil/html'
+import { inputComponents, selectComponents, layoutComponents, formConf } from '../formutil/config'
+import { makeUpHtml, vueTemplate, vueScript, cssStyle } from '../formutil/html'
 import { makeUpJs } from '../formutil/jscript'
 import { makeUpCss } from '../formutil/css'
-import DraggableItem from './DraggItem'
+
+import preview from '../preview/Index'
 
 let oldActiveId
 let tempActiveData
@@ -124,27 +113,20 @@ const idGlobal = 100
 export default {
   components: {
     draggable,
-    render,
-    RightPanel,
-    DraggableItem
+    draggableItem,
+    rightPanel
   },
   data () {
     return {
       idGlobal,
       formConf,
+      formData: {},
+      generateConf: null,
       inputComponents,
       selectComponents,
       layoutComponents,
-      labelWidth: 100,
       drawingList: drawingDefalut,
-      drawingData: {},
       activeId: drawingDefalut[0].formId,
-      drawerVisible: false,
-      formData: {},
-      dialogVisible: false,
-      jsonDrawerVisible: false,
-      generateConf: null,
-      showFileName: false,
       activeData: drawingDefalut[0],
       leftComponents: [
         {
@@ -181,45 +163,16 @@ export default {
         oldActiveId = val
       },
       immediate: true
-    },
-    drawingList: {
-      handler (val) {
-        // this.saveDrawingListDebounce(val)
-        if (val.length === 0) this.idGlobal = 100
-      },
-      deep: true
-    },
-    idGlobal: {
-      handler (val) {
-        // this.saveIdGlobalDebounce(val)
-      },
-      immediate: true
     }
   },
   mounted () {
     this.drawingList = drawingDefalut
     this.activeFormItem(this.drawingList[0])
-    const clipboard = new Clipboard('#copyNode', {
-      text: trigger => {
-        const codeStr = this.generateCode()
-        this.$notify({
-          title: '成功',
-          message: '代码已复制到剪切板，可粘贴。',
-          type: 'success'
-        })
-        return codeStr
-      }
-    })
-    clipboard.on('error', e => {
-      this.$message.error('代码复制失败')
-    })
   },
   methods: {
     activeFormItem (element) {
-      if (element != null) {
-        this.activeData = element
-        this.activeId = element.__config__.formId
-      }
+      this.activeData = element
+      this.activeId = element.__config__.formId
     },
     onEnd (obj) {
       if (obj.from !== obj.to) {
@@ -247,37 +200,6 @@ export default {
       }
       tempActiveData = clone
       return tempActiveData
-    },
-    AssembleFormData () {
-      this.formData = {
-        fields: JSON.parse(JSON.stringify(this.drawingList)),
-        ...this.formConf
-      }
-    },
-    generate (data) {
-      const func = this[`exec${titleCase(this.operationType)}`]
-      this.generateConf = data
-      func && func(data)
-    },
-    execRun (data) {
-      this.AssembleFormData()
-      this.drawerVisible = true
-    },
-    execDownload (data) {
-      // const codeStr = this.generateCode()
-      // const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' })
-      // saveAs(blob, data.fileName)
-    },
-    execCopy (data) {
-      document.getElementById('copyNode').click()
-    },
-    empty () {
-      this.$confirm('确定要清空所有组件吗？', '提示', { type: 'warning' }).then(
-        () => {
-          this.drawingList = []
-          this.idGlobal = 100
-        }
-      )
     },
     drawingItemCopy (item, parent) {
       let clone = JSON.parse(JSON.stringify(item))
@@ -308,32 +230,43 @@ export default {
         }
       })
     },
-    generateCode () {
-      const { type } = this.generateConf
+    AssembleFormData () {
+      this.formData = {
+        fields: JSON.parse(JSON.stringify(this.drawingList)),
+        ...this.formConf
+      }
+    },
+    preview () {
+      this.$dlg.modal(preview, {
+        title: 'xxxx',
+        width: 980,
+        height: 650
+      })
+    },
+    preview1 () {
+      const { type } = 'file'
+      this.AssembleFormData()
       this.AssembleFormData()
       const script = vueScript(makeUpJs(this.formData, type))
       const html = vueTemplate(makeUpHtml(this.formData, type))
       const css = cssStyle(makeUpCss(this.formData))
-      return html + script + css
+
+      const v = html + script + css
+      console.log(v)
     },
-    showJson () {
+    clearall () {
+      const that = this
+      this.$dlg.alert('确定要清空所有组件吗?', {
+        messageType: 'confirm',
+        callback: function () {
+          that.drawingList = []
+          that.idGlobal = 100
+        }
+      })
+    },
+    savejson () {
       this.AssembleFormData()
-      this.jsonDrawerVisible = true
-    },
-    download () {
-      this.dialogVisible = true
-      this.showFileName = true
-      this.operationType = 'download'
-    },
-    run () {
-      this.dialogVisible = true
-      this.showFileName = false
-      this.operationType = 'run'
-    },
-    copy () {
-      this.dialogVisible = true
-      this.showFileName = false
-      this.operationType = 'copy'
+      console.log(JSON.stringify(this.formData))
     },
     tagChange (newTag) {
       newTag = this.cloneComponent(newTag)
@@ -364,11 +297,6 @@ export default {
           if (Array.isArray(item.__config__.children)) this.updateDrawingList(newTag, item.__config__.children)
         })
       }
-    },
-    refreshJson (data) {
-      this.drawingList = JSON.parse(JSON.stringify(data.fields))
-      delete data.fields
-      this.formConf = data
     }
   }
 }

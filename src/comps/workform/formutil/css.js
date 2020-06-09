@@ -1,5 +1,4 @@
 const styles = {
-  'a-rate': '.a-rate{display: inline-block; vertical-align: text-top;}',
   'a-upload': '.a-upload__tip{line-height: 1.2;}'
 }
 

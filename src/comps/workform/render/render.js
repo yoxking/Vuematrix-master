@@ -21,6 +21,7 @@ keys.forEach(key => {
 })
 
 export default {
+  props: ['conf'],
   render (h) {
     const dataObject = {
       attrs: {},
@@ -51,9 +52,9 @@ export default {
         dataObject.attrs[key] = val
       }
     })
+
     delete dataObject.attrs.__config__
     delete dataObject.attrs.__slot__
     return h(this.conf.__config__.tag, dataObject, children)
-  },
-  props: ['conf']
+  }
 }

@@ -4,14 +4,14 @@ export const formConf = {
   formModel: 'formData',
   formRules: 'rules',
   layout: 'horizontal',
-  labelCol: { span: 4 },
-  wrapperCol: { span: 14 },
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
   labelAlign: 'right',
   hideRequiredMark: false,
-  size: 'medium',
-  colon: true,
   disabled: false,
-  gutter: 15,
+  span: 24,
+  gutter: 24,
+  colon: true,
   formButtons: true
 }
 
@@ -21,15 +21,14 @@ export const inputComponents = [
     // 组件的自定义配置
     __config__: {
       label: '单行文本',
-      labelCol: null,
       showLabel: true,
       changeTag: true,
       tag: 'a-input',
       tagIcon: 'input',
       defaultValue: undefined,
-      required: true,
       layout: 'colFormItem',
       span: 24,
+      required: true,
       document: 'https://www.antdv.com/components/input-cn/',
       // 正则校验规则
       regList: []
@@ -41,47 +40,37 @@ export const inputComponents = [
     },
     // 其余的为可直接写在组件标签上的属性
     placeholder: '请输入',
-    style: { width: '100%' },
-    clearable: true,
-    'prefix-icon': '',
-    'suffix-icon': '',
-    maxlength: null,
-    'show-word-limit': false,
-    readonly: false,
+    maxLength: 20,
+    readOnly: false,
     disabled: false
   },
   {
     __config__: {
       label: '多行文本',
-      labelCol: null,
       showLabel: true,
+      changeTag: true,
       tag: 'a-textarea',
       tagIcon: 'textarea',
       defaultValue: undefined,
-      required: true,
       layout: 'colFormItem',
       span: 24,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/input-cn/'
+      required: true,
+      document: 'https://www.antdv.com/components/input-cn/',
+      regList: []
     },
-    type: 'textarea',
     placeholder: '请输入',
-    autosize: {
+    autoSize: {
       minRows: 4,
       maxRows: 4
     },
-    style: { width: '100%' },
-    maxlength: null,
-    'show-word-limit': false,
-    readonly: false,
+    maxLength: 100,
+    readOnly: false,
     disabled: false
   },
   {
     __config__: {
       label: '密码',
       showLabel: true,
-      labelCol: null,
       changeTag: true,
       tag: 'a-input-password',
       tagIcon: 'password',
@@ -89,22 +78,16 @@ export const inputComponents = [
       layout: 'colFormItem',
       span: 24,
       required: true,
-      regList: [],
-      document: 'https://www.antdv.com/components/input-cn/'
+      document: 'https://www.antdv.com/components/input-cn/',
+      regList: []
     },
     __slot__: {
       prepend: '',
       append: ''
     },
     placeholder: '请输入',
-    'show-password': true,
-    style: { width: '100%' },
-    clearable: true,
-    'prefix-icon': '',
-    'suffix-icon': '',
-    maxlength: null,
-    'show-word-limit': false,
-    readonly: false,
+    maxLength: 20,
+    readOnly: false,
     disabled: false
   },
   {
@@ -112,23 +95,20 @@ export const inputComponents = [
       label: '数字',
       showLabel: true,
       changeTag: true,
-      labelCol: null,
       tag: 'a-input-number',
       tagIcon: 'number',
       defaultValue: undefined,
-      span: 24,
       layout: 'colFormItem',
+      span: 24,
       required: true,
-      regList: [],
-      document: 'https://www.antdv.com/components/input-number-cn/'
+      document: 'https://www.antdv.com/components/input-number-cn/',
+      regList: []
     },
     placeholder: '',
-    min: undefined,
-    max: undefined,
+    min: 0,
+    max: 100,
     step: 1,
-    'step-strictly': false,
-    precision: undefined,
-    'controls-position': '',
+    readOnly: false,
     disabled: false
   }
 ]
@@ -140,315 +120,235 @@ export const selectComponents = [
       label: '按钮',
       showLabel: true,
       changeTag: true,
-      labelCol: null,
       tag: 'a-button',
       tagIcon: 'button',
       defaultValue: undefined,
-      span: 24,
       layout: 'colFormItem',
+      span: 24,
+      required: true,
       document: 'https://www.antdv.com/components/button-cn/'
     },
     __slot__: {
       default: '主要按钮'
     },
     type: 'primary',
-    icon: 'a-icon-search',
-    round: false,
-    size: 'medium',
-    plain: false,
-    circle: false,
+    size: 'default',
     disabled: false
   },
   {
     __config__: {
       label: '下拉选择',
       showLabel: true,
-      labelCol: null,
+      changeTag: true,
       tag: 'a-select',
       tagIcon: 'select',
-      defaultValue: undefined,
+      defaultValue: 2,
       layout: 'colFormItem',
       span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/select-cn/'
+      document: 'https://www.antdv.com/components/select-cn/',
+      regList: []
     },
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1
+        value: 1,
+        disabled: false
       }, {
         label: '选项二',
-        value: 2
+        value: 2,
+        disabled: false
       }]
     },
     placeholder: '请选择',
-    style: { width: '100%' },
-    clearable: true,
-    disabled: false,
-    filterable: false,
-    multiple: false
+    mode: 'default',
+    disabled: false
   },
   {
     __config__: {
       label: '单选框组',
-      labelCol: null,
       showLabel: true,
+      changeTag: true,
       tag: 'a-radio-group',
       tagIcon: 'radio',
-      changeTag: true,
-      defaultValue: undefined,
+      defaultValue: 2,
       layout: 'colFormItem',
-      span: 24,
       optionType: 'default',
-      regList: [],
+      span: 24,
       required: true,
-      border: false,
-      document: 'https://www.antdv.com/components/radio-cn/'
+      document: 'https://www.antdv.com/components/radio-cn/',
+      regList: []
     },
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1
+        value: 1,
+        disabled: false
       }, {
         label: '选项二',
-        value: 2
+        value: 2,
+        disabled: false
       }]
     },
-    style: {},
-    size: 'medium',
     disabled: false
   },
   {
     __config__: {
       label: '多选框组',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-checkbox-group',
       tagIcon: 'checkbox',
-      defaultValue: [],
-      span: 24,
-      showLabel: true,
-      labelCol: null,
+      defaultValue: undefined,
       layout: 'colFormItem',
-      optionType: 'default',
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      border: false,
-      document: 'https://www.antdv.com/components/checkbox-cn/'
+      document: 'https://www.antdv.com/components/checkbox-cn/',
+      regList: []
     },
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1
+        value: 1,
+        disabled: false
       }, {
         label: '选项二',
-        value: 2
+        value: 2,
+        disabled: false
       }]
     },
-    style: {},
-    size: 'medium',
-    min: null,
-    max: null,
     disabled: false
   },
   {
     __config__: {
       label: '开关',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-switch',
       tagIcon: 'switch',
-      defaultValue: false,
-      span: 24,
-      showLabel: true,
-      labelCol: null,
+      defaultValue: '1',
       layout: 'colFormItem',
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/switch-cn/'
+      document: 'https://www.antdv.com/components/switch-cn/',
+      regList: []
     },
-    style: {},
-    disabled: false,
-    'active-text': '',
-    'inactive-text': '',
-    'active-color': null,
-    'inactive-color': null,
-    'active-value': true,
-    'inactive-value': false
+    size: 'default',
+    disabled: false
   },
   {
     __config__: {
       label: '滑块',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-slider',
       tagIcon: 'slider',
-      defaultValue: null,
-      span: 24,
-      showLabel: true,
+      defaultValue: 10,
       layout: 'colFormItem',
-      labelCol: null,
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/slider-cn/'
+      document: 'https://www.antdv.com/components/slider-cn/',
+      regList: []
     },
-    disabled: false,
     min: 0,
     max: 100,
     step: 1,
-    'show-stops': false,
-    range: false
+    range: false,
+    disabled: false
   },
   {
     __config__: {
       label: '时间选择',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-time-picker',
       tagIcon: 'time',
       defaultValue: null,
-      span: 24,
-      showLabel: true,
       layout: 'colFormItem',
-      labelCol: null,
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/time-picker-cn/'
+      document: 'https://www.antdv.com/components/time-picker-cn/',
+      regList: []
     },
     placeholder: '请选择',
-    style: { width: '100%' },
-    disabled: false,
-    clearable: true,
-    'picker-options': {
-      selectableRange: '00:00:00-23:59:59'
-    },
     format: 'HH:mm:ss',
-    'value-format': 'HH:mm:ss'
-  },
-  {
-    __config__: {
-      label: '时间范围',
-      tag: 'a-time-picker',
-      tagIcon: 'time-range',
-      span: 24,
-      showLabel: true,
-      labelCol: null,
-      layout: 'colFormItem',
-      defaultValue: null,
-      required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/time-picker-cn/'
-    },
-    style: { width: '100%' },
-    disabled: false,
-    clearable: true,
-    'is-range': true,
-    'range-separator': '至',
-    'start-placeholder': '开始时间',
-    'end-placeholder': '结束时间',
-    format: 'HH:mm:ss',
-    'value-format': 'HH:mm:ss'
+    disabled: false
   },
   {
     __config__: {
       label: '日期选择',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-date-picker',
       tagIcon: 'date',
       defaultValue: null,
-      showLabel: true,
-      labelCol: null,
-      span: 24,
       layout: 'colFormItem',
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/date-picker-cn/'
+      document: 'https://www.antdv.com/components/date-picker-cn/',
+      regList: []
     },
     placeholder: '请选择',
-    type: 'date',
-    style: { width: '100%' },
-    disabled: false,
-    clearable: true,
     format: 'yyyy-MM-dd',
-    'value-format': 'yyyy-MM-dd',
-    readonly: false
+    disabled: false
   },
   {
     __config__: {
       label: '日期范围',
-      tag: 'a-date-picker',
+      showLabel: true,
+      changeTag: true,
+      tag: 'a-range-picker',
       tagIcon: 'date-range',
       defaultValue: null,
-      span: 24,
-      showLabel: true,
-      labelCol: null,
-      required: true,
       layout: 'colFormItem',
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/date-picker-cn/'
+      span: 24,
+      required: true,
+      document: 'https://www.antdv.com/components/date-picker-cn/',
+      regList: []
     },
-    style: { width: '100%' },
-    type: 'daterange',
-    'range-separator': '至',
-    'start-placeholder': '开始日期',
-    'end-placeholder': '结束日期',
-    disabled: false,
-    clearable: true,
     format: 'yyyy-MM-dd',
-    'value-format': 'yyyy-MM-dd',
-    readonly: false
+    disabled: false
   },
   {
     __config__: {
       label: '评分',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-rate',
       tagIcon: 'rate',
-      defaultValue: 0,
-      span: 24,
-      showLabel: true,
-      labelCol: null,
+      defaultValue: 3,
       layout: 'colFormItem',
+      span: 24,
       required: true,
-      regList: [],
-      changeTag: true,
-      document: 'https://www.antdv.com/components/rate-cn/'
+      document: 'https://www.antdv.com/components/rate-cn/',
+      regList: []
     },
-    style: {},
-    max: 5,
-    'allow-half': false,
-    'show-text': false,
-    'show-score': false,
+    count: 5,
     disabled: false
   },
   {
     __config__: {
       label: '上传',
+      showLabel: true,
+      changeTag: true,
       tag: 'a-upload',
       tagIcon: 'upload',
-      layout: 'colFormItem',
       defaultValue: null,
-      showLabel: true,
-      labelCol: null,
-      required: true,
+      layout: 'colFormItem',
       span: 24,
-      showTip: false,
+      required: true,
       buttonText: '点击上传',
-      regList: [],
-      changeTag: true,
       fileSize: 2,
       sizeUnit: 'MB',
-      document: 'https://www.antdv.com/components/upload-cn/'
+      document: 'https://www.antdv.com/components/upload-cn/',
+      regList: []
     },
     __slot__: {
       'list-type': true
     },
-    action: 'https://jsonplaceholder.typicode.com/posts/',
-    disabled: false,
     accept: '',
-    name: 'file',
-    'auto-upload': true,
-    'list-type': 'text',
-    multiple: false
+    action: 'https://jsonplaceholder.typicode.com/posts/',
+    disabled: false
   }
 ]
 
@@ -456,15 +356,15 @@ export const selectComponents = [
 export const layoutComponents = [
   {
     __config__: {
-      layout: 'rowFormItem',
-      tagIcon: 'row',
       label: '行容器',
-      layoutTree: true,
+      tag: 'a-row',
+      tagIcon: 'row',
+      layout: 'rowFormItem',
       children: [],
       document: 'https://www.antdv.com/components/grid-cn/'
     },
-    type: 'default',
-    justify: 'start',
-    align: 'top'
+    type: 'flex',
+    align: 'top',
+    justify: 'start'
   }
 ]

@@ -1,14 +1,13 @@
 export default [
   {
     __config__: {
+      formId: 100,
       label: '单行文本',
-      labelWidth: null,
       showLabel: true,
       changeTag: true,
       tag: 'a-input',
       tagIcon: 'input',
       defaultValue: undefined,
-      required: true,
       layout: 'colFormItem',
       span: 24,
       document: 'https://www.antdv.com/components/input-cn/',
@@ -23,15 +22,11 @@ export default [
       prepend: '',
       append: ''
     },
-    __vModel__: 'mobile',
-    placeholder: '请输入手机号',
-    style: { width: '100%' },
-    clearable: true,
-    'prefix-icon': 'el-icon-mobile',
-    'suffix-icon': '',
-    maxlength: 11,
-    'show-word-limit': true,
-    readonly: false,
+    __vModel__: 'field100',
+    placeholder: '请输入',
+    allowClear: true,
+    maxLength: null,
+    readOnly: false,
     disabled: false
   }
 ]
