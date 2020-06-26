@@ -42,11 +42,12 @@
           <a-form-model-item label="权限范围"
                              prop="dataScope"
                              ref="dataScope">
-            <treeselect v-model="form.dataScope"
+            <a-tree-select v-model="form.dataScope"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -91,13 +92,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getRoleinfo, addRoleinfo, uptRoleinfo } from '@/api/system/roleinfo'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -121,16 +119,22 @@ export default {
           { required: true, message: '请输入角色标识', trigger: 'change' }
         ]
       },
-      options: [
+      treeData: [
         {
           id: '1',
-          label: '全部数据权限'
+          key: '1',
+          title: '全部数据权限',
+          value: '1'
         }, {
           id: '3',
-          label: '本部门数据权限'
+          key: '3',
+          title: '本部门数据权限',
+          value: '3'
         }, {
           id: '4',
-          label: '本部门及以下数据权限'
+          key: '4',
+          title: '本部门及以下数据权限',
+          value: '4'
         }
       ]
     }

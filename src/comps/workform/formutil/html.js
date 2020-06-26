@@ -36,7 +36,7 @@ function buildFormTemplate (scheme, child, type) {
     </a-form-model>`
   if (someSpanIsNot24) {
     str = `<a-row :gutter="${scheme.gutter}">
-        ${str}
+          ${str}
       </a-row>`
   }
   return str
@@ -91,7 +91,7 @@ const layouts = {
     const gutter = scheme.gutter ? `:gutter="${scheme.gutter}"` : ''
     const children = config.children.map(el => layouts[el.__config__.layout](el))
     let str = `<a-row ${type} ${justify} ${align} ${gutter}>
-      ${children.join('\n')}
+         ${children.join('\n')}
     </a-row>`
     str = colWrapper(scheme, str)
     return str
@@ -162,7 +162,7 @@ const tags = {
     let child = buildSelectChild(el)
 
     if (child) child = `\n${child}\n` // 换行
-    return `<${tag} ${vModel} ${placeholder} ${disabled} ${mode} >${child}</${tag}>`
+    return `<${tag} ${vModel} ${placeholder} ${disabled} ${mode} :dropdownStyle="{ zIndex: 6000 }">${child}</${tag}>`
   },
   'a-radio-group': el => {
     const { tag, disabled, vModel } = attrBuilder(el)
@@ -174,7 +174,6 @@ const tags = {
   'a-checkbox-group': el => {
     const { tag, disabled, vModel } = attrBuilder(el)
     let child = buildCheckboxGroupChild(el)
-
     if (child) child = `\n${child}\n` // 换行
     return `<${tag} ${vModel} ${disabled}>${child}</${tag}>`
   },
@@ -198,7 +197,7 @@ const tags = {
     } = attrBuilder(el)
     const format = el.format ? `format="${el.format}"` : ''
 
-    return `<${tag} ${vModel} ${format} ${placeholder} ${disabled}></${tag}>`
+    return `<${tag} ${vModel} ${format} ${placeholder} ${disabled} :popupStyle="{ zIndex: 6000 }"></${tag}>`
   },
   'a-date-picker': el => {
     const {
@@ -206,15 +205,7 @@ const tags = {
     } = attrBuilder(el)
     const format = el.format ? `format="${el.format}"` : ''
 
-    return `<${tag} ${vModel} ${format}  ${placeholder} ${disabled}></${tag}>`
-  },
-  'a-range-picker': el => {
-    const {
-      tag, disabled, vModel
-    } = attrBuilder(el)
-    const format = el.format ? `format="${el.format}"` : ''
-
-    return `<${tag} ${vModel} ${format}  ${disabled}></${tag}>`
+    return `<${tag} ${vModel} ${format}  ${placeholder} ${disabled} :popupStyle="{ zIndex: 6000 }"></${tag}>`
   },
   'a-rate': el => {
     const { tag, disabled, vModel } = attrBuilder(el)

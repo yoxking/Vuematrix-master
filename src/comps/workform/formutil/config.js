@@ -25,7 +25,7 @@ export const inputComponents = [
       changeTag: true,
       tag: 'a-input',
       tagIcon: 'input',
-      defaultValue: undefined,
+      defaultValue: '',
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -51,7 +51,7 @@ export const inputComponents = [
       changeTag: true,
       tag: 'a-textarea',
       tagIcon: 'textarea',
-      defaultValue: undefined,
+      defaultValue: '',
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -74,7 +74,7 @@ export const inputComponents = [
       changeTag: true,
       tag: 'a-input-password',
       tagIcon: 'password',
-      defaultValue: undefined,
+      defaultValue: '',
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -97,7 +97,7 @@ export const inputComponents = [
       changeTag: true,
       tag: 'a-input-number',
       tagIcon: 'number',
-      defaultValue: undefined,
+      defaultValue: 0,
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -142,7 +142,7 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-select',
       tagIcon: 'select',
-      defaultValue: 2,
+      defaultValue: '1',
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -152,14 +152,15 @@ export const selectComponents = [
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1,
+        value: '1',
         disabled: false
       }, {
         label: '选项二',
-        value: 2,
+        value: '2',
         disabled: false
       }]
     },
+    dropdownStyle: { zIndex: 6000 },
     placeholder: '请选择',
     mode: 'default',
     disabled: false
@@ -171,7 +172,7 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-radio-group',
       tagIcon: 'radio',
-      defaultValue: 2,
+      defaultValue: '1',
       layout: 'colFormItem',
       optionType: 'default',
       span: 24,
@@ -182,11 +183,11 @@ export const selectComponents = [
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1,
+        value: '1',
         disabled: false
       }, {
         label: '选项二',
-        value: 2,
+        value: '2',
         disabled: false
       }]
     },
@@ -199,7 +200,7 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-checkbox-group',
       tagIcon: 'checkbox',
-      defaultValue: undefined,
+      defaultValue: ['1'],
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -209,11 +210,11 @@ export const selectComponents = [
     __slot__: {
       options: [{
         label: '选项一',
-        value: 1,
+        value: '1',
         disabled: false
       }, {
         label: '选项二',
-        value: 2,
+        value: '2',
         disabled: false
       }]
     },
@@ -263,15 +264,16 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-time-picker',
       tagIcon: 'time',
-      defaultValue: null,
+      defaultValue: undefined,
       layout: 'colFormItem',
       span: 24,
       required: true,
       document: 'https://www.antdv.com/components/time-picker-cn/',
       regList: []
     },
+    popupStyle: { zIndex: 6000 },
     placeholder: '请选择',
-    format: 'HH:mm:ss',
+    format: 'h:mm:ss A',
     disabled: false
   },
   {
@@ -281,32 +283,16 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-date-picker',
       tagIcon: 'date',
-      defaultValue: null,
+      defaultValue: undefined,
       layout: 'colFormItem',
       span: 24,
       required: true,
       document: 'https://www.antdv.com/components/date-picker-cn/',
       regList: []
     },
+    popupStyle: { zIndex: 6000 },
     placeholder: '请选择',
-    format: 'yyyy-MM-dd',
-    disabled: false
-  },
-  {
-    __config__: {
-      label: '日期范围',
-      showLabel: true,
-      changeTag: true,
-      tag: 'a-range-picker',
-      tagIcon: 'date-range',
-      defaultValue: null,
-      layout: 'colFormItem',
-      span: 24,
-      required: true,
-      document: 'https://www.antdv.com/components/date-picker-cn/',
-      regList: []
-    },
-    format: 'yyyy-MM-dd',
+    format: 'YYYY-MM-DD',
     disabled: false
   },
   {
@@ -333,7 +319,7 @@ export const selectComponents = [
       changeTag: true,
       tag: 'a-upload',
       tagIcon: 'upload',
-      defaultValue: null,
+      defaultValue: undefined,
       layout: 'colFormItem',
       span: 24,
       required: true,
@@ -363,6 +349,7 @@ export const layoutComponents = [
       children: [],
       document: 'https://www.antdv.com/components/grid-cn/'
     },
+    gutter: 24,
     type: 'flex',
     align: 'top',
     justify: 'start'

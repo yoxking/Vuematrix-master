@@ -94,7 +94,7 @@
           <a-form-model-item label="发送时间"
                              prop="sendTime"
                              ref="sendTime">
-            <j-date-picker v-model="form.sendTime" ></j-date-picker>
+            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.sendTime" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">

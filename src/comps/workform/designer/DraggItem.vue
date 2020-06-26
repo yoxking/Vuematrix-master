@@ -30,8 +30,8 @@ const layouts = {
         nativeOnClick={event => { activeItem(element); event.stopPropagation() }}>
         <a-form-model-item
           label={config.showLabel ? config.label : ''} required={config.required}>
-          <render key={config.renderKey} conf={element} onInput={event => {
-            this.$set(config, 'defaultValue', event)
+          <render key={config.renderKey} conf={element} onInput={val => {
+            this.$set(config, 'defaultValue', val)
           }} />
         </a-form-model-item>
         {components.itemButtons.apply(this, arguments)}
@@ -43,7 +43,7 @@ const layouts = {
     const className = this.activeId === element.__config__.formId ? 'drawing-row-item active-form-item' : 'drawing-row-item'
     let child = renderChildren.apply(this, arguments)
     if (element.type === 'flex') {
-      child = <a-row type={element.type} justify={element.justify} align={element.align}>
+      child = <a-row type={element.type} justify={element.justify} align={element.align} gutter={element.gutter}>
         {child}
       </a-row>
     }
@@ -51,7 +51,7 @@ const layouts = {
       <a-col span={element.__config__.span}>
         <a-row gutter={element.__config__.gutter} class={className}
           nativeOnClick={event => { activeItem(element); event.stopPropagation() }}>
-          <span class="component-name">{element.__config__.componentName}</span>
+          <span class="component-name">{element.__config__.componentName}</span><br />
           <draggable list={element.__config__.children} animation={340} group="componentsGroup" class="drag-wrapper">
             {child}
           </draggable>
@@ -97,6 +97,9 @@ export default {
       return layout.call(this, h, this.element, this.index, this.drawingList)
     }
     return layoutIsNotFound.call(this)
+  },
+  methods: {
+    open () {}
   }
 }
 </script>
@@ -139,7 +142,7 @@ export default {
   border: 1px dashed #ccc;
   border-radius: 3px;
   padding: 0 2px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   .drawing-row-item {
     margin-bottom: 2px;
   }
@@ -150,7 +153,7 @@ export default {
     margin-bottom: 0;
   }
   .drag-wrapper {
-    min-height: 80px;
+    min-height: 60px;
   }
   &.active-form-item {
     border: 1px dashed @lighterBlue;

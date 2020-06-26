@@ -30,19 +30,17 @@ function renderFrom (h) {
         rules={this[formConfCopy.formRules]}
       >
         {renderFormItem.call(this, h, formConfCopy.fields)}
-        {formConfCopy.formBtns && formButtons.call(this, h)}
+        {formConfCopy.formButtons && formButtons.call(this, h)}
       </a-form-model>
     </a-row>
   )
 }
 
 function formButtons (h) {
-  return <a-col>
-    <a-form-model-item size="large">
-      <a-button type="primary" onClick={this.submitForm}>提交</a-button>
-      <a-button onClick={this.resetForm}>重置</a-button>
-    </a-form-model-item>
-  </a-col>
+  return <a-form-model-item>
+    <a-button type="primary" onClick={this.submitForm}>提交</a-button>
+    <a-button onClick={this.resetForm}>重置</a-button>
+  </a-form-model-item>
 }
 
 function renderFormItem (h, elementList) {
@@ -66,16 +64,13 @@ function renderChildren (h, scheme) {
 const layouts = {
   colFormItem (h, scheme) {
     const config = scheme.__config__
-    return (
-      <a-col span={config.span}>
-        <a-form-model-item prop={scheme.__vModel__}
-          label={config.showLabel ? config.label : ''}>
-          <render conf={scheme} onInput={ event => {
-            this.$set(config, 'defaultValue', event)
-            this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
-          }} />
-        </a-form-model-item>
-      </a-col>
+    return (<a-form-model-item prop={scheme.__vModel__}
+      label={config.showLabel ? config.label : ''}>
+      <render key={config.renderKey} conf={scheme} onInput={ val => {
+        this.$set(config, 'defaultValue', val)
+        this.$set(this[this.formConf.formModel], scheme.__vModel__, val)
+      }} />
+    </a-form-model-item>
     )
   },
   rowFormItem (h, scheme) {
@@ -148,9 +143,13 @@ export default {
     },
     resetForm () {
       this.formConfCopy = JSON.parse(JSON.stringify(this.formConf))
+      console.log(JSON.stringify(this.formConf))
       this.$refs[this.formConf.formRef].resetFields()
     },
     submitForm () {
+      // 触发sumit事件
+      this.$emit('submit', this[this.formConf.formModel])
+
       this.$refs[this.formConf.formRef].validate(valid => {
         if (!valid) return false
         // 触发sumit事件

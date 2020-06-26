@@ -12,18 +12,20 @@ import 'xe-utils'
 import VueCropper from 'vue-cropper'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
-import JDatePicker from 'vue-jlunar-datepicker'
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 
 import './assets/icons' // icon
 import './comm/authority' // permission access control
 
+moment.locale('zh-cn')
+Vue.prototype.$moment = moment // 赋值使用
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(vDialogs)
 Vue.use(VXETable)
 Vue.use(VueCropper)
-Vue.component('j-date-picker', JDatePicker)
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,8 +1,25 @@
-function vModel (self, dataObject, defaultValue) {
-  dataObject.props.value = defaultValue
 
-  dataObject.on.input = val => {
-    self.$emit('input', val)
+import moment from 'moment'
+
+function vModel (self, dataObject, dataConf) {
+  const tag = dataConf.tag
+
+  if (tag === 'a-time-picker' || tag === 'a-date-picker') {
+    dataObject.props.value = moment(dataConf.defaultValue)
+  } else {
+    dataObject.props.value = dataConf.defaultValue
+  }
+
+  dataObject.on.change = event => {
+    if (tag === 'a-input' || tag === 'a-textarea' || tag === 'a-input-password' || tag === 'a-radio-group') {
+      self.$emit('input', event.target.value)
+    } else if (tag === 'a-time-picker' || tag === 'a-date-picker') {
+      self.$emit('input', event)
+    } else if (tag === 'a-switch') {
+      self.$emit('input', event ? '1' : '0')
+    } else {
+      self.$emit('input', event)
+    }
   }
 }
 
@@ -45,7 +62,7 @@ export default {
     Object.keys(confClone).forEach(key => {
       const val = confClone[key]
       if (key === '__vModel__') {
-        vModel(this, dataObject, confClone.__config__.defaultValue)
+        vModel(this, dataObject, confClone.__config__)
       } else if (dataObject[key]) {
         dataObject[key] = { ...dataObject[key], ...val }
       } else {

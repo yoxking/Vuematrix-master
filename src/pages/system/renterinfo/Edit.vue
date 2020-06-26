@@ -46,11 +46,12 @@
           <a-form-model-item label="租户类型"
                              prop="classNo"
                              ref="classNo">
-            <treeselect v-model="form.classNo"
+            <a-tree-select v-model="form.classNo"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -118,14 +119,14 @@
           <a-form-model-item label="注册日期"
                              prop="registDate"
                              ref="registDate">
-            <j-date-picker v-model="form.registDate" ></j-date-picker>
+            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.registDate" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="有效期至"
                              prop="activeDate"
                              ref="activeDate">
-            <j-date-picker v-model="form.activeDate" ></j-date-picker>
+            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.activeDate" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -182,13 +183,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getRenterinfo, getClasslist, addRenterinfo, uptRenterinfo } from '@/api/system/renterinfo'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -223,7 +221,7 @@ export default {
           { required: true, message: '请输入编码', trigger: 'change' }
         ]
       },
-      options: []
+      treeData: []
     }
   },
   methods: {
@@ -260,7 +258,7 @@ export default {
       })
     }
     getClasslist().then(response => {
-      that.options = response.rows
+      that.treeData = response.rows
     })
   }
 }

@@ -30,11 +30,12 @@
           <a-form-model-item label="上级机构"
                              prop="parentNo"
                              ref="parentNo">
-            <treeselect v-model="form.parentNo"
+            <a-tree-select v-model="form.parentNo"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -79,13 +80,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getOrganizinfo, treeOrganizinfo, addOrganizinfo, uptOrganizinfo } from '@/api/system/organizinfo'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -105,7 +103,7 @@ export default {
           { required: true, message: '请输入机构名称', trigger: 'change' }
         ]
       },
-      options: []
+      treeData: []
     }
   },
   methods: {
@@ -142,7 +140,7 @@ export default {
       })
     }
     treeOrganizinfo().then(response => {
-      that.options = response.rows
+      that.treeData = response.rows
     })
   }
 }

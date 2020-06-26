@@ -26,7 +26,7 @@
               <a-input v-model="activeData.placeholder"
                        placeholder="请输入占位提示" />
             </a-form-model-item>
-            <a-form-model-item v-if="activeData.__vModel__!==undefined"
+            <a-form-model-item v-if="activeData.__vModel__!==undefined&&activeData.__config__.tag !== 'a-checkbox-group'&& activeData.__config__.tag !== 'a-time-picker'&& activeData.__config__.tag !== 'a-date-picker'"
                                label="默认值">
               <a-input v-model="activeData.__config__.defaultValue"
                        placeholder="请输入默认值" />
@@ -77,6 +77,88 @@
           <a-form-model-item v-if="activeData.disabled !== undefined" label="是否禁用">
             <a-switch v-model="activeData.disabled" />
           </a-form-model-item>
+          <a-form-model-item v-if="activeData.__config__.span!==undefined" label="表单栅格">
+            <a-slider v-model="activeData.__config__.span" :max="24" :min="1" :marks="{12:''}" @change="spanChange" />
+          </a-form-model-item>
+          <a-form-model-item v-if="activeData.__config__.layout==='rowFormItem'" label="栅格间隔">
+            <a-input-number v-model="activeData.gutter" :min="0" placeholder="栅格间隔" />
+          </a-form-model-item>
+          <a-form-model-item v-if="activeData.__config__.layout==='rowFormItem'" label="布局模式">
+            <a-radio-group v-model="activeData.type">
+              <a-radio-button value="default">默认</a-radio-button>
+              <a-radio-button value="flex">弹性盒</a-radio-button>
+            </a-radio-group>
+          </a-form-model-item>
+          <a-form-model-item v-if="activeData.justify!==undefined&&activeData.type==='flex'" label="水平排列">
+            <a-select v-model="activeData.justify" :style="{width: '100%'}">
+              <a-select-option value="start" >start</a-select-option>
+              <a-select-option value="end" >end</a-select-option>
+              <a-select-option value="center" >center</a-select-option>
+              <a-select-option value="space-around" >space-around</a-select-option>
+              <a-select-option value="space-between" >space-between</a-select-option>
+            </a-select>
+          </a-form-model-item>
+          <a-form-model-item v-if="activeData.align!==undefined&&activeData.type==='flex'" label="垂直排列">
+            <a-radio-group v-model="activeData.align">
+              <a-radio-button value="top">靠顶</a-radio-button>
+              <a-radio-button value="middle">居中</a-radio-button>
+              <a-radio-button value="bottom">靠底</a-radio-button>
+            </a-radio-group>
+          </a-form-model-item>
+          <template v-if="['a-checkbox-group', 'a-radio-group', 'a-select'].indexOf(activeData.__config__.tag) > -1">
+            <a-divider>选项</a-divider>
+            <draggable
+              :list="activeData.__slot__.options"
+              :animation="340"
+              group="selectItem"
+              handle=".option-drag"
+            >
+              <div v-for="(item, index) in activeData.__slot__.options" :key="index" class="select-item">
+                <div class="select-line-icon option-drag">
+                  <a-icon type="vertical-align-middle" />
+                </div>
+                <a-input v-model="item.label" placeholder="选项名" size="small" />
+                <a-input v-model="item.value" placeholder="选项值" size="small" />
+                <div class="close-btn select-line-icon" @click="activeData.__slot__.options.splice(index, 1)">
+                  <a-icon type="minus-circle" />
+                </div>
+              </div>
+            </draggable>
+            <div style="margin-left: 20px;">
+              <a-button
+                style="padding-bottom: 0"
+                icon="plus-circle"
+                type="link"
+                @click="addSelectItem"
+              >
+                添加选项
+              </a-button>
+            </div>
+            <a-divider />
+          </template>
+          <template v-if="activeData.__config__.layout === 'colFormItem'">
+            <a-divider>正则校验</a-divider>
+            <div
+              v-for="(item, index) in activeData.__config__.regList"
+              :key="index"
+              class="reg-item"
+            >
+              <span class="close-btn" @click="activeData.__config__.regList.splice(index, 1)">
+                <a-icon type="minus-circle" />
+              </span>
+              <a-form-model-item label="表达式">
+                <a-input v-model="item.pattern" placeholder="请输入正则" />
+              </a-form-model-item>
+              <a-form-model-item label="错误提示" style="margin-bottom:0">
+                <a-input v-model="item.message" placeholder="请输入错误提示" />
+              </a-form-model-item>
+            </div>
+            <div style="margin-left: 20px">
+              <a-button icon="plus-circle" type="link" @click="addRuleItem">
+                添加规则
+              </a-button>
+            </div>
+          </template>
           </a-form-model>
         </div>
       </a-tab-pane>
@@ -140,9 +222,12 @@
 </template>
 
 <script>
+import { isNumberStr } from '../formutil/index'
+import draggable from 'vuedraggable'
 
 export default {
   components: {
+    draggable
   },
   props: ['showField', 'activeData', 'formConf'],
   data () {
@@ -153,14 +238,6 @@ export default {
     }
   },
   computed: {
-    documentLink () {
-      return (
-        this.activeData.__config__.document || 'https://www.antdv.com/docs/vue/introduce-cn/'
-      )
-    },
-    activeTag () {
-      return this.activeData.__config__.tag
-    }
   },
   watch: {
     formConf: {
@@ -171,16 +248,22 @@ export default {
     }
   },
   methods: {
-    addRuleItem () {
-      this.activeData.__config__.regList.push({
-        pattern: '',
-        message: ''
-      })
+    spanChange (val) {
+      this.formConf.span = val
+    },
+    setOptionValue (item, val) {
+      item.value = isNumberStr(val) ? +val : val
     },
     addSelectItem () {
       this.activeData.__slot__.options.push({
         label: '',
         value: ''
+      })
+    },
+    addRuleItem () {
+      this.activeData.__config__.regList.push({
+        pattern: '',
+        message: ''
       })
     }
   }
@@ -256,5 +339,34 @@ export default {
 }
 .node-icon {
   color: #bebfc3;
+}
+
+.reg-item{
+  padding: 12px 6px;
+  background: #f8f8f8;
+  position: relative;
+  border-radius: 4px;
+  .close-btn{
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+    cursor: pointer;
+    font-size: 12px;
+    &:hover{
+      background: rgba(210, 23, 23, 0.5)
+    }
+  }
+  & + .reg-item{
+    margin-top: 18px;
+  }
 }
 </style>

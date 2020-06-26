@@ -34,11 +34,12 @@
           <a-form-model-item label="类型"
                              prop="columnType"
                              ref="columnType">
-            <treeselect v-model="form.columnType"
+            <a-tree-select v-model="form.columnType"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -152,13 +153,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getTabcolumn, addTabcolumn, uptTabcolumn } from '@/api/wkflow/tabcolumn'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -186,18 +184,26 @@ export default {
           { required: true, message: '请输入名称', trigger: 'change' }
         ]
       },
-      options: [{
+      treeData: [{
         id: 'numeric',
-        label: '数字'
+        key: 'numeric',
+        title: '数字',
+        value: 'numeric'
       }, {
         id: 'varchar',
-        label: '字符串'
+        key: 'varchar',
+        title: '字符串',
+        value: 'varchar'
       }, {
         id: 'datetime',
-        label: '日期时间'
+        key: 'datetime',
+        title: '日期时间',
+        value: 'datetime'
       }, {
         id: 'text',
-        label: '长字符串'
+        key: 'text',
+        title: '长字符串',
+        value: 'text'
       }]
     }
   },

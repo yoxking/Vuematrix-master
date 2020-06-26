@@ -43,11 +43,12 @@
           <a-form-model-item label="上级菜单"
                              prop="parentNo"
                              ref="parentNo">
-            <treeselect v-model="form.parentNo"
+            <a-tree-select v-model="form.parentNo"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -167,13 +168,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getPermitinfo, treePermitinfo, addPermitinfo, uptPermitinfo } from '@/api/system/permitinfo'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -211,7 +209,7 @@ export default {
           { required: true, message: '请输入组件路径', trigger: 'change' }
         ]
       },
-      options: []
+      treeData: []
     }
   },
   methods: {
@@ -248,7 +246,7 @@ export default {
       })
     }
     treePermitinfo().then(response => {
-      that.options = response.rows
+      that.treeData = response.rows
     })
   }
 }

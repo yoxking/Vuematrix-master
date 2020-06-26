@@ -44,6 +44,9 @@
         <a-button type="link" @click="preview">
           预览
         </a-button>
+        <a-button type="link" @click="debugit">
+          调试
+        </a-button>
         <a-button type="link" class="delete-btn"  @click="clearall">
           清空
         </a-button>
@@ -238,14 +241,13 @@ export default {
     },
     preview () {
       this.$dlg.modal(preview, {
-        title: 'xxxx',
-        width: 980,
+        title: '表单预览',
+        width: 900,
         height: 650
       })
     },
-    preview1 () {
+    debugit () {
       const { type } = 'file'
-      this.AssembleFormData()
       this.AssembleFormData()
       const script = vueScript(makeUpJs(this.formData, type))
       const html = vueTemplate(makeUpHtml(this.formData, type))

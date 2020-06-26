@@ -49,11 +49,12 @@
           <a-form-model-item label="部门"
                              prop="deptNo"
                              ref="deptNo">
-            <treeselect v-model="form.deptNo"
+            <a-tree-select v-model="form.deptNo"
+                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
-                        :clearable="false"
-                        :searchable="false"
-                        :options="options" />
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -143,14 +144,11 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { treeDeptment } from '@/api/system/deptment'
 import { getRuserinfo, addRuserinfo, uptRuserinfo } from '@/api/system/ruserinfo'
 
 export default {
   name: 'Edit',
-  components: { Treeselect },
   props: { id: String },
   data () {
     return {
@@ -182,7 +180,7 @@ export default {
           { required: true, message: '请输入电话', trigger: 'change' }
         ]
       },
-      options: []
+      treeData: []
     }
   },
   methods: {
@@ -219,7 +217,7 @@ export default {
       })
     }
     treeDeptment().then(response => {
-      that.options = response.rows
+      that.treeData = response.rows
     })
   }
 }
