@@ -5,13 +5,14 @@ import App from './App'
 import router from './router'
 import 'ant-design-vue/dist/antd.css'
 import Antd from 'ant-design-vue'
-import vDialogs from 'v-dialogs'
 import axios from 'axios'
 import store from './stores'
 import 'xe-utils'
 import VueCropper from 'vue-cropper'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
+import layer from 'vue-layer'
+import 'vue-layer/lib/vue-layer.css'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 
@@ -23,9 +24,11 @@ Vue.prototype.$moment = moment // 赋值使用
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(Antd)
-Vue.use(vDialogs)
 Vue.use(VXETable)
 Vue.use(VueCropper)
+Vue.prototype.$layer = layer(Vue, {
+  msgtime: 3 // 目前只有一项，即msg方法的默认消失时间，单位：秒
+})
 
 /* eslint-disable no-new */
 new Vue({

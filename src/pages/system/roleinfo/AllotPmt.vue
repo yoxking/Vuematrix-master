@@ -1,6 +1,6 @@
 <template>
   <div class="wrapbox">
-    <a-divider />
+    <br />
     <a-form>
       <a-row>
         <a-col :span="spanCol">
@@ -52,7 +52,22 @@ import { getRoleinfo, getRolepermit, uptRolepermit } from '@/api/system/roleinfo
 
 export default {
   name: 'Detail',
-  props: { id: String },
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       spanCol: 12,
@@ -76,12 +91,13 @@ export default {
     doOk () {
       const that = this
       uptRolepermit(this.id, this.checkedKeys.join(',')).then(response => {
-        that.$message.success(response.msg)
-        that.$emit('close', { code: response.code })
+        that.$layer.msg(response.msg)
+        that.$parent.getDataSource()
+        that.$layer.close(that.layerid)
       })
     },
     doClose () {
-      this.$dlg.closeAll()
+      this.$layer.close(this.layerid)
     },
     getRolePermit () {
       const that = this
@@ -121,7 +137,8 @@ export default {
 <style lang="less" scoped>
 .wrapbox {
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  width:100%;
 }
 .btnbox {
   text-align: center;

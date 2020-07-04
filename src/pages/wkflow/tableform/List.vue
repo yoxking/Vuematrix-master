@@ -137,19 +137,17 @@ export default {
       console.log('reset')
     },
     handleAdd () {
-      const that = this
-      this.$dlg.modal(edit, {
-        title: '新增',
-        width: 950,
-        height: 700,
-        params: {
-          id: ''
+      this.$layer.iframe({
+        content: {
+          content: edit,
+          parent: this,
+          data: { id: '' }
         },
-        callback: data => {
-          if (data !== undefined && data.code === 200) {
-            that.getDataSource()
-          }
-        }
+        area: ['950px', '700px'],
+        title: '新增',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
       })
     },
     handleDel () {
@@ -175,42 +173,46 @@ export default {
         this.$message.warning('请至少选择一条记录!')
       }
     },
-    designForm () {
-      this.$dlg.modal(formDisign, {
-        title: '表单设计',
-        width: 1280,
-        height: 750,
-        params: {
-          id: ''
+    designForm (val) {
+      this.$layer.iframe({
+        content: {
+          content: formDisign,
+          parent: this,
+          data: { id: val }
         },
-        callback: data => {
-        }
+        area: ['1280px', '700px'],
+        title: '表单设计',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
       })
     },
     handleEdt (val) {
-      const that = this
-      this.$dlg.modal(edit, {
-        title: '编辑',
-        width: 950,
-        height: 700,
-        params: {
-          id: val
+      this.$layer.iframe({
+        content: {
+          content: edit,
+          parent: this,
+          data: { id: val }
         },
-        callback: data => {
-          if (data !== undefined && data.code === 200) {
-            that.getDataSource()
-          }
-        }
+        area: ['950px', '700px'],
+        title: '编辑',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
       })
     },
     handleDet (val) {
-      this.$dlg.modal(detail, {
+      this.$layer.iframe({
+        content: {
+          content: detail,
+          parent: this,
+          data: { id: val }
+        },
+        area: ['950px', '700px'],
         title: '详细',
-        width: 950,
-        height: 700,
-        params: {
-          id: val
-        }
+        maxmin: true,
+        shade: true,
+        shadeClose: false
       })
     },
     handleMenu (e) {

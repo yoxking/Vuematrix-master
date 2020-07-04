@@ -158,13 +158,17 @@ export default {
       }
     },
     handleDet (val) {
-      this.$dlg.modal(detail, {
+      this.$layer.iframe({
+        content: {
+          content: detail,
+          parent: this,
+          data: { id: val }
+        },
+        area: ['950px', '700px'],
         title: '详细',
-        width: 950,
-        height: 700,
-        params: {
-          id: val
-        }
+        maxmin: true,
+        shade: true,
+        shadeClose: false
       })
     },
     handleMenu (e) {

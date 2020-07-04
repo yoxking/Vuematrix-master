@@ -66,8 +66,6 @@ export default {
         margin: auto;
         max-width: 1400px;
       }
-      &.side{
-      }
       .breadcrumb{
         margin-bottom: 20px;
       }

@@ -1,24 +1,60 @@
 <template>
   <a-layout-header :class="[theme, 'global-header']">
     <div :class="['global-header-wide', layout]">
-      <router-link v-if="isMobile || layout === 'head'" to="/" :class="['logo', isMobile ? null : 'pc', theme]">
-        <img width="32" src="static/images/vmatrix-logo.png" />
+      <router-link v-if="isMobile || layout === 'head'"
+                   to="/"
+                   :class="['logo', isMobile ? null : 'pc', theme]">
+        <img width="32"
+             src="static/images/vmatrix-logo.png" />
         <h1 v-if="!isMobile">{{systemName}}</h1>
       </router-link>
-      <a-divider v-if="isMobile" type="vertical" />
-      <a-icon v-if="layout === 'side'" class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse"/>
-      <div v-if="layout === 'head'" class="global-header-menu">
-        <i-menu style="height: 64px; line-height: 64px;" :theme="theme" mode="horizontal" :menuData="menuData" @select="onSelect"/>
+      <a-divider v-if="isMobile"
+                 type="vertical" />
+      <a-icon v-if="layout === 'side'"
+              class="trigger"
+              :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+              @click="toggleCollapse" />
+      <div v-if="layout === 'head'"
+           class="global-header-menu">
+        <i-menu style="height: 64px; line-height: 64px;"
+                :theme="theme"
+                mode="horizontal"
+                :menuData="menuData"
+                @select="onSelect" />
       </div>
+      <a-dropdown>
+        <a class="ant-dropdown-link"
+           @click="e => e.preventDefault()" style="font-size:18px;">
+          功能列表
+          <a-icon type="down" />
+        </a>
+        <a-menu slot="overlay" style="width: 180px" @click="handleMenuClick">
+          <a-menu-item key="0">
+            <a-icon type="block" />业务管理
+          </a-menu-item>
+          <a-menu-item key="1">
+            <a-icon type="ordered-list" />流程管理
+          </a-menu-item>
+          <a-menu-item key="2">
+            <a-icon type="area-chart" />统计报表
+          </a-menu-item>
+          <a-menu-divider />
+          <a-menu-item key="3">
+            <a-icon type="switcher" />系统管理
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
       <div :class="['global-header-right', theme]">
-          <header-search class="header-item" />
-          <a-tooltip class="header-item" title="帮助文档" placement="bottom" >
-            <a>
-              <a-icon type="question-circle-o" />
-            </a>
-          </a-tooltip>
-          <header-notice class="header-item"/>
-          <header-avatar class="header-item"/>
+        <header-search class="header-item" />
+        <a-tooltip class="header-item"
+                   title="帮助文档"
+                   placement="bottom">
+          <a>
+            <a-icon type="question-circle-o" />
+          </a>
+        </a-tooltip>
+        <header-notice class="header-item" />
+        <header-avatar class="header-item" />
       </div>
     </div>
   </a-layout-header>
@@ -32,7 +68,7 @@ import IMenu from '../comps/menu/AntdMenu'
 
 export default {
   name: 'GlobalHeader',
-  components: {IMenu, HeaderAvatar, HeaderNotice, HeaderSearch},
+  components: { IMenu, HeaderAvatar, HeaderNotice, HeaderSearch },
   props: ['collapsed', 'menuData'],
   computed: {
     isMobile () {
@@ -49,6 +85,9 @@ export default {
     }
   },
   methods: {
+    handleMenuClick (e) {
+      console.log('click', e)
+    },
     toggleCollapse () {
       this.$emit('toggleCollapse')
     },
@@ -60,80 +99,80 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .trigger {
-    font-size: 20px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color .3s;
-    &:hover{
-      color: #1890ff;
-    }
+.trigger {
+  font-size: 20px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: #1890ff;
   }
-  .header-item{
-    padding: 0 12px;
-    display: inline-block;
-    height: 100%;
-    cursor: pointer;
-    vertical-align: middle;
-    i{
-      font-size: 16px;
-      color: rgba(0,0,0,.65);
-    }
+}
+.header-item {
+  padding: 0 12px;
+  display: inline-block;
+  height: 100%;
+  cursor: pointer;
+  vertical-align: middle;
+  i {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.65);
   }
-  .global-header{
-    padding: 0 12px 0 0;
-    -webkit-box-shadow: 0 1px 4px rgba(0,21,41,.08);
-    box-shadow: 0 1px 4px rgba(0,21,41,.08);
-    position: relative;
-    &.light{
-      background: #fff;
+}
+.global-header {
+  padding: 0 12px 0 0;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: relative;
+  &.light {
+    background: #fff;
+  }
+  &.dark {
+    background: #001529;
+  }
+  .global-header-wide {
+    &.head {
+      max-width: 1400px;
+      margin: auto;
     }
-    &.dark{
-      background: #001529;
+    &.side {
     }
-    .global-header-wide{
-      &.head{
-        max-width: 1400px;
-        margin: auto;
+    .logo {
+      height: 64px;
+      line-height: 58px;
+      vertical-align: top;
+      display: inline-block;
+      padding: 0 12px 0 24px;
+      cursor: pointer;
+      font-size: 20px;
+      &.pc {
+        padding: 0 12px 0 0;
       }
-      &.side{
-      }
-      .logo {
-        height: 64px;
-        line-height: 58px;
-        vertical-align: top;
+      img {
         display: inline-block;
-        padding: 0 12px 0 24px;
-        cursor: pointer;
-        font-size: 20px;
-        &.pc{
-          padding: 0 12px 0 0;
-        }
-        img {
-          display: inline-block;
-          vertical-align: middle;
-        }
-        h1{
-          display: inline-block;
-          font-size: 16px;
-        }
-        &.dark h1{
+        vertical-align: middle;
+      }
+      h1 {
+        display: inline-block;
+        font-size: 16px;
+      }
+      &.dark h1 {
+        color: #fff;
+      }
+    }
+    .global-header-menu {
+      display: inline-block;
+    }
+    .global-header-right {
+      float: right;
+      &.dark {
+        color: #fff;
+        i {
           color: #fff;
         }
       }
-      .global-header-menu{
-        display: inline-block;
-      }
-      .global-header-right{
-        float: right;
-        &.dark{
-          color: #fff;
-          i{
-            color: #fff;
-          }
-        }
-      }
     }
   }
+}
 </style>

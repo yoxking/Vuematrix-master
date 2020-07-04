@@ -180,11 +180,17 @@ export default {
   },
   methods: {
     uptAvatar () {
-      this.$dlg.modal(upldAvatar, {
+      this.$layer.iframe({
+        content: {
+          content: upldAvatar,
+          parent: this,
+          data: {}
+        },
+        area: ['800px', '490px'],
         title: '修改头像',
-        maxButton: false,
-        width: 800,
-        height: 490
+        maxmin: false,
+        shade: true,
+        shadeClose: false
       })
     },
     getUserInfo () {

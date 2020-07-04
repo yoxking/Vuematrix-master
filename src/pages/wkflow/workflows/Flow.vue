@@ -1,6 +1,6 @@
 <template>
-  <div>
-  <work-flow :flow-data="flowData" ref="flow" :form-fields="formFields" ></work-flow>
+  <div class="mwrapbox">
+    <work-flow :flow-data="flowData" ref="flow" :form-fields="formFields" ></work-flow>
   </div>
 </template>
 
@@ -10,12 +10,25 @@ import WorkFlow from '@/comps/workflow'
 export default {
   name: 'Index',
   components: { WorkFlow },
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
-      flowData: [
-        {id: 'node1', top: '109px', left: '35px', type: 'start', name: '开始节点', checkedWriteFields: [], checkedHiddenFields: [], nextNodes: [], auditor: {scope: []}, transfer: {}, others: {attachmentPermissions: []}},
-        {id: 'node7', top: '109px', left: '769px', type: 'end', name: '结束节点', checkedWriteFields: [], checkedHiddenFields: [], nextNodes: [], auditor: {scope: []}, transfer: {}, others: {attachmentPermissions: []}}
-      ],
+      flowData: [],
       formFields: []
     }
   }
@@ -23,4 +36,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .mwrapbox {
+    margin: 0;
+  padding: 10px;
+  width:100%;
+  }
 </style>

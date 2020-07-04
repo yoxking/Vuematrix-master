@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapbox">
     <a-row>
       <a-col :xs="24" :md="12" :style="{height: '350px'}">
         <vue-cropper
@@ -113,6 +113,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width:100%;
+}
 
   .avatar-upload-preview {
     position: absolute;

@@ -432,10 +432,10 @@ export default {
       console.log(key)
     },
     doOk () {
-      this.$emit('close', { code: 200 })
+      // this.$emit('close', { code: 200 })
     },
     doCancel () {
-      this.$emit('close', { code: 202 })
+      // this.$emit('close', { code: 202 })
     }
   }
 }

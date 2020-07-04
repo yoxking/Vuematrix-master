@@ -1,17 +1,25 @@
 <template>
   <a-row>
-    <a-card
-            :bordered="false"
-            :body-style="{ padding: 0 }" style="text-align:right;">
-      <a-button type="primary" @click="addNode">添加节点</a-button>
-      <a-button type="primary" @click="saveData">保存流程</a-button>
-      <a-button type="primary" >安装</a-button>
-      <a-button type="primary" >卸载</a-button>
+    <a-card :bordered="false"
+            :body-style="{ padding: 0 }"
+            style="text-align:right;">
+      <a-button type="primary"
+                @click="addNode">添加节点</a-button>
+      <a-button type="primary"
+                @click="saveData">保存流程</a-button>
+      <a-button type="primary">安装</a-button>
+      <a-button type="primary">卸载</a-button>
     </a-card>
     <a-divider />
-    <div id="flowContainer" class="container">
+    <div id="flowContainer"
+         class="container">
       <template v-for="node in flowData">
-        <flow-node :id="node.id" :key="node.id" :node="node" @deleteNode="deleteNode" @settingNode="settingNode" @changeNode="changeNode" />
+        <flow-node :id="node.id"
+                   :key="node.id"
+                   :node="node"
+                   @deleteNode="deleteNode"
+                   @settingNode="settingNode"
+                   @changeNode="changeNode" />
       </template>
     </div>
   </a-row>
@@ -123,9 +131,12 @@ export default {
 
       // 点击连线
       _this.jsPlumb.bind('click', function (conn, originalEvent) {
-        _this.$dlg.alert('确定删除所点击的连线吗?', {
-          messageType: 'confirm',
-          callback: function () {
+        _this.$confirm({
+          title: '提示',
+          content: '确定删除所点击的连线吗?',
+          okText: '确认',
+          cancelText: '取消',
+          onOk () {
             _this.jsPlumb.deleteConnection(conn)
           }
         })
@@ -137,24 +148,15 @@ export default {
         const from = evt.sourceId
         const to = evt.targetId
         if (from === to) {
-          _this.$dlg.toast('不能连接自己!', {
-            position: 'topCenter',
-            closeTime: 3
-          })
+          _this.$message.warning('不能连接自己!')
           return false
         }
         if (_this.hasConnected(from, to)) {
-          _this.$dlg.toast('不能重复连线!', {
-            position: 'topCenter',
-            closeTime: 3
-          })
+          _this.$message.warning('不能重复连线!')
           return false
         }
         if (_this.hasOppositeConnected(from, to)) {
-          _this.$dlg.toast('存在回环连线!', {
-            position: 'topCenter',
-            closeTime: 3
-          })
+          _this.$message.warning('存在回环连线!')
           return false
         }
         return true
@@ -288,9 +290,12 @@ export default {
     },
     deleteNode: function (node) {
       const _this = this
-      this.$dlg.alert('您确定要删除节点-' + node.name + '?', {
-        messageType: 'confirm',
-        callback: function () {
+      _this.$confirm({
+        title: '提示',
+        content: '您确定要删除节点-' + node.name + '?',
+        okText: '确认',
+        cancelText: '取消',
+        onOk () {
           for (let i = 0; i < _this.flowData.length; i++) {
             if (_this.flowData[i].id === node.id) {
               _this.flowData.splice(i, 1)
@@ -399,7 +404,12 @@ export default {
 
 <style>
 #flowContainer {
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
+  background-image: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.15) 10%,
+      rgba(0, 0, 0, 0) 10%
+    ),
+    linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
   background-size: 10px 10px;
   position: relative;
   min-height: 500px;

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapbox">
-    <a-divider />
+    <br />
     <a-form-model ref="ruleForm"
                   :model="form"
                   :rules="rules"
@@ -121,7 +121,22 @@ import { getFlowentrust, addFlowentrust, uptFlowentrust } from '@/api/wkflow/flo
 
 export default {
   name: 'Edit',
-  props: { id: String },
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       labelCol: { span: 6 },
@@ -153,13 +168,15 @@ export default {
         if (valid) {
           if (that.form.branchNo === '0') {
             addFlowentrust(that.form).then(response => {
-              that.$message.success(response.msg)
-              that.$emit('close', { code: response.code })
+              that.$layer.msg(response.msg)
+              that.$parent.getDataSource()
+              that.$layer.close(that.layerid)
             })
           } else {
             uptFlowentrust(that.form).then(response => {
-              that.$message.success(response.msg)
-              that.$emit('close', { code: response.code })
+              that.$layer.msg(response.msg)
+              that.$parent.getDataSource()
+              that.$layer.close(that.layerid)
             })
           }
         } else {
@@ -169,7 +186,7 @@ export default {
       })
     },
     doCancel () {
-      this.$emit('close', { code: 202 })
+      this.$layer.close(this.layerid)
     }
   },
   mounted () {
@@ -186,7 +203,8 @@ export default {
 <style lang="less" scoped>
   .wrapbox {
     margin: 0;
-    padding: 0;
+  padding: 10px;
+  width:100%;
   }
   .btnbox {
     text-align: center;

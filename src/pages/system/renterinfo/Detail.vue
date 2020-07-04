@@ -1,6 +1,6 @@
 <template>
   <div class="wrapbox">
-    <a-divider />
+    <br />
     <a-form>
       <a-row>
         <a-col :span="spanCol">
@@ -169,7 +169,22 @@ import { getRenterinfo } from '@/api/system/renterinfo'
 
 export default {
   name: 'Detail',
-  props: { id: String },
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       spanCol: 12,
@@ -197,7 +212,7 @@ export default {
   },
   methods: {
     doClose () {
-      this.$dlg.closeAll()
+      this.$layer.close(this.layerid)
     }
   },
   mounted () {
@@ -214,7 +229,8 @@ export default {
 <style lang="less" scoped>
 .wrapbox {
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  width:100%;
 }
 .btnbox {
   text-align: center;

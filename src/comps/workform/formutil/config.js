@@ -160,7 +160,6 @@ export const selectComponents = [
         disabled: false
       }]
     },
-    dropdownStyle: { zIndex: 6000 },
     placeholder: '请选择',
     mode: 'default',
     disabled: false
@@ -271,7 +270,6 @@ export const selectComponents = [
       document: 'https://www.antdv.com/components/time-picker-cn/',
       regList: []
     },
-    popupStyle: { zIndex: 6000 },
     placeholder: '请选择',
     format: 'h:mm:ss A',
     disabled: false
@@ -290,7 +288,6 @@ export const selectComponents = [
       document: 'https://www.antdv.com/components/date-picker-cn/',
       regList: []
     },
-    popupStyle: { zIndex: 6000 },
     placeholder: '请选择',
     format: 'YYYY-MM-DD',
     disabled: false

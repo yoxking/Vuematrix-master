@@ -119,6 +119,22 @@ export default {
     draggableItem,
     rightPanel
   },
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       idGlobal,
@@ -258,9 +274,12 @@ export default {
     },
     clearall () {
       const that = this
-      this.$dlg.alert('确定要清空所有组件吗?', {
-        messageType: 'confirm',
-        callback: function () {
+      this.$confirm({
+        title: '提示',
+        content: '确定要清空所有组件吗?',
+        okText: '确认',
+        cancelText: '取消',
+        onOk () {
           that.drawingList = []
           that.idGlobal = 100
         }
@@ -397,7 +416,7 @@ export default {
   position: relative;
   height: @topheight;
   text-align: right;
-  padding: 0 15px;
+  padding: 5px 15px;
   box-sizing: border-box;;
   border: 1px solid #f1e8e8;
   border-top: none;

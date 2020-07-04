@@ -93,7 +93,7 @@
                          prop="field120"
                          required>
         <a-button type="primary"
-                  size="default">
+                  size="default" @click="onClose()">
           主要按钮
         </a-button>
       </a-form-model-item>
@@ -104,7 +104,12 @@
 <script>
 export default {
   components: {},
-  props: [],
+  props: {
+    layerid: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       formData: {
@@ -137,7 +142,9 @@ export default {
   created () { },
   mounted () { },
   methods: {
-
+    onClose () {
+      this.$layer.close(this.layerid)
+    }
   }
 }
 </script><style lang="less" scoped>
