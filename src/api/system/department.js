@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询部门列表
 export function listDeptment (data) {
   return request({
-    url: '/sys/deptment/list',
+    url: '/sys/department/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listDeptment (data) {
 // 查询部门下拉树结构
 export function treeDeptment () {
   return request({
-    url: '/sys/deptment/tree',
+    url: '/sys/department/tree',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function treeDeptment () {
 // 查询部门详细
 export function getDeptment (id) {
   return request({
-    url: '/sys/deptment/' + id,
+    url: '/sys/department/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getDeptment (id) {
 // 新增部门
 export function addDeptment (data) {
   return request({
-    url: '/sys/deptment',
+    url: '/sys/department',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addDeptment (data) {
 // 修改部门
 export function uptDeptment (data) {
   return request({
-    url: '/sys/deptment',
+    url: '/sys/department',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function uptDeptment (data) {
 // 删除部门
 export function delDeptment (ids) {
   return request({
-    url: '/sys/deptment/' + ids,
+    url: '/sys/department/' + ids,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delDeptment (ids) {
 // 导出部门
 export function exptDeptment (data) {
   return request({
-    url: '/sys/deptment/export',
+    url: '/sys/department/export',
     method: 'post',
     data: data
   })

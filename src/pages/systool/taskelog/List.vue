@@ -10,7 +10,7 @@
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.tableName" />
+                         v-model="queryParam.taskName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -30,14 +30,13 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:taskelog:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:taskelog:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:taskelog:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:taskelog:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -60,28 +59,22 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="tableNo"
+        <vxe-table-column field="taskLogno"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="tableName"
-                          title="表名称"></vxe-table-column>
-        <vxe-table-column field="tableComment"
-                          title="表描述"></vxe-table-column>
-        <vxe-table-column field="className"
-                          title="实体"
+        <vxe-table-column field="taskName"
+                          title="任务名称"></vxe-table-column>
+        <vxe-table-column field="taskGroup"
+                          title="任务分组"></vxe-table-column>
+        <vxe-table-column field="taskMessage"
+                          title="任务消息"
                           show-overflow="tooltip"></vxe-table-column>
+        <vxe-table-column field="resultStatus"
+                          title="结果状态"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text"
-                        >预览</vxe-button>
-            <vxe-button type="text"
-                        >编辑</vxe-button>
-            <vxe-button type="text"
-                        >生成代码</vxe-button>
-            <vxe-button type="text"
-                        @click="handleDet(row.tableNo)"
-                        >详细</vxe-button>
+            <vxe-button type="text" v-hasPermit="['system:taskelog:detail']" @click="handleDet(row.taskLogno)">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -99,8 +92,7 @@
 </template>
 
 <script>
-import { listTableinfo, delTableinfo, exptTableinfo } from '@/api/system/tableinfo'
-import edit from './Edit'
+import { listTaskelog, delTaskelog, exptTaskelog } from '@/api/systool/taskelog'
 import detail from './Detail'
 
 export default {
@@ -112,7 +104,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        tableName: ''
+        taskName: ''
       },
       // 查询参数
       pageParam: {
@@ -132,8 +124,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.tableName !== '') {
-        this.pageParam.condition = " table_name like '%" + this.queryParam.tableName + "%'"
+      if (this.queryParam.taskName !== '') {
+        this.pageParam.condition = " task_name like '%" + this.queryParam.taskName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -141,20 +133,6 @@ export default {
     },
     doReset () {
       console.log('reset')
-    },
-    handleAdd () {
-      this.$layer.iframe({
-        content: {
-          content: edit,
-          parent: this,
-          data: { id: '' }
-        },
-        area: ['950px', '700px'],
-        title: '新增',
-        maxmin: true,
-        shade: true,
-        shadeClose: false
-      })
     },
     handleDel () {
       const that = this
@@ -168,9 +146,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.tableNo)
+              selectedRowKeys.push(item.taskLogno)
             })
-            delTableinfo(selectedRowKeys).then(response => {
+            delTaskelog(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -178,20 +156,6 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
-    },
-    handleEdt (val) {
-      this.$layer.iframe({
-        content: {
-          content: edit,
-          parent: this,
-          data: { id: val }
-        },
-        area: ['950px', '700px'],
-        title: '编辑',
-        maxmin: true,
-        shade: true,
-        shadeClose: false
-      })
     },
     handleDet (val) {
       this.$layer.iframe({
@@ -212,7 +176,8 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptTableinfo(this.pageParam).then(response => {
+        exptTaskelog(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }
@@ -226,7 +191,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listTableinfo(this.pageParam).then(response => {
+      listTaskelog(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

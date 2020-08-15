@@ -30,14 +30,14 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleAdd" v-hasPermit="['system:tableform:addnew']" type="primary">新建</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:tableform:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:tableform:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:tableform:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:tableform:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -71,10 +71,10 @@
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作" width="300">
           <template v-slot="{ row }">
-            <vxe-button type="text">设计字段</vxe-button>
-            <vxe-button type="text" @click="designForm(row.formNo)">设计表单</vxe-button>
-            <vxe-button type="text" @click="handleEdt(row.formNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.formNo)">详细</vxe-button>
+            <vxe-button type="text" v-hasPermit="['system:tableform:column']">设计字段</vxe-button>
+            <vxe-button type="text" @click="designForm(row.formNo)" v-hasPermit="['system:tableform:form']">设计表单</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.formNo)" v-hasPermit="['system:tableform:update']">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.formNo)" v-hasPermit="['system:tableform:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -221,6 +221,7 @@ export default {
         console.log(this.pagination)
       } else if (e.key === 'export') {
         exptTableform(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }

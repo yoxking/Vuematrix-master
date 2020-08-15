@@ -17,12 +17,12 @@ const menus = {
   },
   actions: {
     // 生成路由
-    GenertRoutes ({ commit }, menuId) {
+    GenertRoutes ({ commit }, parentId) {
       return new Promise(resolve => {
         // 向后端请求路由数据
-        getRouters(menuId).then(res => {
+        getRouters(parentId).then(res => {
           const accessedRoutes = filterAsyncRouter(res.data)
-          accessedRoutes.push({ path: '*', redirect: '/404', invisible: true })
+          accessedRoutes.push({ path: '*', redirect: '/', invisible: true })
           commit('SET_ROUTES', accessedRoutes)
           resolve(accessedRoutes)
         })

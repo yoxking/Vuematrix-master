@@ -30,14 +30,14 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleAdd" v-hasPermit="['system:workgroup:addnew']" type="primary">新建</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:workgroup:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:workgroup:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:workgroup:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:workgroup:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -71,8 +71,8 @@
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.groupNo)">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.groupNo)">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.groupNo)" v-hasPermit="['system:workgroup:update']">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.groupNo)" v-hasPermit="['system:workgroup:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -204,6 +204,7 @@ export default {
         console.log(this.pagination)
       } else if (e.key === 'export') {
         exptWorkgroup(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }

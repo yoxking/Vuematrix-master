@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import { treeDeptment } from '@/api/system/deptment'
+import { treeDeptment } from '@/api/system/department'
 import { getSuserinfo, addSuserinfo, uptSuserinfo } from '@/api/system/suserinfo'
 
 export default {

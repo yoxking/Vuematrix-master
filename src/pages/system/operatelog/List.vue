@@ -30,12 +30,13 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:operatelog:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:operatelog:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:operatelog:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:operatelog:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -75,7 +76,7 @@
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleDet(row.oplogNo)">详细</vxe-button>
+                        @click="handleDet(row.oplogNo)" v-hasPermit="['system:operatelog:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -178,6 +179,7 @@ export default {
         console.log(this.pagination)
       } else if (e.key === 'export') {
         exptOperatelog(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }

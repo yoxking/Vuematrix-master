@@ -30,14 +30,14 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleAdd('1')" v-hasPermit="['system:permitinfo:addnew']" type="primary">新增</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:permitinfo:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:permitinfo:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:permitinfo:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:permitinfo:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -72,9 +72,11 @@
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button type="text"
-                        @click="handleEdt(row.permitNo)">编辑</vxe-button>
+                        @click="handleAdd(row.permitNo)" v-hasPermit="['system:permitinfo:addnew']">子菜单</vxe-button>
             <vxe-button type="text"
-                        @click="handleDet(row.permitNo)">详细</vxe-button>
+                        @click="handleEdt(row.permitNo)" v-hasPermit="['system:permitinfo:update']">编辑</vxe-button>
+            <vxe-button type="text"
+                        @click="handleDet(row.permitNo)" v-hasPermit="['system:permitinfo:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -132,12 +134,12 @@ export default {
         height: 700
       })
     },
-    handleAdd () {
+    handleAdd (val) {
       this.$layer.iframe({
         content: {
           content: edit,
           parent: this,
-          data: { id: '' }
+          data: { id: '', parentNo: val }
         },
         area: ['950px', '700px'],
         title: '新增',
@@ -174,7 +176,7 @@ export default {
         content: {
           content: edit,
           parent: this,
-          data: { id: val }
+          data: { parentNo: '', id: val }
         },
         area: ['950px', '700px'],
         title: '编辑',
@@ -203,6 +205,7 @@ export default {
         console.log(this.pagination)
       } else if (e.key === 'export') {
         exptPermitinfo(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }

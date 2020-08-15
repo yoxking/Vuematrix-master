@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.taskNo}}
+            {{model.taskLogno}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -31,49 +31,53 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
-          <a-form-item label="调用方法"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
+        <a-col :span="spanCol">
+          <a-form-item label="调用目标"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
             {{model.invokeTarget}}
           </a-form-item>
         </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="结果状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.resultStatus}}
+          </a-form-item>
+        </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="表达式"
+          <a-form-item label="任务消息"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.taskExpress}}
+            {{model.taskMessage}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="异常信息"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.errorsMessage}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="错误策略"
+          <a-form-item label="开始时间"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.errorsPolicy}}
+            {{model.startTime}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="是否并发"
+          <a-form-item label="完成时间"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.concurrent}}
+            {{model.enditTime}}
           </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item label="状态"
-                             :labelCol="{span: 6}"
-                             :wrapperCol="{span: 16}">
-            {{model.checkState}}
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -94,7 +98,7 @@
 </template>
 
 <script>
-import { getTaskinfo } from '@/api/system/taskinfo'
+import { getTaskelog } from '@/api/systool/taskelog'
 
 export default {
   name: 'Detail',
@@ -118,14 +122,16 @@ export default {
     return {
       spanCol: 12,
       model: {
-        taskNo: '0',
+        taskLogno: '0',
         taskName: '',
-        taskGroup: '0',
-        taskExpress: '',
+        taskGroup: '',
+        taskMessage: '',
         invokeTarget: '',
-        errorsPolicy: '1',
-        concurrent: '1',
-        checkState: '1',
+        resultStatus: '',
+        errorsMessage: '',
+        startTime: '',
+        enditTime: '',
+        checkState: '',
         comments: ''
       }
     }
@@ -138,7 +144,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getTaskinfo(this.id).then(response => {
+      getTaskelog(this.id).then(response => {
         that.model = response.data
       })
     }

@@ -1,5 +1,5 @@
 import router from '../router'
-import store from '../stores'
+import stores from '../stores'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/myutil/cookie'
@@ -17,20 +17,21 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      if (store.state.suser.permits.length === 0) {
+      if (stores.state.suser.permits.length === 0) {
         // 拉取user_info
-        store.dispatch('suser/GetInfo').then(res => {
+        stores.dispatch('suser/GetInfo').then(res => {
           // 根据父菜单生成可访问的路由表
-          store.dispatch('menus/GenertRoutes', '0').then(accessRoutes => {
+          stores.dispatch('menus/GenertRoutes', '6000001249602645').then(accessRoutes => {
             router.options.routes = []
-            router.options.routes = store.state.menus.routes
-            router.addRoutes(accessRoutes) // 动态添加可访问路由表
+            router.options.routes = stores.state.menus.routes
+            // router.addRoutes(accessRoutes) // 动态添加可访问路由表
+            router.$addRoutes(accessRoutes)
 
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         })
           .catch(e => {
-            store.dispatch('suser/FedLogout').then(() => {
+            stores.dispatch('suser/FedLogout').then(() => {
               next({ path: '/' })
             })
           })

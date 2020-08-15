@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询定时任务调度列表
 export function listTaskinfo (data) {
   return request({
-    url: '/job/taskinfo/list',
+    url: '/task/taskinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listTaskinfo (data) {
 // 查询定时任务调度详细
 export function getTaskinfo (id) {
   return request({
-    url: '/job/taskinfo/' + id,
+    url: '/task/taskinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTaskinfo (id) {
 // 新增定时任务调度
 export function addTaskinfo (data) {
   return request({
-    url: '/job/taskinfo',
+    url: '/task/taskinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTaskinfo (data) {
 // 修改定时任务调度
 export function uptTaskinfo (data) {
   return request({
-    url: '/job/taskinfo',
+    url: '/task/taskinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptTaskinfo (data) {
 // 删除定时任务调度
 export function delTaskinfo (ids) {
   return request({
-    url: '/job/taskinfo/' + ids,
+    url: '/task/taskinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,21 +46,33 @@ export function delTaskinfo (ids) {
 // 导出定时任务调度
 export function exptTaskinfo (data) {
   return request({
-    url: '/job/taskinfo/export',
+    url: '/task/taskinfo/export',
     method: 'post',
     data: data
   })
 }
 
-// 导出定时任务调度
+// 执行一次定时任务调度
 export function startTaskinfo (taskNo) {
   const data = {
     taskNo
   }
   return request({
-    url: '/job/taskinfo/startTask',
+    url: '/task/taskinfo/startTask',
     method: 'post',
-    params: data
+    data: data
+  })
+}
+// 导出定时任务调度
+export function changeTaskStatus (taskNo, taskStatus) {
+  const data = {
+    taskNo: taskNo,
+    taskStatus: taskStatus
+  }
+  return request({
+    url: '/task/taskinfo/changeStatus',
+    method: 'post',
+    data: data
   })
 }
 
@@ -70,7 +82,7 @@ export function checkExpress (express) {
     express
   }
   return request({
-    url: '/job/taskinfo/checkExpress',
+    url: '/task/taskinfo/checkExpress',
     method: 'post',
     params: data
   })

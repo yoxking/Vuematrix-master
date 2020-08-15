@@ -1,15 +1,15 @@
 /**
  * 操作权限处理
- * Copyright (c) 2019 yoxking
+ * Copyright (c) 2020 yoxking
  */
 
-import store from '@/store'
+import stores from '@/stores'
 
 export default {
   inserted (el, binding, vnode) {
     const { value } = binding
     const allpermit = '*:*:*'
-    const permits = store.suser.permits
+    const permits = stores.state.suser.permits
 
     if (value && value instanceof Array && value.length > 0) {
       const permitFlag = value

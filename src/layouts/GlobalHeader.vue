@@ -28,19 +28,9 @@
           功能列表
           <a-icon type="down" />
         </a>
-        <a-menu slot="overlay" style="width: 180px" @click="handleMenuClick">
-          <a-menu-item key="0">
-            <a-icon type="block" />业务管理
-          </a-menu-item>
-          <a-menu-item key="1">
-            <a-icon type="ordered-list" />流程管理
-          </a-menu-item>
-          <a-menu-item key="2">
-            <a-icon type="area-chart" />统计报表
-          </a-menu-item>
-          <a-menu-divider />
-          <a-menu-item key="3">
-            <a-icon type="switcher" />系统管理
+        <a-menu slot="overlay" style="width: 180px" @click="handleTopMenu">
+          <a-menu-item v-for="tmenu in tMenuData" :key="tmenu.no" >
+            <a-icon :type="tmenu.icon" />{{tmenu.name}}
           </a-menu-item>
         </a-menu>
       </a-dropdown>
@@ -61,6 +51,7 @@
 </template>
 
 <script>
+import { getTopMenus } from '@/api/menu'
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderAvatar'
@@ -70,6 +61,17 @@ export default {
   name: 'GlobalHeader',
   components: { IMenu, HeaderAvatar, HeaderNotice, HeaderSearch },
   props: ['collapsed', 'menuData'],
+  data () {
+    return {
+      tMenuData: []
+    }
+  },
+  mounted () {
+    const that = this
+    getTopMenus().then(response => {
+      that.tMenuData = response.data
+    })
+  },
   computed: {
     isMobile () {
       return this.$store.state.setting.isMobile
@@ -85,8 +87,8 @@ export default {
     }
   },
   methods: {
-    handleMenuClick (e) {
-      console.log('click', e)
+    handleTopMenu (e) {
+      this.$emit('changeTopMenu', e.key)
     },
     toggleCollapse () {
       this.$emit('toggleCollapse')

@@ -1,13 +1,18 @@
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
+import { getToken } from './cookie'
 
 const mimeMap = {
   xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   zip: 'application/zip'
 }
 
-const baseUrl = process.env.VUE_APP_BASE_API
-export function downLoadZip (str, filename) {
+// 通用下载方法
+export function download (fileName) {
+  window.location.href = baseUrl + '/web/download?fileName=' + encodeURI(fileName) + '&delete=' + true
+}
+
+const baseUrl = process.env.BASE_API
+export function downloadZip (str, filename) {
   var url = baseUrl + str
   axios({
     method: 'get',
@@ -18,6 +23,7 @@ export function downLoadZip (str, filename) {
     resolveBlob(res, mimeMap.zip)
   })
 }
+
 /**
  * 解析blob响应内容并下载
  * @param {*} res blob响应内容

@@ -7,3 +7,11 @@ export function getRouters (parentId) {
     method: 'get'
   })
 }
+
+// 获取一级菜单
+export function getTopMenus () {
+  return request({
+    url: '/web/getTopMenu',
+    method: 'get'
+  })
+}

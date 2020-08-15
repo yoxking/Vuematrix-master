@@ -3,10 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'ant-design-vue/dist/antd.css'
-import Antd from 'ant-design-vue'
 import axios from 'axios'
 import store from './stores'
+import permit from './directive'
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 import 'xe-utils'
 import VueCropper from 'vue-cropper'
 import VXETable from 'vxe-table'
@@ -18,11 +19,14 @@ import 'moment/locale/zh-cn'
 
 import './assets/icons' // icon
 import './comm/authority' // permission access control
+import { download } from './myutil/zipload'
 
 moment.locale('zh-cn')
 Vue.prototype.$moment = moment // 赋值使用
 Vue.prototype.$axios = axios
+Vue.prototype.download = download
 Vue.config.productionTip = false
+Vue.use(permit)
 Vue.use(Antd)
 Vue.use(VXETable)
 Vue.use(VueCropper)

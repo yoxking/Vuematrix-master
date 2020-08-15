@@ -1,6 +1,6 @@
 <template>
-  <a-card :body-style="{padding: '24px 32px'}"
-          :bordered="false">
+  <div class="wrapbox">
+    <br />
     <a-form-model ref="ruleForm"
                   :model="configInfo"
                   :rules="rules"
@@ -46,12 +46,13 @@
           <a-radio value="0">停用</a-radio>
         </a-radio-group>
       </a-form-model-item>
-      <a-form-model-item :wrapperCol="{span: 10, offset: 3}">
-        <a-button type="primary" @click="saveSetting">保存</a-button>
-        <a-button style="margin-left: 8px">关闭</a-button>
-      </a-form-model-item>
     </a-form-model>
-  </a-card>
+    <a-divider />
+    <div class="btnbox">
+      <a-button @click="doOk" type="primary">确定</a-button>
+      <a-button @click="doCancel">取消</a-button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -59,10 +60,26 @@ import { getConfigInfo, saveConfigInfo } from '@/api/setting'
 
 export default {
   name: 'SysSetting',
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
-      labelCol: { span: 3 },
-      wrapperCol: { span: 10 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 16 },
       configInfo: {
         siteName: '',
         siteUrl: '',
@@ -100,22 +117,35 @@ export default {
         that.configInfo = response.data
       })
     },
-    saveSetting () {
+    doOk () {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           saveConfigInfo(that.configInfo).then(response => {
-            that.$message.success(response.msg)
+            // that.$message.success(response.msg)
+            that.$layer.msg(response.msg)
+            that.$layer.close(that.layerid)
           })
         } else {
-          console.log('error submit!!')
+          that.$layer.msg('输入有误，请重新输入!')
           return false
         }
       })
+    },
+    doCancel () {
+      this.$layer.close(this.layerid)
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width:100%;
+}
+.btnbox {
+  text-align: center;
+}
 </style>

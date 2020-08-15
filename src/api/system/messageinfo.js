@@ -51,3 +51,11 @@ export function exptMessageinfo (data) {
     data: data
   })
 }
+
+// 获取未读消息列表
+export function getMyMessages () {
+  return request({
+    url: '/sys/messageinfo/getMessages',
+    method: 'get'
+  })
+}

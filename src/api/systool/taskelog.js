@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询定时任务调度日志列表
 export function listTaskelog (data) {
   return request({
-    url: '/job/taskelog/list',
+    url: '/task/taskelog/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listTaskelog (data) {
 // 查询定时任务调度日志详细
 export function getTaskelog (id) {
   return request({
-    url: '/job/taskelog/' + id,
+    url: '/task/taskelog/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTaskelog (id) {
 // 新增定时任务调度日志
 export function addTaskelog (data) {
   return request({
-    url: '/job/taskelog',
+    url: '/task/taskelog',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTaskelog (data) {
 // 修改定时任务调度日志
 export function uptTaskelog (data) {
   return request({
-    url: '/job/taskelog',
+    url: '/task/taskelog',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptTaskelog (data) {
 // 删除定时任务调度日志
 export function delTaskelog (ids) {
   return request({
-    url: '/job/taskelog/' + ids,
+    url: '/task/taskelog/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delTaskelog (ids) {
 // 导出定时任务调度日志
 export function exptTaskelog (data) {
   return request({
-    url: '/job/taskelog/export',
+    url: '/task/taskelog/export',
     method: 'post',
     data: data
   })

@@ -1,9 +1,8 @@
 <template>
-  <div class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-row :gutter="24">
-      <a-col :md="24"
-             :lg="7">
-        <a-card :bordered="false">
+  <div class="wrapbox">
+    <br />
+    <a-row>
+      <a-col :md="8">
           <div class="account-center-avatarHolder">
             <div class="avatar"
                  @click="uptAvatar">
@@ -12,6 +11,7 @@
             <div class="username">{{userInfo.loginName}}</div>
             <div class="bio">海纳百川，有容乃大</div>
           </div>
+          <a-divider />
           <div class="account-center-detail">
             <p>
               <i class="title"></i>类型：{{userInfo.userType}}
@@ -20,21 +20,13 @@
               <i class="group"></i>部门：{{userInfo.deptNo}}
             </p>
             <p>
-              <i class="address"></i>
-              <span>重庆市</span>
-              <span>沙坪坝</span>
+              <i class="address"></i>地址：{{userInfo.telephone}}
             </p>
           </div>
-          <a-divider />
-        </a-card>
       </a-col>
-      <a-col :md="24"
-             :lg="17">
-        <a-card style="width:100%"
-                :bordered="false">
+      <a-col :md="16">
           <a-tabs defaultActiveKey="1">
-            <a-tab-pane tab="基本资料"
-                        key="1">
+            <a-tab-pane tab="基本资料" key="1">
               <a-form-model ref="ruleForm1"
                             :model="userInfo"
                             :rules="rules1"
@@ -76,7 +68,7 @@
                 <a-form-model-item :wrapperCol="{span: 10, offset: 3}">
                   <a-button type="primary"
                             @click="saveProfile">保存</a-button>
-                  <a-button style="margin-left: 8px">关闭</a-button>
+                  <a-button @click="doCancel" style="margin-left: 8px">关闭</a-button>
                 </a-form-model-item>
               </a-form-model>
             </a-tab-pane>
@@ -111,12 +103,11 @@
                 <a-form-model-item :wrapperCol="{span: 10, offset: 3}">
                   <a-button type="primary"
                             @click="savePassword">保存</a-button>
-                  <a-button style="margin-left: 8px" >关闭</a-button>
+                  <a-button @click="doCancel" style="margin-left: 8px">关闭</a-button>
                 </a-form-model-item>
               </a-form-model>
             </a-tab-pane>
           </a-tabs>
-        </a-card>
       </a-col>
     </a-row>
   </div>
@@ -128,6 +119,22 @@ import { getSuserprofile, uptSuserinfo, uptSuserpswd } from '@/api/system/suseri
 
 export default {
   name: 'UserProfile',
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    id: {// 传递的数据
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       labelCol: { span: 3 },
@@ -197,6 +204,7 @@ export default {
       const that = this
       getSuserprofile().then(response => {
         that.userInfo = response.data
+        that.userInfo.avatar = process.env.BASE_API + that.userInfo.avatar
       })
     },
     saveProfile () {
@@ -204,11 +212,12 @@ export default {
       this.$refs.ruleForm1.validate(valid => {
         if (valid) {
           uptSuserinfo(that.userInfo).then(response => {
-            that.getUserInfo()
-            that.$message.success(response.msg)
+            // that.$message.success(response.msg)
+            that.$layer.msg(response.msg)
+            that.$layer.close(that.layerid)
           })
         } else {
-          console.log('error submit!!')
+          that.$layer.msg('输入有误，请重新输入!')
           return false
         }
       })
@@ -220,30 +229,32 @@ export default {
         this.$refs.ruleForm2.validate(valid => {
           if (valid) {
             uptSuserpswd(that.pswdInfo.oldpsword, that.pswdInfo.newpsword).then(response => {
-              that.$message.success(response.msg)
-              that.pswdInfo.oldpsword = ''
-              that.pswdInfo.newpsword = ''
-              that.pswdInfo.retpsword = ''
+            // that.$message.success(response.msg)
+              that.$layer.msg(response.msg)
+              that.$layer.close(that.layerid)
             })
           } else {
-            console.log('error submit!!')
+            that.$layer.msg('输入有误，请重新输入!')
             return false
           }
         })
       } else {
         this.$message.warn('两次输入的新密码不相同!')
       }
+    },
+    doCancel () {
+      this.$layer.close(this.layerid)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.page-header-wrapper-grid-content-main {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  transition: 0.3s;
+.wrapbox {
+  margin: 0;
+  padding: 10px 20px;
+  width:100%;
+}
 
   .account-center-avatarHolder {
     text-align: center;
@@ -297,5 +308,4 @@ export default {
       background-position: 0 -44px;
     }
   }
-}
 </style>

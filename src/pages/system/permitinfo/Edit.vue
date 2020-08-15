@@ -181,6 +181,10 @@ export default {
       type: String,
       default: ''
     },
+    parentNo: {// 传递的数据
+      type: String,
+      default: ''
+    },
     lydata: {
       type: Object,
       default: () => {
@@ -261,6 +265,10 @@ export default {
       getPermitinfo(this.id).then(response => {
         that.form = response.data
       })
+    } else {
+      if (that.parentNo !== '') {
+        that.form.parentNo = that.parentNo
+      }
     }
     treePermitinfo().then(response => {
       that.treeData = response.rows

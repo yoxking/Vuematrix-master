@@ -228,7 +228,7 @@ export default {
     /** 查询服务器信息 */
     refreshServer () {
       const that = this
-      // this.loading = true
+      this.loading = true
       getServerinfo().then(response => {
         console.log(response)
         that.server = response.data

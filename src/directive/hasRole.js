@@ -1,15 +1,15 @@
 /**
  * 角色权限处理
- * Copyright (c) 2019 ruoyi
+ * Copyright (c) 2020 yoxking
  */
 
-import store from '@/store'
+import stores from '@/stores'
 
 export default {
   inserted (el, binding, vnode) {
     const { value } = binding
     const superadmin = 'admin'
-    const roles = store.suser.roles
+    const roles = stores.state.suser.roles
 
     if (value && value instanceof Array && value.length > 0) {
       const roleFlag = value

@@ -10,16 +10,18 @@
     <a-menu style="width: 150px"
             slot="overlay">
       <a-menu-item>
-        <router-link :to="{ path: '/account/userprofile' }">
+        <a href="javascript:;"
+           @click="handleProfile">
           <a-icon type="user" />
           <span>个人中心</span>
-        </router-link>
+        </a>
       </a-menu-item>
       <a-menu-item>
-        <router-link :to="{ path: '/account/syssetting' }">
+        <a href="javascript:;"
+           @click="handleSetting">
           <a-icon type="setting" />
           <span>基本设置</span>
-        </router-link>
+        </a>
       </a-menu-item>
       <a-menu-divider />
       <a-menu-item>
@@ -34,19 +36,48 @@
 </template>
 
 <script>
+import profile from '@/pages/sysuser/UserProfile'
+import setting from '@/pages/sysuser/SysSetting'
+
 export default {
   name: 'HeaderAvatar',
   computed: {
     userName () {
-      return 'admin'
-      // return this.$store.state.uname
+      return this.$store.state.suser.uname
     },
     userAvatar () {
-      return require('@/assets/image/profile.jpg')
-      // return this.$store.state.avatar
+      return this.$store.state.suser.avatar
     }
   },
   methods: {
+    handleProfile () {
+      this.$layer.iframe({
+        content: {
+          content: profile,
+          parent: this,
+          data: { id: '' }
+        },
+        area: ['950px', '680px'],
+        title: '个人中心',
+        maxmin: false,
+        shade: true,
+        shadeClose: false
+      })
+    },
+    handleSetting () {
+      this.$layer.iframe({
+        content: {
+          content: setting,
+          parent: this,
+          data: { id: '' }
+        },
+        area: ['950px', '680px'],
+        title: '基本设置',
+        maxmin: false,
+        shade: true,
+        shadeClose: false
+      })
+    },
     handleLogout () {
       var that = this
       this.$confirm({

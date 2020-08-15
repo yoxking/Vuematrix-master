@@ -7,6 +7,12 @@ import Login from '@/pages/login/Index'
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+
 // 公共路由
 export const constRoutes = [
   {
@@ -53,6 +59,14 @@ export const constRoutes = [
   }
 ]
 
-export default new Router({
+const router = new Router({
   routes: constRoutes
 })
+
+router.$addRoutes = (routeData) => {
+  // 清空路由
+  router.matcher = new Router({routes: constRoutes}).matcher
+  // 添加路由
+  router.addRoutes(routeData)
+}
+export default router

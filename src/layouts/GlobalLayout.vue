@@ -11,7 +11,7 @@
       <setting />
     </drawer>
     <a-layout>
-      <global-header :menuData="menuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse"/>
+      <global-header :menuData="menuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse" @changeTopMenu="onChangeMenu"/>
       <a-layout-content :style="{minHeight: minHeight, margin: '24px 24px 0'}">
         <slot></slot>
       </a-layout-content>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import router from '../router'
+import stores from '../stores'
+
 import GlobalHeader from './GlobalHeader'
 import GlobalFooter from './GlobalFooter'
 import Drawer from '../comps/tools/Drawer'
@@ -73,10 +76,24 @@ export default {
     },
     onSettingDrawerChange (val) {
       this.showSetting = val
+    },
+    onChangeMenu (parentId) {
+      const that = this
+      stores.dispatch('menus/GenertRoutes', parentId).then(accessRoutes => {
+        if (accessRoutes != null && accessRoutes.length > 0) {
+          that.menuData = accessRoutes[0].children
+          router.options.routes = []
+          router.options.routes = stores.state.menus.routes
+          // router.addRoutes(accessRoutes) // 动态添加可访问路由表
+          router.$addRoutes(accessRoutes)
+
+          router.push('/')
+        }
+      })
     }
   },
   beforeCreate () {
-    const routes = this.$router.options.routes.find((item) => item.path === '/')
+    const routes = router.options.routes.find((item) => item.path === '/')
     menuData = (routes && routes.children) || []
   }
 }

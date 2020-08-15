@@ -6,11 +6,11 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="表名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
-                         v-model="queryParam.taskName" />
+                         v-model="queryParam.tableName" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -30,14 +30,15 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd"
-                  type="primary">新建</a-button>
-        <a-button @click="handleDel">删除</a-button>
+        <a-button @click="handleGens" v-hasPermit="['system:tableinfo:generate']" ype="primary">生成代码</a-button>
+        <a-button @click="handleImpt" v-hasPermit="['system:tableinfo:dbtable']">导入</a-button>
+        <a-button @click="handleDel" v-hasPermit="['system:tableinfo:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit">审批</a-menu-item>
-            <a-menu-item key="export">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['system:tableinfo:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['system:tableinfo:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['system:tableinfo:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -60,28 +61,28 @@
         <vxe-table-column type="seq"
                           title="序号"
                           width="60"></vxe-table-column>
-        <vxe-table-column field="taskNo"
+        <vxe-table-column field="tableNo"
                           title="编号"
                           width="120"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="taskName"
-                          title="任务名称"></vxe-table-column>
-        <vxe-table-column field="taskGroup"
-                          title="任务组名"></vxe-table-column>
-        <vxe-table-column field="invokeTarget"
-                          title="调用目标"
-                          show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="taskExpress"
-                          title="表达式"
+        <vxe-table-column field="tableName"
+                          width="200"
+                          title="表名称"></vxe-table-column>
+        <vxe-table-column field="tableComment"
+                          width="200"
+                          title="表描述"></vxe-table-column>
+        <vxe-table-column field="className"
+                          title="实体"
+                          width="200"
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text"
-                        @click="startTask(row.taskNo)">执行</vxe-button>
-            <vxe-button type="text"
-                        @click="handleEdt(row.taskNo)">编辑</vxe-button>
-            <vxe-button type="text"
-                        @click="handleDet(row.taskNo)">详细</vxe-button>
+            <vxe-button type="text" v-hasPermit="['system:tableinfo:preview']" @click="previewCode(row.tableNo)"
+                        >预览</vxe-button>
+            <vxe-button type="text" v-hasPermit="['system:tableinfo:generate']" @click="handleGen(row.tableName)"
+                        >生成代码</vxe-button>
+            <vxe-button type="text" v-hasPermit="['system:tableinfo:detail']" @click="handleDet(row.tableNo)"
+                        >详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -99,9 +100,11 @@
 </template>
 
 <script>
-import { listTaskinfo, delTaskinfo, exptTaskinfo, startTaskinfo } from '@/api/system/taskinfo'
-import edit from './Edit'
+import { listTableinfo, delTableinfo, exptTableinfo } from '@/api/systool/tableinfo'
+import { downloadZip } from '@/myutil/zipload'
 import detail from './Detail'
+import imptTb from './Import'
+import preview from './Preview'
 
 export default {
   name: 'List',
@@ -112,7 +115,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        taskName: ''
+        tableName: ''
       },
       // 查询参数
       pageParam: {
@@ -132,8 +135,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.taskName !== '') {
-        this.pageParam.condition = " task_name like '%" + this.queryParam.taskName + "%'"
+      if (this.queryParam.tableName !== '') {
+        this.pageParam.condition = " table_name like '%" + this.queryParam.tableName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -142,15 +145,15 @@ export default {
     doReset () {
       console.log('reset')
     },
-    handleAdd () {
+    handleImpt () {
       this.$layer.iframe({
         content: {
-          content: edit,
+          content: imptTb,
           parent: this,
           data: { id: '' }
         },
-        area: ['950px', '700px'],
-        title: '新增',
+        area: ['750px', '500px'],
+        title: '导入表',
         maxmin: true,
         shade: true,
         shadeClose: false
@@ -168,9 +171,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.taskNo)
+              selectedRowKeys.push(item.tableNo)
             })
-            delTaskinfo(selectedRowKeys).then(response => {
+            delTableinfo(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -179,32 +182,22 @@ export default {
         this.$message.warning('请至少选择一条记录!')
       }
     },
-    startTask (val) {
-      this.$confirm({
-        title: '提示',
-        content: '您确认要立即执行一次任务吗?',
-        okText: '确认',
-        cancelText: '取消',
-        onOk () {
-          startTaskinfo(val).then(response => {
-            console.log(response)
-          })
-        }
-      })
+    handleGens () {
+      // const that = this
+      let selectedRecords = this.$refs.myTable.getCheckboxRecords()
+      if (selectedRecords.length > 0) {
+        let selectedTables = ''
+        selectedRecords.map(function (item) {
+          selectedTables += item.tableName + ','
+        })
+        selectedTables = selectedTables.replace(/(^,)|(,$)/, '')
+        downloadZip('/gen/tableinfo/batchGenCode?tables=' + selectedTables, 'HotMatrix')
+      } else {
+        this.$message.warning('请至少选择一条记录!')
+      }
     },
-    handleEdt (val) {
-      this.$layer.iframe({
-        content: {
-          content: edit,
-          parent: this,
-          data: { id: val }
-        },
-        area: ['950px', '700px'],
-        title: '编辑',
-        maxmin: true,
-        shade: true,
-        shadeClose: false
-      })
+    handleGen (val) {
+      downloadZip('/gen/tableinfo/genCode/' + val, 'HotMatrix')
     },
     handleDet (val) {
       this.$layer.iframe({
@@ -220,12 +213,27 @@ export default {
         shadeClose: false
       })
     },
+    previewCode (val) {
+      this.$layer.iframe({
+        content: {
+          content: preview,
+          parent: this,
+          data: { id: val }
+        },
+        area: ['950px', '700px'],
+        title: '代码预览',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
+      })
+    },
     handleMenu (e) {
       const that = this
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptTaskinfo(this.pageParam).then(response => {
+        exptTableinfo(this.pageParam).then(response => {
+          that.download(response.msg)
           that.$message.success('导出成功!')
         })
       }
@@ -239,7 +247,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listTaskinfo(this.pageParam).then(response => {
+      listTableinfo(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

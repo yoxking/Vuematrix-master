@@ -1,7 +1,7 @@
 <template>
   <div class="wrapbox">
     <a-row>
-      <a-col :xs="24" :md="12" :style="{height: '350px'}">
+      <a-col :md="12" :style="{height: '350px'}">
         <vue-cropper
           ref="cropper"
           :img="options.img"
@@ -14,7 +14,7 @@
         >
         </vue-cropper>
       </a-col>
-      <a-col :xs="24" :md="12" :style="{height: '350px'}">
+      <a-col :md="12" :style="{height: '350px'}">
         <div class="avatar-upload-preview">
           <img :src="previews.url" :style="previews.img"/>
         </div>
@@ -22,25 +22,18 @@
     </a-row>
     <br>
     <a-row>
-      <a-col :lg="2" :md="2">
+      <a-col :md="12" style="text-align:center;">
         <a-upload name="file" :beforeUpload="beforeUpload" :showUploadList="false">
           <a-button icon="upload">选择图片</a-button>
         </a-upload>
-      </a-col>
-      <a-col :lg="{span: 1, offset: 2}" :md="2">
         <a-button icon="plus" @click="changeScale(1)"/>
-      </a-col>
-      <a-col :lg="{span: 1, offset: 1}" :md="2">
         <a-button icon="minus" @click="changeScale(-1)"/>
-      </a-col>
-      <a-col :lg="{span: 1, offset: 1}" :md="2">
         <a-button icon="undo" @click="rotateLeft"/>
-      </a-col>
-      <a-col :lg="{span: 1, offset: 1}" :md="2">
         <a-button icon="redo" @click="rotateRight"/>
       </a-col>
-      <a-col :lg="{span: 2, offset: 6}" :md="2">
+      <a-col :md="12" style="text-align:center;">
         <a-button type="primary" @click="uploadImg('blob')">保存</a-button>
+        <a-button @click="doCancel" style="margin-left: 8px">关闭</a-button>
       </a-col>
     </a-row>
   </div>
@@ -50,6 +43,18 @@
 import { uploadAvatar } from '@/api/system/suserinfo'
 
 export default {
+  props: {
+    layerid: {// 自动注入的layerid
+      type: String,
+      default: ''
+    },
+    lydata: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       options: {
@@ -88,7 +93,6 @@ export default {
     },
     // 上传图片（点击上传按钮）
     uploadImg (type) {
-      console.log('uploadimg')
       const that = this
       // 输出
       if (type === 'blob') {
@@ -98,12 +102,16 @@ export default {
           uploadAvatar(formData).then(response => {
             if (response.code === 200) {
               that.options.img = process.env.BASE_API + response.imgUrl
+              that.$layer.msg(response.msg)
             }
-            that.$message.success(response.msg)
-            that.$refs.cropper.clearCrop()
+            // that.$message.success(response.msg)
+            // that.$refs.cropper.clearCrop()
           })
         })
       }
+    },
+    doCancel () {
+      this.$layer.close(this.layerid)
     },
     realTime (data) {
       this.previews = data

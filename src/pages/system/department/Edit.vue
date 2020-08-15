@@ -9,9 +9,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="编号"
-                             prop="taskNo"
-                             ref="taskNo">
-            <a-input v-model="form.taskNo" />
+                             prop="deptNo"
+                             ref="deptNo">
+            <a-input v-model="form.deptNo" readOnly/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,65 +20,54 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="任务名称"
-                             prop="taskName"
-                             ref="taskName">
-            <a-input v-model="form.taskName" />
+          <a-form-model-item label="部门名称"
+                             prop="deptName"
+                             ref="deptName">
+            <a-input v-model="form.deptName" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="任务分组"
-                             prop="taskGroup"
-                             ref="taskGroup">
-            <a-radio-group v-model="form.taskGroup">
-              <a-radio value="0">默认</a-radio>
-              <a-radio value="1">系统</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="调用方法"
-                             prop="invokeTarget"
-                             ref="invokeTarget"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 20}">
-            <a-input v-model="form.invokeTarget" />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="表达式"
-                             prop="taskExpress"
-                             ref="taskExpress"
-                             :labelCol="{span: 3}"
-                             :wrapperCol="{span: 20}">
-            <a-input v-model="form.taskExpress" />
+          <a-form-model-item label="上级部门"
+                             prop="parentNo"
+                             ref="parentNo">
+            <a-tree-select v-model="form.parentNo"
+                        :dropdownStyle="{ zIndex: 6000 }"
+                        :multiple="false"
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="错误策略"
-                             prop="errorsPolicy"
-                             ref="errorsPolicy">
-            <a-radio-group v-model="form.errorsPolicy">
-              <a-radio value="1">立即执行</a-radio>
-              <a-radio value="2">执行一次</a-radio>
-              <a-radio value="3">放弃执行</a-radio>
-            </a-radio-group>
+          <a-form-model-item label="负责人"
+                             prop="leader"
+                             ref="leader">
+            <a-input v-model="form.leader" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="是否并发"
-                             prop="concurrent"
-                             ref="concurrent">
-            <a-radio-group v-model="form.concurrent">
-              <a-radio value="1">允许</a-radio>
-              <a-radio value="0">禁止</a-radio>
-            </a-radio-group>
+          <a-form-model-item label="排序"
+                             prop="orderNo"
+                             ref="orderNo">
+            <a-input-number v-model="form.orderNo" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="电话"
+                             prop="telephone"
+                             ref="telephone">
+            <a-input v-model="form.telephone" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="邮箱"
+                             prop="email"
+                             ref="email">
+            <a-input v-model="form.email" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -89,7 +78,7 @@
                              ref="checkState">
             <a-radio-group v-model="form.checkState">
               <a-radio value="1">正常</a-radio>
-              <a-radio value="0">暂停</a-radio>
+              <a-radio value="0">停用</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -119,7 +108,7 @@
 </template>
 
 <script>
-import { getTaskinfo, addTaskinfo, uptTaskinfo } from '@/api/system/taskinfo'
+import { getDeptment, treeDeptment, addDeptment, uptDeptment } from '@/api/system/department'
 
 export default {
   name: 'Edit',
@@ -145,24 +134,22 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        taskNo: '0',
-        taskName: '',
-        taskGroup: '0',
-        taskExpress: '',
-        invokeTarget: '',
-        errorsPolicy: '1',
-        concurrent: '1',
+        deptNo: '0',
+        deptName: '',
+        parentNo: '0',
+        orderNo: '1',
+        leader: '',
+        telephone: '',
+        email: '',
         checkState: '1',
         comments: ''
       },
       rules: {
-        taskName: [
-          { required: true, message: '请输入任务名称', trigger: 'change' }
-        ],
-        taskGroup: [
-          { required: true, message: '请输入分组名称', trigger: 'change' }
+        deptName: [
+          { required: true, message: '请输入部门名称', trigger: 'change' }
         ]
-      }
+      },
+      treeData: []
     }
   },
   methods: {
@@ -170,14 +157,14 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.taskNo === '0') {
-            addTaskinfo(that.form).then(response => {
+          if (that.form.deptNo === '0') {
+            addDeptment(that.form).then(response => {
               that.$layer.msg(response.msg)
               that.$parent.getDataSource()
               that.$layer.close(that.layerid)
             })
           } else {
-            uptTaskinfo(that.form).then(response => {
+            uptDeptment(that.form).then(response => {
               that.$layer.msg(response.msg)
               that.$parent.getDataSource()
               that.$layer.close(that.layerid)
@@ -194,12 +181,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
-      getTaskinfo(this.id).then(response => {
+      getDeptment(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeDeptment().then(response => {
+      that.treeData = response.rows
+    })
   }
 }
 </script>

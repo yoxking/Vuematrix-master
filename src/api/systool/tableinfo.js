@@ -17,29 +17,36 @@ export function getTableinfo (id) {
   })
 }
 
-// 新增代码生成业务
-export function addTableinfo (data) {
-  return request({
-    url: '/gen/tableinfo',
-    method: 'post',
-    data: data
-  })
-}
-
-// 修改代码生成业务
-export function uptTableinfo (data) {
-  return request({
-    url: '/gen/tableinfo',
-    method: 'put',
-    data: data
-  })
-}
-
 // 删除代码生成业务
 export function delTableinfo (ids) {
   return request({
     url: '/gen/tableinfo/' + ids,
     method: 'delete'
+  })
+}
+
+// 查询db数据库列表
+export function listDbTable () {
+  return request({
+    url: '/gen/tableinfo/dbTableList',
+    method: 'get'
+  })
+}
+
+// 导入表
+export function importTable (data) {
+  return request({
+    url: '/gen/tableinfo/importTable',
+    method: 'post',
+    data: data
+  })
+}
+
+// 预览生成代码
+export function previewTable (tableId) {
+  return request({
+    url: '/gen/tableinfo/preview/' + tableId,
+    method: 'get'
   })
 }
 

@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import { treeDeptment } from '@/api/system/deptment'
+import { treeDeptment } from '@/api/system/department'
 import { getRuserinfo, addRuserinfo, uptRuserinfo } from '@/api/system/ruserinfo'
 
 export default {

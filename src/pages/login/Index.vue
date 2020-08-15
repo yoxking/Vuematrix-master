@@ -65,6 +65,19 @@
                   </a-col>
                 </a-row>
               </a-form-item>
+              <a-form-item>
+                <a-select size="large" default-value="10001">
+                  <a-select-option value="10001">
+                    重庆市第一实验中学
+                  </a-select-option>
+                  <a-select-option value="10002">
+                    重庆北碚区西师附中
+                  </a-select-option>
+                  <a-select-option value="10003">
+                    重庆沙坪坝南开中学
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
             </a-tab-pane>
             <a-tab-pane tab="手机号登录"
                         key="2">
@@ -93,10 +106,24 @@
                   </a-col>
                 </a-row>
               </a-form-item>
+              <a-form-item>
+                <a-select size="large" default-value="10001">
+                  <a-select-option value="10001">
+                    重庆市第一实验中学
+                  </a-select-option>
+                  <a-select-option value="10002">
+                    重庆北碚区西师附中
+                  </a-select-option>
+                  <a-select-option value="10003">
+                    重庆沙坪坝南开中学
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
             </a-tab-pane>
           </a-tabs>
           <div>
-            <a-checkbox :checked="loginInfo.rememberMe" @change="onRembme">自动登录</a-checkbox>
+            <a-checkbox :checked="loginInfo.rememberMe"
+                        @change="onRembme">自动登录</a-checkbox>
             <router-link style="float: right"
                          :to="{ path: '/forgetpwd' }">忘记密码</router-link>
           </div>
@@ -204,9 +231,8 @@ export default {
   flex-direction: column;
   height: 100vh;
   overflow: auto;
-  background: #f0f2f5
-    url("/static/images/login-bg-img.svg")
-    no-repeat center 110px;
+  background: #f0f2f5 url("/static/images/login-bg-img.svg") no-repeat center
+    110px;
   background-size: 100%;
   .content {
     padding: 32px 0;

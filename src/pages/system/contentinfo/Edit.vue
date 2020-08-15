@@ -97,9 +97,7 @@
           <a-form-item label="正文"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            <a-textarea v-model="form.ncontents"
-                        placeholder="正文"
-                        :autoSize="{ minRows: 5, maxRows: 8 }" />
+            <vue-editor v-model="form.ncontents" :editor-toolbar="customToolbar" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -140,10 +138,12 @@
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor'
 import { getContentinfo, getClasslist, addContentinfo, uptContentinfo } from '@/api/system/contentinfo'
 
 export default {
   name: 'Edit',
+  components: { VueEditor },
   props: {
     layerid: {// 自动注入的layerid
       type: String,
@@ -165,6 +165,11 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['image', 'code-block']
+      ],
       form: {
         contzNo: '0',
         title: '',

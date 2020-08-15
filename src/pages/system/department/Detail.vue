@@ -3,94 +3,83 @@
     <br />
     <a-form>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.tableNo}}
+            {{model.deptNo}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
+        <a-col :span="12">
+         &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="部门名称"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.deptName}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="上级部门"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.parentNo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="负责人"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.leader}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="排序"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.orderNo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="电话"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.telephone}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="邮箱"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.email}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           &nbsp;
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="表名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.tableName}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="表描述"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.tableComment}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="实体"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.className}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="模板"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.tplCategory}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="包名"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.packageName}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="模块名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.moduleName}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="业务名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.businessName}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="功能名称"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.functionName}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="选项"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.options}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="功能作者"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.functionAuthor}}
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -103,7 +92,7 @@
 </template>
 
 <script>
-import { getTableinfo } from '@/api/system/tableinfo'
+import { getDeptment } from '@/api/system/department'
 
 export default {
   name: 'Detail',
@@ -125,19 +114,16 @@ export default {
   },
   data () {
     return {
-      spanCol: 12,
       model: {
-        tableNo: '0',
-        tableName: '',
-        tableComment: '',
-        className: '',
-        tplCategory: '',
-        packageName: '',
-        moduleName: '',
-        businessName: '',
-        functionName: '',
-        functionAuthor: '',
-        options: ''
+        deptNo: '0',
+        deptName: '',
+        parentNo: '0',
+        orderNo: '1',
+        leader: '',
+        telephone: '',
+        email: '',
+        checkState: '1',
+        comments: ''
       }
     }
   },
@@ -149,7 +135,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getTableinfo(this.id).then(response => {
+      getDeptment(this.id).then(response => {
         that.model = response.data
       })
     }
