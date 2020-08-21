@@ -12,28 +12,28 @@
       </div>
       <div class="login">
         <h3><span>找回密码</span></h3>
-        <a-form ref="formRegister"
-                id="formRegister">
-          <a-form-item>
+        <a-form-model ref="ruleForm" :model="form" :rules="rules">
+          <a-form-model-item prop="email" ref="email">
             <a-input size="large"
                      type="text"
-                     placeholder="邮箱"></a-input>
-          </a-form-item>
-
-          <a-form-item>
+                     v-model="form.email"
+                     placeholder="邮箱地址"></a-input>
+          </a-form-model-item>
+          <a-form-model-item prop="password" ref="password">
             <a-input size="large"
                      type="password"
+                     v-model="form.password"
                      placeholder="至少6位密码，区分大小写"></a-input>
-          </a-form-item>
-          <a-form-item>
+          </a-form-model-item>
+          <a-form-model-item prop="repsword" ref="repsword">
             <a-input size="large"
                      type="password"
+                     v-model="form.repsword"
                      autocomplete="false"
                      placeholder="确认密码"></a-input>
-          </a-form-item>
-
-          <a-form-item>
-            <a-input size="large"
+          </a-form-model-item>
+          <a-form-model-item prop="mobile" ref="mobile">
+            <a-input size="large" v-model="form.mobile"
                      placeholder="11 位手机号">
               <a-select slot="addonBefore"
                         size="large"
@@ -42,20 +42,20 @@
                 <a-select-option value="+87">+87</a-select-option>
               </a-select>
             </a-input>
-          </a-form-item>
-
+          </a-form-model-item>
           <a-row :gutter="16">
             <a-col class="gutter-row"
                    :span="16">
-              <a-form-item>
+              <a-form-model-item prop="txtcode" ref="txtcode">
                 <a-input size="large"
                          type="text"
+                         v-model="form.txtcode"
                          placeholder="验证码">
                   <a-icon slot="prefix"
                           type="mail"
                           :style="{ color: 'rgba(0,0,0,.25)' }" />
                 </a-input>
-              </a-form-item>
+              </a-form-model-item>
             </a-col>
             <a-col class="gutter-row"
                    :span="8">
@@ -63,18 +63,17 @@
                         size="large">获取验证码</a-button>
             </a-col>
           </a-row>
-
-          <a-form-item>
-            <a-button size="large"
+          <a-form-model-item>
+            <a-button :loading="loading"
+                      size="large"
                       type="primary"
-                      htmlType="submit"
-                      class="register-button">注册
+                      @click="onSubmit"
+                      class="register-button">提交
             </a-button>
             <router-link class="login-link"
                          :to="{ path: '/login' }">使用已有账户登录</router-link>
-          </a-form-item>
-
-        </a-form>
+          </a-form-model-item>
+        </a-form-model>
       </div>
     </div>
     <global-footer :link-list="linkList"
@@ -90,8 +89,21 @@ export default {
   components: { GlobalFooter },
   data () {
     return {
-      logging: false,
-      error: ''
+      loading: false,
+      form: {
+        email: undefined,
+        password: undefined,
+        repsword: undefined,
+        mobile: '',
+        txtcode: ''
+      },
+      rules: {
+        email: [{ required: true, message: '请输入邮箱地址', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入新的密码', trigger: 'blur' }],
+        repsword: [{ required: true, message: '请输入确认密码', trigger: 'blur' }],
+        mobile: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
+        txtcode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -106,6 +118,17 @@ export default {
     }
   },
   methods: {
+    onSubmit () {
+      const that = this
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          that.loading = true
+
+          console.log(that.form)
+          that.loading = false
+        }
+      })
+    }
   }
 }
 </script>

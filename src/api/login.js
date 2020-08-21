@@ -1,17 +1,19 @@
 import request from '@/myutil/request'
 
 // 登录方法
-export function login (username, password, code, uuid) {
-  const data = {
-    username,
-    password,
-    code,
-    uuid
-  }
+export function login (data) {
   return request({
     url: '/web/login',
     method: 'post',
-    params: data
+    data: data
+  })
+}
+
+// 获取应用信息
+export function getRenters () {
+  return request({
+    url: '/web/getRenters',
+    method: 'get'
   })
 }
 

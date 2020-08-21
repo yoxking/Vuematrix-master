@@ -59,3 +59,12 @@ export function exptRenterinfo (data) {
     data: data
   })
 }
+
+// 初始化信息
+export function InitalRenter (data) {
+  return request({
+    url: '/sys/renterinfo/initialize',
+    method: 'post',
+    data: data
+  })
+}

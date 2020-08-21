@@ -31,13 +31,9 @@ const suser = {
 
   actions: {
     // 登录
-    Login ({ commit }, userInfo) {
-      const username = userInfo.username.trim()
-      const password = userInfo.password
-      const code = userInfo.code
-      const uuid = userInfo.uuid
+    Login ({ commit }, data) {
       return new Promise((resolve, reject) => {
-        login(username, password, code, uuid).then(res => {
+        login(data).then(res => {
           setToken(res.token)
           commit('SET_TOKEN', res.token)
           resolve()

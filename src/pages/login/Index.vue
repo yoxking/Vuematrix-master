@@ -11,134 +11,72 @@
         <div class="desc">热度空间管理系统 v1.0</div>
       </div>
       <div class="login">
-        <a-form @submit="onSubmit"
-                :form="form">
-          <a-tabs size="large"
+        <a-form-model ref="ruleForm" :model="form" :rules="rules">
+          <a-tabs size="large" default-active-key="1"
                   :tabBarStyle="{textAlign: 'center'}"
                   style="padding: 0 2px;">
-            <a-tab-pane tab="账户密码登录"
-                        key="1">
-              <a-alert type="error"
-                       :closable="true"
-                       v-show="errinfo"
-                       :message="errinfo"
-                       showIcon
-                       style="margin-bottom: 24px;" />
-              <a-form-item>
-                <a-input size="large"
-                         placeholder="admin"
-                         v-decorator="[
-                'username',
-                {rules: [{ required: true, message: '请输入您的账号' }]},]">
-                  <a-icon slot="prefix"
-                          type="user" />
+            <a-tab-pane tab="账户密码登录" key="1">
+              <a-form-model-item  prop="username" ref="username">
+                <a-input size="large" v-model="form.username" placeholder="admin">
+                  <a-icon slot="prefix" type="user" />
                 </a-input>
-              </a-form-item>
-              <a-form-item>
-                <a-input size="large"
-                         placeholder="123"
-                         type="password"
-                         v-decorator="[
-                'password',
-                {rules: [{ required: true, message: '请输入您的密码' }]},]">
-                  <a-icon slot="prefix"
-                          type="lock" />
+              </a-form-model-item>
+              <a-form-model-item prop="password" ref="password">
+                <a-input size="large" v-model="form.password" placeholder="123" type="password">
+                  <a-icon slot="prefix" type="lock" />
                 </a-input>
-              </a-form-item>
-              <a-form-item>
-                <a-row :gutter="8"
-                       style="margin: 0 -4px">
+              </a-form-model-item>
+              <a-form-model-item prop="txtcode" ref="txtcode">
+                <a-row :gutter="8" style="margin: 0 -4px">
                   <a-col :span="16">
-                    <a-input size="large"
-                             placeholder="验证码"
-                             v-decorator="[
-                'codetext',
-                {rules: [{ required: true, message: '请输入验证码' }]},]">
-                      <a-icon slot="prefix"
-                              type="safety-certificate" />
+                    <a-input size="large" v-model="form.txtcode" placeholder="验证码">
+                      <a-icon slot="prefix" type="safety-certificate" />
                     </a-input>
                   </a-col>
-                  <a-col :span="8"
-                         style="padding-left: 4px">
-                    <img :src="codeUrl"
-                         @click="getCode" />
+                  <a-col :span="8" style="padding-left: 4px">
+                    <img :src="codeUrl" @click="getTxtCode" />
                   </a-col>
                 </a-row>
-              </a-form-item>
-              <a-form-item>
-                <a-select size="large" default-value="10001">
-                  <a-select-option value="10001">
-                    重庆市第一实验中学
-                  </a-select-option>
-                  <a-select-option value="10002">
-                    重庆北碚区西师附中
-                  </a-select-option>
-                  <a-select-option value="10003">
-                    重庆沙坪坝南开中学
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
+              </a-form-model-item>
             </a-tab-pane>
-            <a-tab-pane tab="手机号登录"
-                        key="2">
-              <a-form-item>
-                <a-input size="large"
-                         placeholder="手机号码">
-                  <a-icon slot="prefix"
-                          type="mobile" />
+            <a-tab-pane tab="手机号登录" key="2">
+              <a-form-model-item prop="mobile" ref="mobile">
+                <a-input size="large" placeholder="手机号码">
+                  <a-icon slot="prefix" type="mobile" />
                 </a-input>
-              </a-form-item>
-              <a-form-item>
-                <a-row :gutter="8"
-                       style="margin: 0 -4px">
+              </a-form-model-item>
+              <a-form-model-item prop="txtcode2" ref="txtcode2">
+                <a-row :gutter="8" style="margin: 0 -4px">
                   <a-col :span="16">
-                    <a-input size="large"
-                             placeholder="验证码">
-                      <a-icon slot="prefix"
-                              type="mail" />
+                    <a-input size="large" placeholder="验证码">
+                      <a-icon slot="prefix" type="mail" />
                     </a-input>
                   </a-col>
-                  <a-col :span="8"
-                         style="padding-left: 4px">
-                    <a-button style="width: 100%"
-                              class="captcha-button"
-                              size="large">获取验证码</a-button>
+                  <a-col :span="8" style="padding-left: 4px">
+                    <a-button style="width: 100%" class="captcha-button" size="large">获取验证码</a-button>
                   </a-col>
                 </a-row>
-              </a-form-item>
-              <a-form-item>
-                <a-select size="large" default-value="10001">
-                  <a-select-option value="10001">
-                    重庆市第一实验中学
-                  </a-select-option>
-                  <a-select-option value="10002">
-                    重庆北碚区西师附中
-                  </a-select-option>
-                  <a-select-option value="10003">
-                    重庆沙坪坝南开中学
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
+              </a-form-model-item>
             </a-tab-pane>
           </a-tabs>
           <div>
-            <a-checkbox :checked="loginInfo.rememberMe"
-                        @change="onRembme">自动登录</a-checkbox>
+            <a-checkbox :checked="form.rememberMe"
+                        @change="onRemember">自动登录</a-checkbox>
             <router-link style="float: right"
                          :to="{ path: '/forgetpwd' }">忘记密码</router-link>
           </div>
-          <a-form-item>
+          <a-form-model-item>
             <a-button :loading="logging"
                       style="width: 100%;margin-top: 24px"
                       size="large"
-                      htmlType="submit"
-                      type="primary">登录</a-button>
-          </a-form-item>
-        </a-form>
+                      type="primary"
+                      @click="onLogin"
+                      >登录</a-button>
+          </a-form-model-item>
+        </a-form-model>
       </div>
     </div>
-    <global-footer :link-list="linkList"
-                   :copyright="copyright" />
+    <global-footer :link-list="linkList" :copyright="copyright" />
   </div>
 </template>
 
@@ -153,17 +91,21 @@ export default {
   components: { GlobalFooter },
   data () {
     return {
-      form: this.$form.createForm(this),
       redirect: undefined,
       logging: false,
-      errinfo: '',
       codeUrl: '',
-      loginInfo: {
-        username: 'admin',
-        password: '123',
-        rememberMe: false,
-        code: '',
-        uuid: ''
+      renterList: [],
+      form: {
+        username: undefined,
+        password: undefined,
+        txtcode: '',
+        uuid: '',
+        rememberMe: false
+      },
+      rules: {
+        username: [{ required: true, message: '请输入您的账号', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入您的密码', trigger: 'blur' }],
+        txtcode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       }
     }
   },
@@ -187,36 +129,33 @@ export default {
     }
   },
   created () {
-    this.getCode()
+    this.getTxtCode()
   },
   methods: {
-    getCode () {
+    getTxtCode () {
+      const that = this
       getCodeImg().then(res => {
-        this.codeUrl = 'data:image/gif;base64,' + res.img
-        this.loginInfo.uuid = res.uuid
+        that.codeUrl = 'data:image/gif;base64,' + res.img
+        that.form.uuid = res.uuid
       })
     },
-    onRembme (e) {
-      this.loginInfo.rememberMe = !this.loginInfo.rememberMe
+    onRemember () {
+      this.form.rememberMe = !this.form.rememberMe
     },
-    onSubmit (e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.logging = true
+    onLogin () {
+      const that = this
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          that.logging = true
 
-          this.loginInfo.username = this.form.getFieldValue('username')
-          this.loginInfo.password = this.form.getFieldValue('password')
-          this.loginInfo.code = this.form.getFieldValue('codetext')
-
-          this.$store
-            .dispatch('suser/Login', this.loginInfo)
+          that.$store
+            .dispatch('suser/Login', that.form)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/home/index' })
+              that.$router.push({ path: that.redirect || '/home/index' })
             })
             .catch(() => {
-              this.logging = false
-              this.getCode()
+              that.logging = false
+              that.getTxtCode()
             })
         }
       })

@@ -3,6 +3,7 @@ import stores from '../stores'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/myutil/cookie'
+import { getTopMenus } from '@/api/menu'
 
 NProgress.configure({ showSpinner: false })
 
@@ -20,14 +21,19 @@ router.beforeEach((to, from, next) => {
       if (stores.state.suser.permits.length === 0) {
         // 拉取user_info
         stores.dispatch('suser/GetInfo').then(res => {
-          // 根据父菜单生成可访问的路由表
-          stores.dispatch('menus/GenertRoutes', '6000001249602645').then(accessRoutes => {
-            router.options.routes = []
-            router.options.routes = stores.state.menus.routes
-            // router.addRoutes(accessRoutes) // 动态添加可访问路由表
-            router.$addRoutes(accessRoutes)
+          getTopMenus().then(response => {
+            if (response.code === 200 && response.data != null && response.data.length > 0) {
+              let parentNo = response.data[0].no
+              // 根据父菜单生成可访问的路由表
+              stores.dispatch('menus/GenertRoutes', parentNo).then(accessRoutes => {
+                router.options.routes = []
+                router.options.routes = stores.state.menus.routes
+                // router.addRoutes(accessRoutes) // 动态添加可访问路由表
+                router.$addRoutes(accessRoutes)
 
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+                next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+              })
+            }
           })
         })
           .catch(e => {

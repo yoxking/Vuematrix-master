@@ -65,7 +65,7 @@
         <vxe-table-column field="rcnname"
                           title="租户名称"></vxe-table-column>
         <vxe-table-column field="appCode"
-                          title="服务编码"></vxe-table-column>
+                          title="服务编号"></vxe-table-column>
         <vxe-table-column field="classNo"
                           title="类型"
                           show-overflow></vxe-table-column>
@@ -91,6 +91,7 @@
 
 <script>
 import { listRenterinfo, delRenterinfo, exptRenterinfo } from '@/api/system/renterinfo'
+import initial from './Initial'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -136,12 +137,12 @@ export default {
     handleAdd () {
       this.$layer.iframe({
         content: {
-          content: edit,
+          content: initial,
           parent: this,
           data: { id: '' }
         },
         area: ['950px', '700px'],
-        title: '新增',
+        title: '初始化',
         maxmin: true,
         shade: true,
         shadeClose: false

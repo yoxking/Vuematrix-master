@@ -81,3 +81,11 @@ export function exptSuserinfo (data) {
     data: data
   })
 }
+
+// 校验用户名是否重复
+export function checkLoginName (name) {
+  return request({
+    url: '/sys/suserinfo/checkLoginName/' + name,
+    method: 'get'
+  })
+}

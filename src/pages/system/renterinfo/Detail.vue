@@ -32,7 +32,7 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="服务编码"
+          <a-form-item label="服务编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.appCode}}

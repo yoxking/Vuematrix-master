@@ -20,14 +20,14 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="租户中文名称"
+          <a-form-model-item label="中文名称"
                              prop="rcnname"
                              ref="rcnname">
             <a-input v-model="form.rcnname" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="租户英文名称"
+          <a-form-model-item label="英文名称"
                              prop="renname"
                              ref="renname">
             <a-input v-model="form.renname" />
@@ -36,23 +36,19 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="服务编码"
-                             prop="appCode"
-                             ref="appCode">
-            <a-input v-model="form.appCode" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
           <a-form-model-item label="租户类型"
                              prop="classNo"
                              ref="classNo">
             <a-tree-select v-model="form.classNo"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -214,19 +210,20 @@ export default {
         renname: '',
         classNo: '',
         orderNo: '1',
-        appCode: '',
         appUrl: '',
         appVer: '1.0',
         telephone: '',
         email: '',
         summary: '',
+        edogNo: '',
         edogType: 1,
         registDate: '',
         activeDate: '',
         activeCount: 1,
         activeCode: '',
         checkState: '1',
-        comments: ''
+        comments: '',
+        appCode: ''
       },
       rules: {
         appCnname: [
