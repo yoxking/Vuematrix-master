@@ -30,14 +30,14 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd" v-hasPermit="['system:workflows:addnew']" type="primary">新建</a-button>
-        <a-button @click="handleDel" v-hasPermit="['system:workflows:delete']">删除</a-button>
+        <a-button @click="handleAdd" v-hasPermit="['wkflow:workflows:addnew']" type="primary">新增</a-button>
+        <a-button @click="handleDel" v-hasPermit="['wkflow:workflows:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit" v-hasPermit="['system:workflows:audit']">审批</a-menu-item>
-            <a-menu-item key="import" v-hasPermit="['system:workflows:import']">导入</a-menu-item>
-            <a-menu-item key="export" v-hasPermit="['system:workflows:export']">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['wkflow:workflows:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['wkflow:workflows:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['wkflow:workflows:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -71,9 +71,9 @@
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作" width="300">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="designFlow(row.flowNo)" v-hasPermit="['system:workflows:flow']">设计流程</vxe-button>
-            <vxe-button type="text" @click="handleEdt(row.flowNo)" v-hasPermit="['system:workflows:update']">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.flowNo)" v-hasPermit="['system:workflows:detail']">详细</vxe-button>
+            <vxe-button type="text" @click="designFlow(row.flowNo)" v-hasPermit="['wkflow:workflows:dflow']">设计流程</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.flowNo)" v-hasPermit="['wkflow:workflows:update']">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.flowNo)" v-hasPermit="['wkflow:workflows:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>

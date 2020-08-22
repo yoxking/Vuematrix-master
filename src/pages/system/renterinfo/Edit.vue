@@ -226,11 +226,11 @@ export default {
         appCode: ''
       },
       rules: {
-        appCnname: [
+        rcnname: [
           { required: true, message: '请输入名称', trigger: 'change' }
         ],
-        appCode: [
-          { required: true, message: '请输入编码', trigger: 'change' }
+        renname: [
+          { required: true, message: '请输入名称', trigger: 'change' }
         ]
       },
       treeData: []

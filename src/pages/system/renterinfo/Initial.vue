@@ -9,6 +9,7 @@
     <div class="steps-content">
       <a-form-model ref="ruleForm"
                     :model="form"
+                    :rules="rules"
                     :label-col="labelCol"
                     :wrapper-col="wrapperCol">
         <div v-if="current==0">
@@ -185,82 +186,173 @@
             </a-col>
           </a-row>
         </div>
-        <div v-if="current==3" class="descbox">
+        <div v-if="current==3"
+             class="descbox">
           <a-descriptions title="初始化信息校验结果">
             <a-descriptions-item label="中文名称">
               {{form.rcnname}}
-              <a-icon type="check-circle" v-if="form.rcnname!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.rcnname===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.rcnname!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.rcnname===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="英文名称">
               {{form.renname}}
-              <a-icon type="check-circle" v-if="form.renname!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.renname===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.renname!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.renname===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="类型">
               {{form.classNo}}
-              <a-icon type="check-circle" v-if="form.classNo!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.classNo===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.classNo!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.classNo===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="账号">
               {{form.username}}
-              <a-icon type="check-circle" v-if="form.username!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.username===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.username!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.username===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="电话">
               {{form.telephone}}
-              <a-icon type="check-circle" v-if="form.telephone!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.telephone===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.telephone!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.telephone===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="邮箱">
               {{form.email}}
-              <a-icon type="check-circle" v-if="form.email!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.email===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.email!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.email===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="服务Url">
               {{form.appUrl}}
-              <a-icon type="check-circle" v-if="form.appUrl!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.appUrl===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.appUrl!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.appUrl===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="服务Ver">
               {{form.appVer}}
-              <a-icon type="check-circle" v-if="form.appVer!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.appVer===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.appVer!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.appVer===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="加密狗编号">
               {{form.edogNo}}
-              <a-icon type="check-circle" v-if="form.edogNo!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.edogNo===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.edogNo!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.edogNo===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="加密狗型号">
               {{form.edogType}}
-              <a-icon type="check-circle" v-if="form.edogType!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.edogType===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.edogType!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.edogType===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="注册日期">
               {{form.registDate}}
-              <a-icon type="check-circle" v-if="form.registDate!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.registDate===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.registDate!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.registDate===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="有效日期">
               {{form.activeDate}}
-              <a-icon type="check-circle" v-if="form.activeDate!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.activeDate===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.activeDate!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.activeDate===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="注册数量">
               {{form.activeCount}}
-              <a-icon type="check-circle" v-if="form.activeCount!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.activeCount===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.activeCount!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.activeCount===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="注册码">
               {{form.activeCode}}
-              <a-icon type="check-circle" v-if="form.activeCode!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.activeCode===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.activeCode!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.activeCode===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
             <a-descriptions-item label="状态">
               {{form.checkState}}
-              <a-icon type="check-circle" v-if="form.checkState!==''"  theme="twoTone" two-tone-color="#52c41a"/>
-              <a-icon type="close-circle" v-if="form.checkState===''"  theme="twoTone" two-tone-color="#eb2f96"/>
+              <a-icon type="check-circle"
+                      v-if="form.checkState!==''"
+                      theme="twoTone"
+                      two-tone-color="#52c41a" />
+              <a-icon type="close-circle"
+                      v-if="form.checkState===''"
+                      theme="twoTone"
+                      two-tone-color="#eb2f96" />
             </a-descriptions-item>
           </a-descriptions>
         </div>
@@ -356,6 +448,17 @@ export default {
         comments: '',
         appCode: ''
       },
+      rules: {
+        rcnname: [
+          { required: true, message: '请输入名称', trigger: 'change' }
+        ],
+        username: [
+          { required: true, message: '请输入账号', trigger: 'change' }
+        ],
+        telephone: [
+          { required: true, message: '请输入电话', trigger: 'change' }
+        ]
+      },
       treeData: []
     }
   },
@@ -364,7 +467,14 @@ export default {
       this.current--
     },
     next () {
-      this.current++
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          this.current++
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     onOk () {
       const that = this
@@ -403,9 +513,9 @@ export default {
   padding: 10px 20px;
   width: 100%;
 }
-.descbox{
+.descbox {
   margin: 0;
-  padding:5px 20px;
+  padding: 5px 20px;
 }
 .steps-content {
   margin-top: 16px;

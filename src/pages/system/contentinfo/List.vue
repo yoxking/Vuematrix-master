@@ -30,7 +30,7 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd" v-hasPermit="['system:contentinfo:addnew']" type="primary">新建</a-button>
+        <a-button @click="handleAdd" v-hasPermit="['system:contentinfo:addnew']" type="primary">新增</a-button>
         <a-button @click="handleDel" v-hasPermit="['system:contentinfo:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"

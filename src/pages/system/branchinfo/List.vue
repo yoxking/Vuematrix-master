@@ -31,7 +31,7 @@
     <div>
       <div class="operator">
         <a-button @click="handleAdd"
-                  type="primary" v-hasPermit="['system:branchinfo:addnew']">新建</a-button>
+                  type="primary" v-hasPermit="['system:branchinfo:addnew']">新增</a-button>
         <a-button @click="handleDel" v-hasPermit="['system:branchinfo:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"

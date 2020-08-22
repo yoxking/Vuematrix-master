@@ -30,14 +30,14 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd" v-hasPermit="['system:flowarchivs:addnew']" type="primary">新建</a-button>
-        <a-button @click="handleDel" v-hasPermit="['system:flowarchivs:delete']">删除</a-button>
+        <a-button @click="handleAdd" v-hasPermit="['wkflow:flowarchivs:addnew']" type="primary">新增</a-button>
+        <a-button @click="handleDel" v-hasPermit="['wkflow:flowarchivs:delete']">删除</a-button>
         <a-dropdown>
           <a-menu @click="handleMenu"
                   slot="overlay">
-            <a-menu-item key="audit" v-hasPermit="['system:flowarchivs:audit']">审批</a-menu-item>
-            <a-menu-item key="import" v-hasPermit="['system:flowarchivs:import']">导入</a-menu-item>
-            <a-menu-item key="export" v-hasPermit="['system:flowarchivs:export']">导出</a-menu-item>
+            <a-menu-item key="audit" v-hasPermit="['wkflow:flowarchivs:audit']">审批</a-menu-item>
+            <a-menu-item key="import" v-hasPermit="['wkflow:flowarchivs:import']">导入</a-menu-item>
+            <a-menu-item key="export" v-hasPermit="['wkflow:flowarchivs:export']">导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -71,8 +71,8 @@
                           show-overflow="tooltip"></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.archvNo)" v-hasPermit="['system:flowarchivs:update']">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.archvNo)" v-hasPermit="['system:flowarchivs:detail']">详细</vxe-button>
+            <vxe-button type="text" @click="handleEdt(row.archvNo)" v-hasPermit="['wkflow:flowarchivs:update']">编辑</vxe-button>
+            <vxe-button type="text" @click="handleDet(row.archvNo)" v-hasPermit="['wkflow:flowarchivs:detail']">详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
