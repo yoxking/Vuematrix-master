@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询岗位信息列表
 export function listPostinfo (data) {
   return request({
-    url: '/sys/postinfo/list',
+    url: '/system/postinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listPostinfo (data) {
 // 查询岗位信息详细
 export function getPostinfo (id) {
   return request({
-    url: '/sys/postinfo/' + id,
+    url: '/system/postinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getPostinfo (id) {
 // 新增岗位信息
 export function addPostinfo (data) {
   return request({
-    url: '/sys/postinfo',
+    url: '/system/postinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addPostinfo (data) {
 // 修改岗位信息
 export function uptPostinfo (data) {
   return request({
-    url: '/sys/postinfo',
+    url: '/system/postinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptPostinfo (data) {
 // 删除岗位信息
 export function delPostinfo (ids) {
   return request({
-    url: '/sys/postinfo/' + ids,
+    url: '/system/postinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delPostinfo (ids) {
 // 导出岗位信息
 export function exptPostinfo (data) {
   return request({
-    url: '/sys/postinfo/export',
+    url: '/system/postinfo/export',
     method: 'post',
     data: data
   })

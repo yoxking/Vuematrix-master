@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询应用信息列表
 export function listRenterinfo (data) {
   return request({
-    url: '/sys/renterinfo/list',
+    url: '/system/renterinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listRenterinfo (data) {
 // 查询内容信息列表
 export function getClasslist () {
   return request({
-    url: '/sys/renterinfo/classlist',
+    url: '/system/renterinfo/classlist',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getClasslist () {
 // 查询应用信息详细
 export function getRenterinfo (id) {
   return request({
-    url: '/sys/renterinfo/' + id,
+    url: '/system/renterinfo/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getRenterinfo (id) {
 // 新增应用信息
 export function addRenterinfo (data) {
   return request({
-    url: '/sys/renterinfo',
+    url: '/system/renterinfo',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addRenterinfo (data) {
 // 修改应用信息
 export function uptRenterinfo (data) {
   return request({
-    url: '/sys/renterinfo',
+    url: '/system/renterinfo',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function uptRenterinfo (data) {
 // 删除应用信息
 export function delRenterinfo (ids) {
   return request({
-    url: '/sys/renterinfo/' + ids,
+    url: '/system/renterinfo/' + ids,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delRenterinfo (ids) {
 // 导出应用信息
 export function exptRenterinfo (data) {
   return request({
-    url: '/sys/renterinfo/export',
+    url: '/system/renterinfo/export',
     method: 'post',
     data: data
   })
@@ -63,7 +63,7 @@ export function exptRenterinfo (data) {
 // 初始化信息
 export function InitalRenter (data) {
   return request({
-    url: '/sys/renterinfo/initialize',
+    url: '/system/renterinfo/initialize',
     method: 'post',
     data: data
   })

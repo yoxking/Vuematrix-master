@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询注册用户信息列表
 export function listRuserinfo (data) {
   return request({
-    url: '/sys/ruserinfo/list',
+    url: '/system/ruserinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listRuserinfo (data) {
 // 查询注册用户信息详细
 export function getRuserinfo (id) {
   return request({
-    url: '/sys/ruserinfo/' + id,
+    url: '/system/ruserinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getRuserinfo (id) {
 // 新增注册用户信息
 export function addRuserinfo (data) {
   return request({
-    url: '/sys/ruserinfo',
+    url: '/system/ruserinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addRuserinfo (data) {
 // 修改注册用户信息
 export function uptRuserinfo (data) {
   return request({
-    url: '/sys/ruserinfo',
+    url: '/system/ruserinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptRuserinfo (data) {
 // 删除注册用户信息
 export function delRuserinfo (ids) {
   return request({
-    url: '/sys/ruserinfo/' + ids,
+    url: '/system/ruserinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delRuserinfo (ids) {
 // 导出注册用户信息
 export function exptRuserinfo (data) {
   return request({
-    url: '/sys/ruserinfo/export',
+    url: '/system/ruserinfo/export',
     method: 'post',
     data: data
   })

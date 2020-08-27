@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询【请填写功能名称】列表
 export function listFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchivs/list',
+    url: '/wkflow/flowarchivs/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listFlowarchivs (data) {
 // 查询【请填写功能名称】详细
 export function getFlowarchivs (id) {
   return request({
-    url: '/flow/flowarchivs/' + id,
+    url: '/wkflow/flowarchivs/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getFlowarchivs (id) {
 // 新增【请填写功能名称】
 export function addFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchivs',
+    url: '/wkflow/flowarchivs',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addFlowarchivs (data) {
 // 修改【请填写功能名称】
 export function uptFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchivs',
+    url: '/wkflow/flowarchivs',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptFlowarchivs (data) {
 // 删除【请填写功能名称】
 export function delFlowarchivs (ids) {
   return request({
-    url: '/flow/flowarchivs/' + ids,
+    url: '/wkflow/flowarchivs/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delFlowarchivs (ids) {
 // 导出【请填写功能名称】
 export function exptFlowarchivs (data) {
   return request({
-    url: '/flow/flowarchivs/export',
+    url: '/wkflow/flowarchivs/export',
     method: 'post',
     data: data
   })

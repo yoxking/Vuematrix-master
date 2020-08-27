@@ -1,112 +1,17 @@
 <template>
   <div class="wrapbox">
     <br />
-    <a-form>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="编号"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.mssgNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.mssgType}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="标题"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.mtitle}}
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="收件人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.mreceiver}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="发件人"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.msender}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="消息内容"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.mcontent}}
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="消息附件"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.attachfile}}
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="发送时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.sendTime}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="收件时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.receiveTime}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="阅读状态"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.readState}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.comments}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-form>
+    <div>
+     <div class="title">{{model.mtitle}}</div>
+     <div class="subtitle">消息类型:{{model.mssgType}} &nbsp;&nbsp;&nbsp;&nbsp;发送人:{{model.msender}} &nbsp;&nbsp;&nbsp;&nbsp;发送时间:{{parseTime(model.sendTime, '{y}-{m}-{d} {h}:{i}:{s}')}}  &nbsp;&nbsp;&nbsp;&nbsp;阅读状态:{{model.readState}}</div>
+     <a-divider />
+     <div class="mcontent">
+       {{model.mcontent}}
+     </div>
+     <div class="mattach">
+       <a :href="model.attachfile" target="blank">附件下载</a>
+     </div>
+    </div>
     <a-divider />
     <div class="btnbox">
       <a-button @click="doClose">关闭</a-button>
@@ -175,6 +80,20 @@ export default {
   margin: 0;
   padding: 10px;
   width:100%;
+}
+.title{
+  text-align: center;
+  font-size: 20px;
+}
+.subtitle{
+  text-align: center;
+  font-size: 12px;
+}
+.mcontent{
+  padding: 0 20px;
+}
+.mattach{
+  padding: 0 20px;
 }
 .btnbox {
   text-align: center;

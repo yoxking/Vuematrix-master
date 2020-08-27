@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询单字段列表
 export function listTabcolumn (data) {
   return request({
-    url: '/flow/tabcolumn/list',
+    url: '/wkflow/tabcolumn/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listTabcolumn (data) {
 // 查询单字段详细
 export function getTabcolumn (id) {
   return request({
-    url: '/flow/tabcolumn/' + id,
+    url: '/wkflow/tabcolumn/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTabcolumn (id) {
 // 新增单字段
 export function addTabcolumn (data) {
   return request({
-    url: '/flow/tabcolumn',
+    url: '/wkflow/tabcolumn',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTabcolumn (data) {
 // 修改单字段
 export function uptTabcolumn (data) {
   return request({
-    url: '/flow/tabcolumn',
+    url: '/wkflow/tabcolumn',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptTabcolumn (data) {
 // 删除单字段
 export function delTabcolumn (ids) {
   return request({
-    url: '/flow/tabcolumn/' + ids,
+    url: '/wkflow/tabcolumn/' + ids,
     method: 'delete'
   })
 }

@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询流程委托列表
 export function listFlowentrust (data) {
   return request({
-    url: '/flow/flowentrust/list',
+    url: '/wkflow/flowentrust/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listFlowentrust (data) {
 // 查询流程委托详细
 export function getFlowentrust (id) {
   return request({
-    url: '/flow/flowentrust/' + id,
+    url: '/wkflow/flowentrust/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getFlowentrust (id) {
 // 新增流程委托
 export function addFlowentrust (data) {
   return request({
-    url: '/flow/flowentrust',
+    url: '/wkflow/flowentrust',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addFlowentrust (data) {
 // 修改流程委托
 export function uptFlowentrust (data) {
   return request({
-    url: '/flow/flowentrust',
+    url: '/wkflow/flowentrust',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptFlowentrust (data) {
 // 删除流程委托
 export function delFlowentrust (ids) {
   return request({
-    url: '/flow/flowentrust/' + ids,
+    url: '/wkflow/flowentrust/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delFlowentrust (ids) {
 // 导出流程委托
 export function exptFlowentrust (data) {
   return request({
-    url: '/flow/flowentrust/export',
+    url: '/wkflow/flowentrust/export',
     method: 'post',
     data: data
   })

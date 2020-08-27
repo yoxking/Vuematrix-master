@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询字典数据列表
 export function listDictdata (data) {
   return request({
-    url: '/sys/dictdata/list',
+    url: '/system/dictdata/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listDictdata (data) {
 // 查询内容信息列表
 export function getTypelist () {
   return request({
-    url: '/sys/dictdata/typelist',
+    url: '/system/dictdata/typelist',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTypelist () {
 // 查询字典数据详细
 export function getDictdata (id) {
   return request({
-    url: '/sys/dictdata/' + id,
+    url: '/system/dictdata/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getDictdata (id) {
 // 新增字典数据
 export function addDictdata (data) {
   return request({
-    url: '/sys/dictdata',
+    url: '/system/dictdata',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addDictdata (data) {
 // 修改字典数据
 export function uptDictdata (data) {
   return request({
-    url: '/sys/dictdata',
+    url: '/system/dictdata',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function uptDictdata (data) {
 // 删除字典数据
 export function delDictdata (ids) {
   return request({
-    url: '/sys/dictdata/' + ids,
+    url: '/system/dictdata/' + ids,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delDictdata (ids) {
 // 导出字典数据
 export function exptDictdata (data) {
   return request({
-    url: '/sys/dictdata/export',
+    url: '/system/dictdata/export',
     method: 'post',
     data: data
   })

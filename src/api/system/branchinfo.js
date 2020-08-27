@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询分支信息列表
 export function listBranchinfo (data) {
   return request({
-    url: '/sys/branchinfo/list',
+    url: '/system/branchinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listBranchinfo (data) {
 // 查询分支信息详细
 export function getBranchinfo (id) {
   return request({
-    url: '/sys/branchinfo/' + id,
+    url: '/system/branchinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getBranchinfo (id) {
 // 新增分支信息
 export function addBranchinfo (data) {
   return request({
-    url: '/sys/branchinfo',
+    url: '/system/branchinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addBranchinfo (data) {
 // 修改分支信息
 export function uptBranchinfo (data) {
   return request({
-    url: '/sys/branchinfo',
+    url: '/system/branchinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptBranchinfo (data) {
 // 删除分支信息
 export function delBranchinfo (ids) {
   return request({
-    url: '/sys/branchinfo/' + ids,
+    url: '/system/branchinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delBranchinfo (ids) {
 // 导出分支信息
 export function exptBranchinfo (data) {
   return request({
-    url: '/sys/branchinfo/export',
+    url: '/system/branchinfo/export',
     method: 'post',
     data: data
   })

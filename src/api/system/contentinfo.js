@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询内容信息列表
 export function listContentinfo (data) {
   return request({
-    url: '/sys/contentinfo/list',
+    url: '/system/contentinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listContentinfo (data) {
 // 查询内容信息列表
 export function getClasslist () {
   return request({
-    url: '/sys/contentinfo/classlist',
+    url: '/system/contentinfo/classlist',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getClasslist () {
 // 查询内容信息详细
 export function getContentinfo (id) {
   return request({
-    url: '/sys/contentinfo/' + id,
+    url: '/system/contentinfo/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getContentinfo (id) {
 // 新增内容信息
 export function addContentinfo (data) {
   return request({
-    url: '/sys/contentinfo',
+    url: '/system/contentinfo',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addContentinfo (data) {
 // 修改内容信息
 export function uptContentinfo (data) {
   return request({
-    url: '/sys/contentinfo',
+    url: '/system/contentinfo',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function uptContentinfo (data) {
 // 删除内容信息
 export function delContentinfo (ids) {
   return request({
-    url: '/sys/contentinfo/' + ids,
+    url: '/system/contentinfo/' + ids,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delContentinfo (ids) {
 // 导出内容信息
 export function exptContentinfo (data) {
   return request({
-    url: '/sys/contentinfo/export',
+    url: '/system/contentinfo/export',
     method: 'post',
     data: data
   })

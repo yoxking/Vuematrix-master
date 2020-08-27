@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询工作组列表
 export function listWorkgroup (data) {
   return request({
-    url: '/flow/workgroup/list',
+    url: '/wkflow/workgroup/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listWorkgroup (data) {
 // 查询工作组详细
 export function getWorkgroup (id) {
   return request({
-    url: '/flow/workgroup/' + id,
+    url: '/wkflow/workgroup/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getWorkgroup (id) {
 // 新增工作组
 export function addWorkgroup (data) {
   return request({
-    url: '/flow/workgroup',
+    url: '/wkflow/workgroup',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addWorkgroup (data) {
 // 修改工作组
 export function uptWorkgroup (data) {
   return request({
-    url: '/flow/workgroup',
+    url: '/wkflow/workgroup',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptWorkgroup (data) {
 // 删除工作组
 export function delWorkgroup (ids) {
   return request({
-    url: '/flow/workgroup/' + ids,
+    url: '/wkflow/workgroup/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delWorkgroup (ids) {
 // 导出工作组
 export function exptWorkgroup (data) {
   return request({
-    url: '/flow/workgroup/export',
+    url: '/wkflow/workgroup/export',
     method: 'post',
     data: data
   })

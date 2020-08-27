@@ -1,97 +1,25 @@
 <template>
   <div class="wrapbox">
     <br />
-    <a-form>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="编号"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.branchNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="标题"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.title}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="作者"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.author}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.classNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="海报"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.poster}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="摘要"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
+    <div>
+      <div class="title">{{model.title}}</div>
+      <div class="subtitle">分类:{{model.classNo}} &nbsp;&nbsp;&nbsp;&nbsp;作者:{{model.author}} &nbsp;&nbsp;&nbsp;&nbsp;发布时间:{{parseTime(model.pubdate, '{y}-{m}-{d}')}} &nbsp;&nbsp;&nbsp;&nbsp;审核状态:{{model.checkState}}</div>
+      <div class="abstract">
+        <a-descriptions>
+          <a-descriptions-item label="摘要">
             {{model.abstracts}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="正文"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.ncontents}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="发布时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.pubdate}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="状态"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.checkState}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.comments}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-form>
+          </a-descriptions-item>
+        </a-descriptions>
+      </div>
+      <a-divider />
+      <div class="mcontent">
+        {{model.ncontents}}
+      </div>
+      <div class="mattach">
+        <a :href="model.poster"
+           target="blank">附件下载</a>
+      </div>
+    </div>
     <a-divider />
     <div class="btnbox">
       <a-button @click="doClose">关闭</a-button>
@@ -157,7 +85,24 @@ export default {
 .wrapbox {
   margin: 0;
   padding: 10px;
-  width:100%;
+  width: 100%;
+}
+.title {
+  text-align: center;
+  font-size: 20px;
+}
+.subtitle {
+  text-align: center;
+  font-size: 12px;
+}
+.abstract {
+  padding: 0 20px;
+}
+.mcontent {
+  padding: 0 20px;
+}
+.mattach {
+  padding: 0 20px;
 }
 .btnbox {
   text-align: center;

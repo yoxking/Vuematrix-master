@@ -36,10 +36,10 @@
                              prop="classNo"
                              ref="classNo">
             <a-tree-select v-model="form.classNo"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
+                        placeholder="请选择..."
                         :tree-data="treeData" />
           </a-form-model-item>
         </a-col>
@@ -59,7 +59,7 @@
           <a-form-model-item label="发布时间"
                              prop="pubdate"
                              ref="pubdate">
-            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.pubdate" />
+            <a-date-picker  :format="dateFormat" v-model="form.pubdate" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -170,12 +170,13 @@ export default {
         [{ list: 'ordered' }, { list: 'bullet' }],
         ['image', 'code-block']
       ],
+      dateFormat: 'YYYY-MM-DD',
       form: {
         contzNo: '0',
         title: '',
-        classNo: '',
+        classNo: undefined,
         author: '',
-        pubdate: '',
+        pubdate: null,
         poster: '',
         abstracts: '',
         ncontents: '',
@@ -226,6 +227,7 @@ export default {
     if (this.id !== '') {
       getContentinfo(this.id).then(response => {
         that.form = response.data
+        that.form.pubdate = this.$moment(response.data.pubdate, that.dateFormat)
       })
     }
     getClasslist().then(response => {

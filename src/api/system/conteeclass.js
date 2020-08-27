@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询内容类型列表
 export function listConteeclass (data) {
   return request({
-    url: '/sys/conteeclass/list',
+    url: '/system/conteeclass/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listConteeclass (data) {
 // 查询内容类型详细
 export function getConteeclass (id) {
   return request({
-    url: '/sys/conteeclass/' + id,
+    url: '/system/conteeclass/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getConteeclass (id) {
 // 新增内容类型
 export function addConteeclass (data) {
   return request({
-    url: '/sys/conteeclass',
+    url: '/system/conteeclass',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addConteeclass (data) {
 // 修改内容类型
 export function uptConteeclass (data) {
   return request({
-    url: '/sys/conteeclass',
+    url: '/system/conteeclass',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptConteeclass (data) {
 // 删除内容类型
 export function delConteeclass (ids) {
   return request({
-    url: '/sys/conteeclass/' + ids,
+    url: '/system/conteeclass/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delConteeclass (ids) {
 // 导出内容类型
 export function exptConteeclass (data) {
   return request({
-    url: '/sys/conteeclass/export',
+    url: '/system/conteeclass/export',
     method: 'post',
     data: data
   })

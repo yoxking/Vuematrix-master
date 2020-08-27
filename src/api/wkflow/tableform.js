@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询单设计列表
 export function listTableform (data) {
   return request({
-    url: '/flow/tableform/list',
+    url: '/wkflow/tableform/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listTableform (data) {
 // 查询单设计详细
 export function getTableform (id) {
   return request({
-    url: '/flow/tableform/' + id,
+    url: '/wkflow/tableform/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTableform (id) {
 // 新增单设计
 export function addTableform (data) {
   return request({
-    url: '/flow/tableform',
+    url: '/wkflow/tableform',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTableform (data) {
 // 修改单设计
 export function uptTableform (data) {
   return request({
-    url: '/flow/tableform',
+    url: '/wkflow/tableform',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptTableform (data) {
 // 删除单设计
 export function delTableform (ids) {
   return request({
-    url: '/flow/tableform/' + ids,
+    url: '/wkflow/tableform/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delTableform (ids) {
 // 导出单设计
 export function exptTableform (data) {
   return request({
-    url: '/flow/tableform/export',
+    url: '/wkflow/tableform/export',
     method: 'post',
     data: data
   })

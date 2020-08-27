@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询工作流程按钮列表
 export function listFlowbutton (data) {
   return request({
-    url: '/flow/flowbutton/list',
+    url: '/wkflow/flowbutton/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listFlowbutton (data) {
 // 查询工作流程按钮详细
 export function getFlowbutton (id) {
   return request({
-    url: '/flow/flowbutton/' + id,
+    url: '/wkflow/flowbutton/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getFlowbutton (id) {
 // 新增工作流程按钮
 export function addFlowbutton (data) {
   return request({
-    url: '/flow/flowbutton',
+    url: '/wkflow/flowbutton',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addFlowbutton (data) {
 // 修改工作流程按钮
 export function uptFlowbutton (data) {
   return request({
-    url: '/flow/flowbutton',
+    url: '/wkflow/flowbutton',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptFlowbutton (data) {
 // 删除工作流程按钮
 export function delFlowbutton (ids) {
   return request({
-    url: '/flow/flowbutton/' + ids,
+    url: '/wkflow/flowbutton/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delFlowbutton (ids) {
 // 导出工作流程按钮
 export function exptFlowbutton (data) {
   return request({
-    url: '/flow/flowbutton/export',
+    url: '/wkflow/flowbutton/export',
     method: 'post',
     data: data
   })

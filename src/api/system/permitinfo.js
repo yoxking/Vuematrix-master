@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询菜单权限列表
 export function listPermitinfo (data) {
   return request({
-    url: '/sys/permitinfo/list',
+    url: '/system/permitinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listPermitinfo (data) {
 // 查询部门下拉树结构
 export function treePermitinfo () {
   return request({
-    url: '/sys/permitinfo/tree',
+    url: '/system/permitinfo/tree',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function treePermitinfo () {
 // 查询菜单权限详细
 export function getPermitinfo (id) {
   return request({
-    url: '/sys/permitinfo/' + id,
+    url: '/system/permitinfo/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getPermitinfo (id) {
 // 新增菜单权限
 export function addPermitinfo (data) {
   return request({
-    url: '/sys/permitinfo',
+    url: '/system/permitinfo',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addPermitinfo (data) {
 // 修改菜单权限
 export function uptPermitinfo (data) {
   return request({
-    url: '/sys/permitinfo',
+    url: '/system/permitinfo',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function uptPermitinfo (data) {
 // 删除菜单权限
 export function delPermitinfo (ids) {
   return request({
-    url: '/sys/permitinfo/' + ids,
+    url: '/system/permitinfo/' + ids,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delPermitinfo (ids) {
 // 导出菜单权限
 export function exptPermitinfo (data) {
   return request({
-    url: '/sys/permitinfo/export',
+    url: '/system/permitinfo/export',
     method: 'post',
     data: data
   })

@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询角色信息列表
 export function listRoleinfo (data) {
   return request({
-    url: '/sys/roleinfo/list',
+    url: '/system/roleinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listRoleinfo (data) {
 // 查询角色信息详细
 export function getRoleinfo (id) {
   return request({
-    url: '/sys/roleinfo/' + id,
+    url: '/system/roleinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getRoleinfo (id) {
 // 新增角色信息
 export function addRoleinfo (data) {
   return request({
-    url: '/sys/roleinfo',
+    url: '/system/roleinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addRoleinfo (data) {
 // 修改角色信息
 export function uptRoleinfo (data) {
   return request({
-    url: '/sys/roleinfo',
+    url: '/system/roleinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptRoleinfo (data) {
 // 删除角色信息
 export function delRoleinfo (ids) {
   return request({
-    url: '/sys/roleinfo/' + ids,
+    url: '/system/roleinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delRoleinfo (ids) {
 // 导出角色信息
 export function exptRoleinfo (data) {
   return request({
-    url: '/sys/roleinfo/export',
+    url: '/system/roleinfo/export',
     method: 'post',
     data: data
   })
@@ -55,7 +55,7 @@ export function exptRoleinfo (data) {
 // 查询角色信息详细
 export function getRolesusers (roleNo) {
   return request({
-    url: '/sys/roleinfo/suersource/' + roleNo,
+    url: '/system/roleinfo/suersource/' + roleNo,
     method: 'get'
   })
 }
@@ -63,7 +63,7 @@ export function getRolesusers (roleNo) {
 // 查询角色信息详细
 export function getRolepermit (roleNo) {
   return request({
-    url: '/sys/roleinfo/permittree/' + roleNo,
+    url: '/system/roleinfo/permittree/' + roleNo,
     method: 'get'
   })
 }
@@ -74,7 +74,7 @@ export function uptRolesusers (roleNo, suserNos) {
     roleNo, suserNos
   }
   return request({
-    url: '/sys/roleinfo/updateSusers',
+    url: '/system/roleinfo/updateSusers',
     method: 'post',
     params: data
   })
@@ -86,7 +86,7 @@ export function uptRolepermit (roleNo, permitNos) {
     roleNo, permitNos
   }
   return request({
-    url: '/sys/roleinfo/updatePermits',
+    url: '/system/roleinfo/updatePermits',
     method: 'post',
     params: data
   })

@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询消息信息列表
 export function listMessageinfo (data) {
   return request({
-    url: '/sys/messageinfo/list',
+    url: '/system/messageinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listMessageinfo (data) {
 // 查询消息信息详细
 export function getMessageinfo (id) {
   return request({
-    url: '/sys/messageinfo/' + id,
+    url: '/system/messageinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getMessageinfo (id) {
 // 新增消息信息
 export function addMessageinfo (data) {
   return request({
-    url: '/sys/messageinfo',
+    url: '/system/messageinfo',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addMessageinfo (data) {
 // 修改消息信息
 export function uptMessageinfo (data) {
   return request({
-    url: '/sys/messageinfo',
+    url: '/system/messageinfo',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptMessageinfo (data) {
 // 删除消息信息
 export function delMessageinfo (ids) {
   return request({
-    url: '/sys/messageinfo/' + ids,
+    url: '/system/messageinfo/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delMessageinfo (ids) {
 // 导出消息信息
 export function exptMessageinfo (data) {
   return request({
-    url: '/sys/messageinfo/export',
+    url: '/system/messageinfo/export',
     method: 'post',
     data: data
   })
@@ -55,7 +55,7 @@ export function exptMessageinfo (data) {
 // 获取未读消息列表
 export function getMyMessages () {
   return request({
-    url: '/sys/messageinfo/getMessages',
+    url: '/system/messageinfo/getMessages',
     method: 'get'
   })
 }

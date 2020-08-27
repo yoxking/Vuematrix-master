@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询流程任务列表
 export function listFlowtaske (data) {
   return request({
-    url: '/flow/flowtaske/list',
+    url: '/wkflow/flowtaske/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listFlowtaske (data) {
 // 查询流程任务详细
 export function getFlowtaske (id) {
   return request({
-    url: '/flow/flowtaske/' + id,
+    url: '/wkflow/flowtaske/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getFlowtaske (id) {
 // 新增流程任务
 export function addFlowtaske (data) {
   return request({
-    url: '/flow/flowtaske',
+    url: '/wkflow/flowtaske',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addFlowtaske (data) {
 // 修改流程任务
 export function uptFlowtaske (data) {
   return request({
-    url: '/flow/flowtaske',
+    url: '/wkflow/flowtaske',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function uptFlowtaske (data) {
 // 删除流程任务
 export function delFlowtaske (ids) {
   return request({
-    url: '/flow/flowtaske/' + ids,
+    url: '/wkflow/flowtaske/' + ids,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delFlowtaske (ids) {
 // 导出流程任务
 export function exptFlowtaske (data) {
   return request({
-    url: '/flow/flowtaske/export',
+    url: '/wkflow/flowtaske/export',
     method: 'post',
     data: data
   })

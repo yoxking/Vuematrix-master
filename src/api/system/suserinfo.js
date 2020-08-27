@@ -3,7 +3,7 @@ import request from '@/myutil/request'
 // 查询系统用户信息列表
 export function listSuserinfo (data) {
   return request({
-    url: '/sys/suserinfo/list',
+    url: '/system/suserinfo/list',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function listSuserinfo (data) {
 // 查询系统用户信息详细
 export function getSuserinfo (id) {
   return request({
-    url: '/sys/suserinfo/' + id,
+    url: '/system/suserinfo/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getSuserinfo (id) {
 // 查询注册用户信息详细2
 export function getSuserprofile () {
   return request({
-    url: '/sys/suserinfo/profile?rand=' + Date.now(),
+    url: '/system/suserinfo/profile?rand=' + Date.now(),
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getSuserprofile () {
 // 用户头像上传
 export function uploadAvatar (data) {
   return request({
-    url: '/sys/suserinfo/uploadAvatar',
+    url: '/system/suserinfo/uploadAvatar',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function uploadAvatar (data) {
 // 新增系统用户信息
 export function addSuserinfo (data) {
   return request({
-    url: '/sys/suserinfo',
+    url: '/system/suserinfo',
     method: 'post',
     data: data
   })
@@ -46,7 +46,7 @@ export function addSuserinfo (data) {
 // 修改系统用户信息
 export function uptSuserinfo (data) {
   return request({
-    url: '/sys/suserinfo',
+    url: '/system/suserinfo',
     method: 'put',
     data: data
   })
@@ -59,7 +59,7 @@ export function uptSuserpswd (oldPswd, newPswd) {
     newPswd
   }
   return request({
-    url: '/sys/suserinfo/password',
+    url: '/system/suserinfo/password',
     method: 'put',
     params: data
   })
@@ -68,7 +68,7 @@ export function uptSuserpswd (oldPswd, newPswd) {
 // 删除系统用户信息
 export function delSuserinfo (ids) {
   return request({
-    url: '/sys/suserinfo/' + ids,
+    url: '/system/suserinfo/' + ids,
     method: 'delete'
   })
 }
@@ -76,7 +76,7 @@ export function delSuserinfo (ids) {
 // 导出系统用户信息
 export function exptSuserinfo (data) {
   return request({
-    url: '/sys/suserinfo/export',
+    url: '/system/suserinfo/export',
     method: 'post',
     data: data
   })
@@ -85,7 +85,7 @@ export function exptSuserinfo (data) {
 // 校验用户名是否重复
 export function checkLoginName (name) {
   return request({
-    url: '/sys/suserinfo/checkLoginName/' + name,
+    url: '/system/suserinfo/checkLoginName/' + name,
     method: 'get'
   })
 }
