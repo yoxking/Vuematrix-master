@@ -139,7 +139,8 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
-import { getContentinfo, getClasslist, addContentinfo, uptContentinfo } from '@/api/system/contentinfo'
+import { treeConteeclass } from '@/api/system/conteeclass'
+import { getContentinfo, addContentinfo, uptContentinfo } from '@/api/system/contentinfo'
 
 export default {
   name: 'Edit',
@@ -176,7 +177,7 @@ export default {
         title: '',
         classNo: undefined,
         author: '',
-        pubdate: null,
+        pubdate: this.$moment(this.currentDate(), this.dateFormat),
         poster: '',
         abstracts: '',
         ncontents: '',
@@ -227,10 +228,10 @@ export default {
     if (this.id !== '') {
       getContentinfo(this.id).then(response => {
         that.form = response.data
-        that.form.pubdate = this.$moment(response.data.pubdate, that.dateFormat)
+        that.form.pubdate = that.$moment(response.data.pubdate, that.dateFormat)
       })
     }
-    getClasslist().then(response => {
+    treeConteeclass().then(response => {
       that.treeData = response.rows
     })
   }

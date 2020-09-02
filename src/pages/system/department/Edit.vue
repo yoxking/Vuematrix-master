@@ -137,7 +137,7 @@ export default {
         deptNo: '0',
         deptName: '',
         parentNo: '0',
-        orderNo: '1',
+        orderNo: 1,
         leader: '',
         telephone: '',
         email: '',

@@ -9,14 +9,6 @@ export function listRenterinfo (data) {
   })
 }
 
-// 查询内容信息列表
-export function getClasslist () {
-  return request({
-    url: '/system/renterinfo/classlist',
-    method: 'get'
-  })
-}
-
 // 查询应用信息详细
 export function getRenterinfo (id) {
   return request({

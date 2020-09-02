@@ -202,7 +202,7 @@ export default {
         permitName: '',
         permitCode: '',
         permitType: 'M',
-        parentNo: '1',
+        parentNo: '顶级',
         orderNo: '1',
         linkType: '0',
         menuIcon: 'none',

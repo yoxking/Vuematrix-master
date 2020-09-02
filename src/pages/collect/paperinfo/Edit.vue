@@ -35,8 +35,8 @@
                              prop="paperType"
                              ref="paperType">
             <a-radio-group v-model="form.paperType">
-              <a-radio value="0">行政</a-radio>
-              <a-radio value="1">市场</a-radio>
+              <a-radio value="0">私有</a-radio>
+              <a-radio value="1">公开</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -44,16 +44,18 @@
           <a-form-model-item label="类型"
                              prop="classNo"
                              ref="classNo">
-            <a-radio-group v-model="form.classNo">
-              <a-radio value="0">行政</a-radio>
-              <a-radio value="1">市场</a-radio>
-            </a-radio-group>
+            <a-tree-select v-model="form.classNo"
+                        :multiple="false"
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="标题"
+          <a-form-item label="描述"
                              prop="paperDesc"
                              ref="paperDesc"
                        :labelCol="{span: 3}"
@@ -99,14 +101,14 @@
           <a-form-model-item label="开始日期"
                              prop="startDate"
                              ref="startDate">
-            <a-input v-model="form.startDate" />
+            <a-date-picker v-model="form.startDate" :format="dateFormat" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="结束日期"
                              prop="enditDate"
                              ref="enditDate">
-            <a-input v-model="form.enditDate" />
+            <a-date-picker v-model="form.enditDate" :format="dateFormat" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -115,7 +117,7 @@
           <a-form-model-item label="时长"
                              prop="duration"
                              ref="duration">
-            <a-input-number v-model="form.duration" />
+            <a-input-number v-model="form.duration" />分钟
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -151,6 +153,7 @@
 </template>
 
 <script>
+import { treePaperclass } from '@/api/collect/paperclass'
 import { getPaperinfo, addPaperinfo, uptPaperinfo } from '@/api/collect/paperinfo'
 
 export default {
@@ -176,20 +179,21 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
+      dateFormat: 'YYYY-MM-DD',
       form: {
         paperNo: '0',
         paperTitle: '',
         paperType: '0',
         paperDesc: '',
-        classNo: '0',
+        classNo: undefined,
         orderNo: 1,
         paperScore: '',
         rulesQuests: '',
         paperQuests: '',
         paperRusers: '',
-        startDate: '',
-        enditDate: '',
-        duration: '',
+        startDate: this.$moment(this.currentDate(), this.dateFormat),
+        enditDate: this.$moment(this.currentDate(), this.dateFormat),
+        duration: 120,
         checkState: '1',
         comments: ''
       },
@@ -197,7 +201,8 @@ export default {
         paperTitle: [
           { required: true, message: '请输入名称', trigger: 'change' }
         ]
-      }
+      },
+      treeData: []
     }
   },
   methods: {
@@ -229,12 +234,17 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getPaperinfo(this.id).then(response => {
         that.form = response.data
+        that.form.startDate = that.$moment(response.data.startDate, that.dateFormat)
+        that.form.enditDate = that.$moment(response.data.enditDate, that.dateFormat)
       })
     }
+    treePaperclass().then(response => {
+      that.treeData = response.rows
+    })
   }
 }
 </script>

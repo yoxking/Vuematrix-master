@@ -15,7 +15,15 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-model-item label="类别"
+                             prop="questType"
+                             ref="questType">
+            <a-radio-group v-model="form.questType">
+              <a-radio value="1">填空题</a-radio>
+              <a-radio value="2">单选题</a-radio>
+              <a-radio value="3">多选题</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
@@ -31,22 +39,22 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="类别"
-                             prop="questType"
-                             ref="questType">
-            <a-radio-group v-model="form.questType">
-              <a-radio value="0">行政</a-radio>
-              <a-radio value="1">市场</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
           <a-form-model-item label="类型"
                              prop="classNo"
                              ref="classNo">
-            <a-radio-group v-model="form.classNo">
-              <a-radio value="0">行政</a-radio>
-              <a-radio value="1">市场</a-radio>
+            <a-tree-select v-model="form.classNo"
+                        :multiple="false"
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="是否必填">
+            <a-radio-group v-model="form.questMust">
+              <a-radio value="0">非必填</a-radio>
+              <a-radio value="1">必填</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -66,7 +74,7 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="得分"
+          <a-form-model-item label="总得分"
                              prop="questScore"
                              ref="questScore">
             <a-input-number v-model="form.questScore" />
@@ -80,43 +88,34 @@
           </a-form-model-item>
         </a-col>
       </a-row>
-      <a-row>
+      <div v-if="form.questType!=='1'">
+      <a-row v-for="(item,index) in form.options" :key="item.optNo">
         <a-col :span="spanCol">
-          <a-form-model-item label="状态"
-                             prop="checkState"
-                             ref="checkState">
-            <a-radio-group v-model="form.checkState">
-              <a-radio value="1">正常</a-radio>
-              <a-radio value="0">停用</a-radio>
-            </a-radio-group>
+          <a-form-model-item :label="'选项'+(index+1)">
+            <a-input v-model="item.optTitle" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-model-item label="得分">
+            <a-input-number v-model="item.optScore" style="margin-right:10px;" />
+            <a-button type="primary" shape="circle" size="small" icon="plus" @click="onAddOpt(index)" />
+            <a-button type="danger" shape="circle" size="small" icon="minus" @click="onDelOpt(index)" />
+          </a-form-model-item>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            <a-textarea v-model="form.comments"
-                        placeholder="备注信息"
-                        :autoSize="{ minRows: 3, maxRows: 5 }" />
-          </a-form-item>
-        </a-col>
-      </a-row>
+      </div>
     </a-form-model>
     <a-divider />
     <div class="btnbox">
       <a-button @click="doOk"
                 type="primary">确定</a-button>
       <a-button @click="doCancel">取消</a-button>
-    </div>
+    </div><br /><br />
   </div>
 </template>
 
 <script>
+import { treeQuestclass } from '@/api/collect/questclass'
 import { getQuestinfo, addQuestinfo, uptQuestinfo } from '@/api/collect/questinfo'
 
 export default {
@@ -146,10 +145,23 @@ export default {
         questNo: '0',
         questTitle: '',
         questDesc: '',
-        questType: '0',
-        classNo: '0',
+        questType: '1',
+        questMust: '1',
+        classNo: undefined,
         orderNo: 1,
         questScore: 0,
+        options: [
+          {
+            optNo: 1,
+            optTitle: '选项内容',
+            optScore: 0
+          },
+          {
+            optNo: 2,
+            optTitle: '选项内容',
+            optScore: 0
+          }
+        ],
         checkState: '1',
         comments: ''
       },
@@ -157,10 +169,23 @@ export default {
         questTitle: [
           { required: true, message: '请输入名称', trigger: 'change' }
         ]
-      }
+      },
+      treeData: []
     }
   },
   methods: {
+    getUuid () {
+      // const timestamp = +new Date() + ''
+      const randomNum = parseInt((1 + Math.random()) * 100) + ''
+      return randomNum
+    },
+    onAddOpt (val) {
+      let temp = {optNo: this.getUuid(), optTitle: '选项内容', optScore: 0}
+      this.form.options.splice(val + 1, 0, temp)
+    },
+    onDelOpt (val) {
+      this.form.options.splice(val, 1)
+    },
     doOk () {
       const that = this
       this.$refs.ruleForm.validate(valid => {
@@ -189,12 +214,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getQuestinfo(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeQuestclass().then(response => {
+      that.treeData = response.rows
+    })
   }
 }
 </script>

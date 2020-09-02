@@ -9,6 +9,14 @@ export function listPaperclass (data) {
   })
 }
 
+// 查询问卷类型树结构
+export function treePaperclass () {
+  return request({
+    url: '/collect/paperclass/tree',
+    method: 'get'
+  })
+}
+
 // 查询问卷类型详细
 export function getPaperclass (id) {
   return request({

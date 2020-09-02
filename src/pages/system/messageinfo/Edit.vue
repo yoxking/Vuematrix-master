@@ -94,7 +94,7 @@
           <a-form-model-item label="发送时间"
                              prop="sendTime"
                              ref="sendTime">
-            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.sendTime" />
+            <a-date-picker :format="dateFormat" v-model="form.sendTime" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -148,6 +148,7 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
+      dateFormat: 'YYYY-MM-DD',
       form: {
         mssgNo: '0',
         mtitle: '',
@@ -157,8 +158,8 @@ export default {
         mcontent: '',
         attachfile: '',
         readState: '0',
-        receiveTime: '',
-        sendTime: '',
+        receiveTime: this.$moment(this.currentDate(), this.dateFormat),
+        sendTime: this.$moment(this.currentDate(), this.dateFormat),
         checkState: '1',
         comments: ''
       },
@@ -205,6 +206,7 @@ export default {
       const that = this
       getMessageinfo(this.id).then(response => {
         that.form = response.data
+        that.form.sendTime = that.$moment(response.data.sendTime, that.dateFormat)
       })
     }
   }

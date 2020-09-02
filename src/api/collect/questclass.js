@@ -9,6 +9,14 @@ export function listQuestclass (data) {
   })
 }
 
+// 查询测题类型树结构
+export function treeQuestclass () {
+  return request({
+    url: '/collect/questclass/tree',
+    method: 'get'
+  })
+}
+
 // 查询测题类型详细
 export function getQuestclass (id) {
   return request({

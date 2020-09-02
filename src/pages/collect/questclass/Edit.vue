@@ -27,41 +27,28 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-model-item label="类型"
-                             prop="parentNo"
-                             ref="parentNo">
-            <a-radio-group v-model="form.parentNo">
-              <a-radio value="00">行政</a-radio>
-              <a-radio value="01">市场</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="上级类型"
+                             prop="parentNo"
+                             ref="parentNo">
+            <a-tree-select v-model="form.parentNo"
+                        :multiple="false"
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
+          </a-form-model-item>
+        </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="排序"
                              prop="orderNo"
                              ref="orderNo">
             <a-input-number v-model="form.orderNo" />
           </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item label="状态"
-                             prop="checkState"
-                             ref="checkState">
-            <a-radio-group v-model="form.checkState">
-              <a-radio value="1">正常</a-radio>
-              <a-radio value="0">停用</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -86,7 +73,7 @@
 </template>
 
 <script>
-import { getQuestclass, addQuestclass, uptQuestclass } from '@/api/collect/questclass'
+import { getQuestclass, treeQuestclass, addQuestclass, uptQuestclass } from '@/api/collect/questclass'
 
 export default {
   name: 'Edit',
@@ -114,16 +101,16 @@ export default {
       form: {
         classNo: '0',
         className: '',
-        parentNo: '00',
+        parentNo: undefined,
         orderNo: 1,
-        checkState: '1',
         comments: ''
       },
       rules: {
         className: [
           { required: true, message: '请输入名称', trigger: 'change' }
         ]
-      }
+      },
+      treeData: []
     }
   },
   methods: {
@@ -155,12 +142,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getQuestclass(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeQuestclass().then(response => {
+      that.treeData = response.rows
+    })
   }
 }
 </script>

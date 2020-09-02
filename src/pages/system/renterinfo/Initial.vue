@@ -130,7 +130,7 @@
               <a-form-model-item label="注册日期"
                                  prop="registDate"
                                  ref="registDate">
-                <a-date-picker :popupStyle="{ zIndex: 6000 }"
+                <a-date-picker :format="dateFormat"
                                v-model="form.registDate" />
               </a-form-model-item>
             </a-col>
@@ -138,7 +138,7 @@
               <a-form-model-item label="有效期至"
                                  prop="activeDate"
                                  ref="activeDate">
-                <a-date-picker :popupStyle="{ zIndex: 6000 }"
+                <a-date-picker :format="dateFormat"
                                v-model="form.activeDate" />
               </a-form-model-item>
             </a-col>
@@ -380,7 +380,8 @@
 </template>
 
 <script>
-import { getClasslist, InitalRenter } from '@/api/system/renterinfo'
+import { treeRenteclass } from '@/api/system/renteclass'
+import { InitalRenter } from '@/api/system/renterinfo'
 import { checkLoginName } from '@/api/system/suserinfo'
 
 export default {
@@ -425,11 +426,12 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
+      dateFormat: 'YYYY-MM-DD',
       form: {
         rentNo: '0',
         rcnname: '',
         renname: '',
-        classNo: '',
+        classNo: undefined,
         orderNo: '1',
         summary: '',
         username: '',
@@ -440,8 +442,8 @@ export default {
         appVer: '1.0',
         edogNo: '',
         edogType: 1,
-        registDate: undefined,
-        activeDate: undefined,
+        registDate: this.$moment(this.currentDate(), this.dateFormat),
+        activeDate: this.$moment(this.currentDate(), this.dateFormat),
         activeCount: 1,
         activeCode: '',
         checkState: '1',
@@ -501,7 +503,7 @@ export default {
   },
   mounted () {
     const that = this
-    getClasslist().then(response => {
+    treeRenteclass().then(response => {
       that.treeData = response.rows
     })
   }

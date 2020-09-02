@@ -245,6 +245,13 @@ export function getTime (type) {
 }
 
 /**
+ * @returns {string}
+ */
+export function currentDate () {
+  return new Date().toISOString()
+}
+
+/**
  * @param {Function} func
  * @param {number} wait
  * @param {boolean} immediate
@@ -318,7 +325,7 @@ export function uniqueArr (arr) {
 /**
  * @returns {string}
  */
-export function createUniqueString () {
+export function getUuid () {
   const timestamp = +new Date() + ''
   const randomNum = parseInt((1 + Math.random()) * 65536) + ''
   return (+(randomNum + timestamp)).toString(32)

@@ -9,6 +9,14 @@ export function listConteeclass (data) {
   })
 }
 
+// 查询内容类型树结构
+export function treeConteeclass () {
+  return request({
+    url: '/system/conteeclass/tree',
+    method: 'get'
+  })
+}
+
 // 查询内容类型详细
 export function getConteeclass (id) {
   return request({

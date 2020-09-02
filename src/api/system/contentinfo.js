@@ -9,14 +9,6 @@ export function listContentinfo (data) {
   })
 }
 
-// 查询内容信息列表
-export function getClasslist () {
-  return request({
-    url: '/system/contentinfo/classlist',
-    method: 'get'
-  })
-}
-
 // 查询内容信息详细
 export function getContentinfo (id) {
   return request({

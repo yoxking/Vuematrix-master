@@ -179,7 +179,8 @@
 </template>
 
 <script>
-import { getRenterinfo, getClasslist, addRenterinfo, uptRenterinfo } from '@/api/system/renterinfo'
+import { treeRenteclass } from '@/api/system/renteclass'
+import { getRenterinfo, addRenterinfo, uptRenterinfo } from '@/api/system/renterinfo'
 
 export default {
   name: 'Edit',
@@ -271,7 +272,7 @@ export default {
         that.form = response.data
       })
     }
-    getClasslist().then(response => {
+    treeRenteclass().then(response => {
       that.treeData = response.rows
     })
   }

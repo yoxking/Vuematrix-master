@@ -191,13 +191,13 @@ export default {
           selectedTables += item.tableName + ','
         })
         selectedTables = selectedTables.replace(/(^,)|(,$)/, '')
-        downloadZip('/gen/tableinfo/batchGenCode?tables=' + selectedTables, 'HotMatrix')
+        downloadZip('/genert/tableinfo/batchGenCode?tables=' + selectedTables, 'HotMatrix')
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
     },
     handleGen (val) {
-      downloadZip('/gen/tableinfo/genCode/' + val, 'HotMatrix')
+      downloadZip('/genert/tableinfo/genCode/' + val, 'HotMatrix')
     },
     handleDet (val) {
       this.$layer.iframe({

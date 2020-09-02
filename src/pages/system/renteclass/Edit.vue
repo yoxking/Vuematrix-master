@@ -31,6 +31,27 @@
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item label="上级类型"
+                             prop="parentNo"
+                             ref="parentNo">
+            <a-tree-select v-model="form.parentNo"
+                        :multiple="false"
+                        :allow-clear="false"
+                        :show-search="false"
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="排序"
+                             prop="orderNo"
+                             ref="orderNo">
+            <a-input-number v-model="form.orderNo" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="24">
           <a-form-item label="备注"
                        :labelCol="{span: 3}"
@@ -52,7 +73,7 @@
 </template>
 
 <script>
-import { getRenteclass, addRenteclass, uptRenteclass } from '@/api/system/renteclass'
+import { getRenteclass, treeRenteclass, addRenteclass, uptRenteclass } from '@/api/system/renteclass'
 
 export default {
   name: 'Edit',
@@ -80,13 +101,16 @@ export default {
       form: {
         classNo: '0',
         className: '',
+        parentNo: undefined,
+        orderNo: 1,
         comments: ''
       },
       rules: {
         className: [
           { required: true, message: '请输入类型名称', trigger: 'change' }
         ]
-      }
+      },
+      treeData: []
     }
   },
   methods: {
@@ -118,12 +142,15 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getRenteclass(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeRenteclass().then(response => {
+      that.treeData = response.rows
+    })
   }
 }
 </script>

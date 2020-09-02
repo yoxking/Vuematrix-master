@@ -19,13 +19,14 @@ import 'moment/locale/zh-cn'
 
 import './assets/icons' // icon
 import './comm/authority' // permission access control
-import { parseTime } from './myutil/public'
+import { parseTime, currentDate } from './myutil/public'
 import { download } from './myutil/zipload'
 
 moment.locale('zh-cn')
 Vue.prototype.$moment = moment // 赋值使用
 Vue.prototype.$axios = axios
 Vue.prototype.parseTime = parseTime
+Vue.prototype.currentDate = currentDate
 Vue.prototype.download = download
 Vue.config.productionTip = false
 Vue.use(permit)

@@ -16,6 +16,22 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
+          <a-form-item label="上级类型"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.parentNo}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="排序"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.orderNo}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
           <a-form-item label="名称"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
@@ -70,6 +86,8 @@ export default {
       model: {
         classNo: '0',
         className: '',
+        parentNo: '0',
+        orderNo: 1,
         comments: ''
       }
     }

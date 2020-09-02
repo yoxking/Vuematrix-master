@@ -9,6 +9,14 @@ export function listRenteclass (data) {
   })
 }
 
+// 查询应用类型树结构
+export function treeRenteclass () {
+  return request({
+    url: '/system/renteclass/tree',
+    method: 'get'
+  })
+}
+
 // 查询应用类型详细
 export function getRenteclass (id) {
   return request({
