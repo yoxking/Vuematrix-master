@@ -39,8 +39,8 @@
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        placeholder="请选择..."
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -186,10 +186,16 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: '请输入标题', trigger: 'change' }
+          { required: true, message: '请输入标题内容', trigger: 'blur' }
+        ],
+        classNo: [
+          { required: true, message: '请选择类型', trigger: 'change' }
         ],
         author: [
-          { required: true, message: '请输入作者', trigger: 'change' }
+          { required: true, message: '请输入文章作者', trigger: 'blur' }
+        ],
+        pubdate: [
+          { required: true, message: '请选择发布时间', trigger: 'change' }
         ]
       },
       treeData: []

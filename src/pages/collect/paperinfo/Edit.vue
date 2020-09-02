@@ -11,7 +11,8 @@
           <a-form-model-item label="编号"
                              prop="paperNo"
                              ref="paperNo">
-            <a-input v-model="form.paperNo" readOnly/>
+            <a-input v-model="form.paperNo"
+                     readOnly />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -20,13 +21,13 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="标题"
-                             prop="paperTitle"
-                             ref="paperTitle"
+          <a-form-model-item label="标题"
+                       prop="paperTitle"
+                       ref="paperTitle"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
             <a-input v-model="form.paperTitle" />
-          </a-form-item>
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
@@ -45,23 +46,23 @@
                              prop="classNo"
                              ref="classNo">
             <a-tree-select v-model="form.classNo"
-                        :multiple="false"
-                        :allow-clear="false"
-                        :show-search="false"
-                        :tree-data="treeData"
-                        placeholder="请选择类型" />
+                           :multiple="false"
+                           :allow-clear="false"
+                           :show-search="false"
+                           :tree-data="treeData"
+                           placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="描述"
-                             prop="paperDesc"
-                             ref="paperDesc"
+          <a-form-model-item label="描述"
+                       prop="paperDesc"
+                       ref="paperDesc"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
             <a-input v-model="form.paperDesc" />
-          </a-form-item>
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
@@ -101,14 +102,16 @@
           <a-form-model-item label="开始日期"
                              prop="startDate"
                              ref="startDate">
-            <a-date-picker v-model="form.startDate" :format="dateFormat" />
+            <a-date-picker v-model="form.startDate"
+                           :format="dateFormat" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="结束日期"
                              prop="enditDate"
                              ref="enditDate">
-            <a-date-picker v-model="form.enditDate" :format="dateFormat" />
+            <a-date-picker v-model="form.enditDate"
+                           :format="dateFormat" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -187,7 +190,7 @@ export default {
         paperDesc: '',
         classNo: undefined,
         orderNo: 1,
-        paperScore: '',
+        paperScore: 100,
         rulesQuests: '',
         paperQuests: '',
         paperRusers: '',
@@ -199,7 +202,16 @@ export default {
       },
       rules: {
         paperTitle: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入标题', trigger: 'blur' }
+        ],
+        classNo: [
+          { required: true, message: '请选择类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
+        ],
+        paperScore: [
+          { required: true, message: '请输入总得分', trigger: 'blur' }
         ]
       },
       treeData: []
@@ -250,12 +262,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .wrapbox {
-    margin: 0;
-    padding: 10px;
-    width:100%;
-  }
-  .btnbox {
-    text-align: center;
-  }
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+.btnbox {
+  text-align: center;
+}
 </style>

@@ -44,11 +44,11 @@
                              prop="parentNo"
                              ref="parentNo">
             <a-tree-select v-model="form.parentNo"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -203,7 +203,7 @@ export default {
         permitCode: '',
         permitType: 'M',
         parentNo: '顶级',
-        orderNo: '1',
+        orderNo: 1,
         linkType: '0',
         menuIcon: 'none',
         pathUrl: '',
@@ -216,16 +216,22 @@ export default {
       },
       rules: {
         permitName: [
-          { required: true, message: '请输入菜单名称', trigger: 'change' }
+          { required: true, message: '请输入菜单名称', trigger: 'blur' }
         ],
         permitCode: [
-          { required: true, message: '请输入权限标识', trigger: 'change' }
+          { required: true, message: '请输入权限标识', trigger: 'blur' }
+        ],
+        parentNo: [
+          { required: true, message: '请选择上级类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ],
         pathUrl: [
-          { required: true, message: '请输入页面路径', trigger: 'change' }
+          { required: true, message: '请输入页面路径', trigger: 'blur' }
         ],
         component: [
-          { required: true, message: '请输入组件路径', trigger: 'change' }
+          { required: true, message: '请输入组件路径', trigger: 'blur' }
         ]
       },
       treeData: []

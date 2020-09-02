@@ -105,10 +105,10 @@ export default {
       },
       rules: {
         dictName: [
-          { required: true, message: '请输入字典名称', trigger: 'change' }
+          { required: true, message: '请输入字典名称', trigger: 'blur' }
         ],
         dictType: [
-          { required: true, message: '请输入字典类型', trigger: 'change' }
+          { required: true, message: '请输入字典类型', trigger: 'blur' }
         ]
       }
     }

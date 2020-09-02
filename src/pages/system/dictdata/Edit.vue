@@ -31,11 +31,11 @@
                              prop="dictType"
                              ref="dictType">
             <a-tree-select v-model="form.dictType"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -123,7 +123,7 @@ export default {
       spanCol: 12,
       form: {
         dataNo: '0',
-        dictType: '',
+        dictType: undefined,
         dictCode: '',
         dictKey: '',
         dictValue: '',
@@ -132,14 +132,20 @@ export default {
         comments: ''
       },
       rules: {
+        dictType: [
+          { required: true, message: '请选择类型', trigger: 'change' }
+        ],
         dictCode: [
-          { required: true, message: '请输入编码', trigger: 'change' }
+          { required: true, message: '请输入编码', trigger: 'blur' }
         ],
         dictKey: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
         dictValue: [
-          { required: true, message: '请输入键值', trigger: 'change' }
+          { required: true, message: '请输入键值', trigger: 'blur' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       },
       treeData: []

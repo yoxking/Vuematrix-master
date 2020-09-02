@@ -110,10 +110,13 @@ export default {
       },
       rules: {
         postName: [
-          { required: true, message: '请输入岗位名称', trigger: 'change' }
+          { required: true, message: '请输入岗位名称', trigger: 'blur' }
         ],
         postCode: [
-          { required: true, message: '请输入岗位编码', trigger: 'change' }
+          { required: true, message: '请输入岗位编码', trigger: 'blur' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       }
     }

@@ -160,24 +160,27 @@ export default {
       },
       rules1: {
         userCnname: [
-          { required: true, message: '请输姓名', trigger: 'change' }
+          { required: true, message: '请输姓名', trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'change' }
         ],
         telephone: [
-          { required: true, message: '请输入电话', trigger: 'change' }
+          { required: true, message: '请输入电话', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'change' }
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' }
         ]
       },
       rules2: {
         oldpsword: [
-          { required: true, message: '请输入原密码', trigger: 'change' }
+          { required: true, message: '请输入原密码', trigger: 'blur' }
         ],
         newpsword: [
-          { required: true, message: '请输入新密码', trigger: 'change' }
+          { required: true, message: '请输入新密码', trigger: 'blur' }
         ],
         retpsword: [
-          { required: true, message: '请输入确认密码', trigger: 'change' }
+          { required: true, message: '请输入确认密码', trigger: 'blur' }
         ]
       }
     }

@@ -31,8 +31,8 @@
                              prop="userType"
                              ref="userType">
             <a-radio-group v-model="form.userType">
-              <a-radio value="00">系统</a-radio>
-              <a-radio value="01">普通</a-radio>
+              <a-radio value="0">管理员</a-radio>
+              <a-radio value="1">普通</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -50,11 +50,11 @@
                              prop="deptNo"
                              ref="deptNo">
             <a-tree-select v-model="form.deptNo"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型"  />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -176,7 +176,7 @@ export default {
         userCnname: '',
         userEnname: '',
         deptNo: '',
-        userType: '01',
+        userType: '1',
         telephone: '',
         email: '',
         sex: '1',
@@ -186,13 +186,16 @@ export default {
       },
       rules: {
         loginName: [
-          { required: true, message: '请输入账号', trigger: 'change' }
+          { required: true, message: '请输入账号', trigger: 'blur' }
         ],
         userCnname: [
-          { required: true, message: '请输入中文姓名', trigger: 'change' }
+          { required: true, message: '请输入中文姓名', trigger: 'blur' }
         ],
         telephone: [
-          { required: true, message: '请输入电话', trigger: 'change' }
+          { required: true, message: '请输入电话', trigger: 'blur' }
+        ],
+        deptNo: [
+          { required: true, message: '请选择所属部门', trigger: 'change' }
         ]
       },
       treeData: []

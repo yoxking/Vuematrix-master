@@ -31,11 +31,11 @@
                              prop="parentNo"
                              ref="parentNo">
             <a-tree-select v-model="form.parentNo"
-                        :dropdownStyle="{ zIndex: 6000 }"
                         :multiple="false"
                         :allow-clear="false"
                         :show-search="false"
-                        :tree-data="treeData" />
+                        :tree-data="treeData"
+                        placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -146,7 +146,13 @@ export default {
       },
       rules: {
         deptName: [
-          { required: true, message: '请输入部门名称', trigger: 'change' }
+          { required: true, message: '请输入部门名称', trigger: 'blur' }
+        ],
+        parentNo: [
+          { required: true, message: '请选择上级类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       },
       treeData: []

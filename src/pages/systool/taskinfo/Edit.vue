@@ -158,10 +158,16 @@ export default {
       },
       rules: {
         taskName: [
-          { required: true, message: '请输入任务名称', trigger: 'change' }
+          { required: true, message: '请输入任务名称', trigger: 'blur' }
         ],
         taskGroup: [
-          { required: true, message: '请输入分组名称', trigger: 'change' }
+          { required: true, message: '请输入分组名称', trigger: 'blur' }
+        ],
+        taskExpress: [
+          { required: true, message: '请输入表达式', trigger: 'blur' }
+        ],
+        invokeTarget: [
+          { required: true, message: '请输入调用方法', trigger: 'blur' }
         ]
       }
     }

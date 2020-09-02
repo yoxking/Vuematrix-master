@@ -107,7 +107,13 @@ export default {
       },
       rules: {
         className: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        parentNo: [
+          { required: true, message: '请选择上级类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       },
       treeData: []

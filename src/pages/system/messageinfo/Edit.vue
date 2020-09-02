@@ -165,10 +165,10 @@ export default {
       },
       rules: {
         mtitle: [
-          { required: true, message: '请输入消息标题', trigger: 'change' }
+          { required: true, message: '请输入消息标题', trigger: 'blur' }
         ],
         mreceiver: [
-          { required: true, message: '请输入收件人', trigger: 'change' }
+          { required: true, message: '请输入收件人', trigger: 'blur' }
         ]
       }
     }

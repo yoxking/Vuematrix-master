@@ -31,8 +31,8 @@
                              prop="branchType"
                              ref="branchType">
             <a-radio-group v-model="form.branchType">
-              <a-radio value="00">行政</a-radio>
-              <a-radio value="01">市场</a-radio>
+              <a-radio value="0">系统</a-radio>
+              <a-radio value="1">普通</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -156,7 +156,13 @@ export default {
       },
       rules: {
         branchName: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        branchType: [
+          { required: true, message: '请选择类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       }
     }

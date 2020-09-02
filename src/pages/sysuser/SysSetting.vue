@@ -90,19 +90,22 @@ export default {
       },
       rules: {
         siteName: [
-          { required: true, message: '请输入站点名称', trigger: 'change' }
+          { required: true, message: '请输入站点名称', trigger: 'blur' }
         ],
         siteUrl: [
-          { required: true, message: '请输入站点地址', trigger: 'change' }
+          { required: true, message: '请输入站点地址', trigger: 'blur' }
         ],
         appCode: [
-          { required: true, message: '请输入站点编码', trigger: 'change' }
+          { required: true, message: '请输入站点编码', trigger: 'blur' }
         ],
         connStr: [
-          { required: true, message: '请输入数据库连接', trigger: 'change' }
+          { required: true, message: '请输入数据库连接', trigger: 'blur' }
         ],
         siteDesc: [
-          { required: true, message: '请输入站点描述', trigger: 'change' }
+          { required: true, message: '请输入站点描述', trigger: 'blur' }
+        ],
+        runState: [
+          { required: true, message: '请选择运行状态', trigger: 'change' }
         ]
       }
     }

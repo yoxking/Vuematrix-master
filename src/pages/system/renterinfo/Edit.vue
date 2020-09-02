@@ -115,14 +115,14 @@
           <a-form-model-item label="注册日期"
                              prop="registDate"
                              ref="registDate">
-            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.registDate" />
+            <a-date-picker v-model="form.registDate" :format="dateFormat"/>
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item label="有效期至"
                              prop="activeDate"
                              ref="activeDate">
-            <a-date-picker :popupStyle="{ zIndex: 6000 }" v-model="form.activeDate" />
+            <a-date-picker v-model="form.activeDate" :format="dateFormat"/>
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -205,6 +205,7 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
+      dateFormat: 'YYYY-MM-DD',
       form: {
         rentNo: '0',
         rcnname: '',
@@ -218,8 +219,8 @@ export default {
         summary: '',
         edogNo: '',
         edogType: 1,
-        registDate: '',
-        activeDate: '',
+        registDate: null,
+        activeDate: null,
         activeCount: 1,
         activeCode: '',
         checkState: '1',
@@ -228,10 +229,16 @@ export default {
       },
       rules: {
         rcnname: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
         renname: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        classNo: [
+          { required: true, message: '请选择类型', trigger: 'change' }
+        ],
+        orderNo: [
+          { required: true, message: '请输入排序值', trigger: 'blur' }
         ]
       },
       treeData: []
@@ -270,6 +277,8 @@ export default {
     if (this.id !== '') {
       getRenterinfo(this.id).then(response => {
         that.form = response.data
+        that.form.registDate = that.$moment(response.data.registDate, that.dateFormat)
+        that.form.activeDate = that.$moment(response.data.activeDate, that.dateFormat)
       })
     }
     treeRenteclass().then(response => {
