@@ -32,16 +32,6 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="类别"
-                             prop="paperType"
-                             ref="paperType">
-            <a-radio-group v-model="form.paperType">
-              <a-radio value="0">私有</a-radio>
-              <a-radio value="1">公开</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
           <a-form-model-item label="类型"
                              prop="classNo"
                              ref="classNo">
@@ -49,20 +39,37 @@
                            :multiple="false"
                            :allow-clear="false"
                            :show-search="false"
-                           :tree-data="treeData"
+                           :tree-data="pclassTree"
                            placeholder="请选择类型" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item label="类别"
+                             prop="paperType"
+                             ref="paperType">
+            <a-radio-group v-model="form.paperType">
+              <a-radio value="1">公开</a-radio>
+              <a-radio value="2">私有</a-radio>
+            </a-radio-group>
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="描述"
-                       prop="paperDesc"
-                       ref="paperDesc"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            <a-input v-model="form.paperDesc" />
+        <a-col :span="18">
+          <a-form-model-item label="图片"
+                             prop="paperPoster"
+                             ref="paperPoster"
+                             :labelCol="{span: 4}"
+                             :wrapperCol="{span: 19}">
+            <a-input v-model="form.paperPoster" />
           </a-form-model-item>
+        </a-col>
+        <a-col :span="6">
+          <a-upload name="file"
+                    :multiple="true">
+            <a-button>
+              <a-icon type="upload" /> 上传图片</a-button>
+          </a-upload>
         </a-col>
       </a-row>
       <a-row>
@@ -83,14 +90,33 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-model-item label="规则"
-                             prop="rulesQuests"
-                             ref="rulesQuests">
-            <a-input v-model="form.rulesQuests" />
+          <a-form-model-item label="题库类型"
+                             prop="questClass"
+                             ref="questClass">
+            <a-tree-select v-model="form.questClass"
+                           :multiple="false"
+                           :allow-clear="false"
+                           :show-search="false"
+                           :tree-data="qclassTree"
+                           placeholder="请选择类型" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
+          <a-form-model-item label="题集规则"
+                             prop="questRules"
+                             ref="questRules">
+            <a-radio-group v-model="form.questRules">
+              <a-radio value="1">所有题集</a-radio>
+              <a-radio value="2">随机生成</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
           <a-form-model-item label="对象"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}"
                              prop="paperRusers"
                              ref="paperRusers">
             <a-input v-model="form.paperRusers" />
@@ -118,9 +144,9 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item label="时长"
-                             prop="duration"
-                             ref="duration">
-            <a-input-number v-model="form.duration" />分钟
+                             prop="exDuration"
+                             ref="exDuration">
+            <a-input-number v-model="form.exDuration" />分钟
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -136,13 +162,15 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="备注"
+          <a-form-model-item label="备注"
+                       prop="paperDesc"
+                       ref="paperDesc"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            <a-textarea v-model="form.comments"
-                        placeholder="备注信息"
+            <a-textarea v-model="form.paperDesc"
+                        placeholder="备注"
                         :autoSize="{ minRows: 3, maxRows: 5 }" />
-          </a-form-item>
+          </a-form-model-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -157,6 +185,7 @@
 
 <script>
 import { treePaperclass } from '@/api/collect/paperclass'
+import { treeQuestclass } from '@/api/collect/questclass'
 import { getPaperinfo, addPaperinfo, uptPaperinfo } from '@/api/collect/paperinfo'
 
 export default {
@@ -186,17 +215,19 @@ export default {
       form: {
         paperNo: '0',
         paperTitle: '',
-        paperType: '0',
+        paperPoster: '',
+        paperType: '1',
         paperDesc: '',
         classNo: undefined,
         orderNo: 1,
+        questClass: undefined,
+        questRules: '1',
         paperScore: 100,
-        rulesQuests: '',
         paperQuests: '',
         paperRusers: '',
         startDate: this.$moment(this.currentDate(), this.dateFormat),
         enditDate: this.$moment(this.currentDate(), this.dateFormat),
-        duration: 120,
+        exDuration: 120,
         checkState: '1',
         comments: ''
       },
@@ -214,7 +245,8 @@ export default {
           { required: true, message: '请输入总得分', trigger: 'blur' }
         ]
       },
-      treeData: []
+      pclassTree: [],
+      qclassTree: []
     }
   },
   methods: {
@@ -255,7 +287,10 @@ export default {
       })
     }
     treePaperclass().then(response => {
-      that.treeData = response.rows
+      that.pclassTree = response.rows
+    })
+    treeQuestclass().then(response => {
+      that.qclassTree = response.rows
     })
   }
 }

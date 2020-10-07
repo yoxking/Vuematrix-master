@@ -39,24 +39,27 @@
           </a-form-item>
         </a-col>
       </a-row>
+          <a-row>
+            <a-col :span="spanCol">
+              <a-form-model-item label="是否必填"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+                {{model.questMust}}
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="spanCol">
+               &nbsp;
+            </a-col>
+          </a-row>
       <a-row>
-        <a-col :span="24">
-          <a-form-item label="描述"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.questDesc}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="得分"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.questScore}}
           </a-form-item>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="排序"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
@@ -65,26 +68,46 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
-          <a-form-item label="状态"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.checkState}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          &nbsp;
+        <a-col :span="24">
+          <a-form-model-item label="题目"
+                             prop="questTitle"
+                             ref="questTitle"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            {{model.questTitle}}
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.comments}}
-          </a-form-item>
+          <a-form-model-item label="描述"
+                             prop="questDesc"
+                             ref="questDesc"
+                             :labelCol="{span: 3}"
+                             :wrapperCol="{span: 20}">
+            {{model.questDesc}}
+          </a-form-model-item>
         </a-col>
       </a-row>
+      <template v-if="model.questType!=='1'">
+        <a-row v-for="(item,index) in model.options"
+               :key="item.optNo">
+          <a-col :span="spanCol">
+            <a-form-model-item :label="'选项'+(index+1)"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+              {{item.optTitle}}
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="spanCol">
+            <a-form-model-item label="得分"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+              {{item.optScore}}
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </template>
     </a-form>
     <a-divider />
     <div class="btnbox">
@@ -121,10 +144,12 @@ export default {
         questNo: '0',
         questTitle: '',
         questDesc: '',
-        questType: '0',
-        classNo: '0',
+        questType: '1',
+        questMust: '1',
+        classNo: undefined,
         orderNo: 1,
         questScore: 0,
+        options: [],
         checkState: '1',
         comments: ''
       }
@@ -147,12 +172,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .wrapbox {
-    margin: 0;
-    padding: 10px;
-    width:100%;
-  }
-  .btnbox {
-    text-align: center;
-  }
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+.btnbox {
+  text-align: center;
+}
 </style>

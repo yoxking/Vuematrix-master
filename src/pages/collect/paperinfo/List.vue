@@ -6,7 +6,7 @@
           <a-row>
             <a-col :md="8"
                    :sm="24">
-              <a-form-item label="分支名称"
+              <a-form-item label="名称"
                            :labelCol="{span: 5}"
                            :wrapperCol="{span: 18, offset: 1}">
                 <a-input placeholder="请输入"
@@ -69,11 +69,11 @@
         <vxe-table-column field="checkState"
                           title="状态"
                           show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column title="操作">
+        <vxe-table-column title="操作" width="400" >
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="onDesign(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问卷设计</vxe-button>
-            <vxe-button type="text" @click="onPublish(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问卷发布</vxe-button>
+            <!--<vxe-button type="text" @click="onDesign(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问卷设计</vxe-button>-->
             <vxe-button type="text" @click="onPreview(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问卷预览</vxe-button>
+            <!--<vxe-button type="text" @click="onPublish(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问卷发布</vxe-button>-->
             <vxe-button type="text" @click="onReport(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">问题统计</vxe-button>
             <vxe-button type="text" @click="handleEdt(row.paperNo)" v-hasPermit="['collect:paperinfo:update']">编辑</vxe-button>
             <vxe-button type="text" @click="handleDet(row.paperNo)" v-hasPermit="['collect:paperinfo:detail']">详细</vxe-button>
@@ -257,7 +257,7 @@ export default {
         content: {
           content: preview,
           parent: this,
-          data: {}
+          data: { id: val }
         },
         area: ['900px', '600px'],
         title: '问卷预览',

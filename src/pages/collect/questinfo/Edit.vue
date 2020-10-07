@@ -115,7 +115,7 @@
               </a-form-model-item>
             </a-col>
           </a-row>
-          <div v-if="form.questType!=='1'">
+          <template  v-if="form.questType!=='1'">
             <a-row v-for="(item,index) in form.options"
                    :key="item.optNo">
               <a-col :span="spanCol">
@@ -140,7 +140,7 @@
                 </a-form-model-item>
               </a-col>
             </a-row>
-          </div>
+          </template>
         </a-tab-pane>
       </a-tabs>
     </a-form-model>
@@ -189,18 +189,11 @@ export default {
         classNo: undefined,
         orderNo: 1,
         questScore: 0,
-        options: [
-          {
-            optNo: 1,
-            optTitle: '选项内容',
-            optScore: 0
-          },
-          {
-            optNo: 2,
-            optTitle: '选项内容',
-            optScore: 0
-          }
-        ],
+        options: [{
+          optNo: '12',
+          optTitle: '选项内容',
+          optScore: 0
+        }],
         checkState: '1',
         comments: ''
       },

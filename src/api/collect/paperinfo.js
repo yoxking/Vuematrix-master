@@ -9,6 +9,14 @@ export function listPaperinfo (data) {
   })
 }
 
+// 查询问卷信息列表
+export function getPaperQuests (id) {
+  return request({
+    url: '/collect/paperinfo/paperQuests/' + id,
+    method: 'get'
+  })
+}
+
 // 查询问卷信息详细
 export function getPaperinfo (id) {
   return request({

@@ -25,17 +25,26 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
+          <a-form-item label="类型"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.classNo}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
           <a-form-item label="类别"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.paperType}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.classNo}}
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="图片"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.paperPoster}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -66,18 +75,27 @@
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="规则"
+          <a-form-item label="题库类型"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.rulesQuests}}
+            {{model.questClass}}
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="对象"
+          <a-form-item label="规则"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.paperRusers}}
+            {{model.questRules}}
           </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item label="对象"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.paperRusers}}
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
@@ -101,7 +119,7 @@
           <a-form-item label="时长"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.duration}}
+            {{model.exDuration}}
           </a-form-item>
         </a-col>
         <a-col :span="12">
@@ -156,17 +174,19 @@ export default {
       model: {
         paperNo: '0',
         paperTitle: '',
+        paperPoster: '',
         paperType: '0',
         paperDesc: '',
-        classNo: '0',
+        classNo: '',
         orderNo: 1,
-        paperScore: '',
-        rulesQuests: '',
+        questClass: '',
+        questRules: '',
+        paperScore: 100,
         paperQuests: '',
         paperRusers: '',
         startDate: '',
         enditDate: '',
-        duration: '',
+        exDuration: 120,
         checkState: '1',
         comments: ''
       }
