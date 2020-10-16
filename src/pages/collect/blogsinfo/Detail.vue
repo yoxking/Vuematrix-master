@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.paperNo}}
+            {{model.blogNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,11 +16,11 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="标题"
+          <a-form-model-item label="标题"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.paperTitle}}
-          </a-form-item>
+            {{model.blogTitle}}
+          </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
@@ -32,102 +32,48 @@
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="类别"
+          <a-form-item label="用户"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.paperType}}
+            {{model.ruserNo}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="图片"
+          <a-form-item label="内容"
                        :labelCol="{span: 3}"
                        :wrapperCol="{span: 20}">
-            {{model.paperPoster}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="描述"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.paperDesc}}
+            {{model.blogContent}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="得分"
+          <a-form-item label="喜欢"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.paperScore}}
+            {{model.dolikeHit}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="排序"
+          <a-form-item label="转发"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.orderNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="题库类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.questClass}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="规则"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.questRules}}
+            {{model.repostHit}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
-          <a-form-model-item label="对象"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
-            {{model.paperRusers}}
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="开始日期"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.startDate}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="结束日期"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.enditDate}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="时长"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.exDuration}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
+        <a-col :span="12">
           <a-form-item label="状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.checkState}}
           </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -143,12 +89,12 @@
     <a-divider />
     <div class="btnbox">
       <a-button @click="doClose">关闭</a-button>
-    </div><br /><br />
+    </div>
   </div>
 </template>
 
 <script>
-import { getPaperinfo } from '@/api/collect/paperinfo'
+import { getBlogsinfo } from '@/api/collect/blogsinfo'
 
 export default {
   name: 'Detail',
@@ -172,21 +118,13 @@ export default {
     return {
       spanCol: 12,
       model: {
-        paperNo: '0',
-        paperTitle: '',
-        paperPoster: '',
-        paperType: '0',
-        paperDesc: '',
+        blogNo: '0',
+        blogTitle: '',
         classNo: '',
-        orderNo: 1,
-        questClass: '',
-        questRules: '',
-        paperScore: 100,
-        paperQuests: '',
-        paperRusers: '',
-        startDate: '',
-        enditDate: '',
-        exDuration: 120,
+        ruserNo: '',
+        blogContent: '',
+        dolikeHit: 0,
+        repostHit: 0,
         checkState: '1',
         comments: ''
       }
@@ -200,7 +138,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getPaperinfo(this.id).then(response => {
+      getBlogsinfo(this.id).then(response => {
         that.model = response.data
       })
     }
@@ -209,12 +147,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .wrapbox {
-    margin: 0;
-    padding: 10px;
-    width:100%;
-  }
-  .btnbox {
-    text-align: center;
-  }
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+.btnbox {
+  text-align: center;
+}
 </style>
