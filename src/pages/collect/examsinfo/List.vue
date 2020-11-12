@@ -15,7 +15,7 @@
               >
                 <a-input
                   placeholder="请输入"
-                  v-model="queryParam.branchName"
+                  v-model="queryParam.examsTitle"
                 />
               </a-form-item>
             </a-col>
@@ -44,12 +44,12 @@
       <div class="operator">
         <a-button
           @click="handleAdd"
-          v-hasPermit="['system:branch:addnew']"
+          v-hasPermit="['collect:examsinfo:addnew']"
           type="primary"
         >新增</a-button>
         <a-button
           @click="handleDel"
-          v-hasPermit="['system:branch:delete']"
+          v-hasPermit="['collect:examsinfo:delete']"
         >删除</a-button>
         <a-dropdown>
           <a-menu
@@ -58,15 +58,15 @@
           >
             <a-menu-item
               key="audit"
-              v-hasPermit="['system:branch:audit']"
+              v-hasPermit="['collect:examsinfo:audit']"
             >审批</a-menu-item>
             <a-menu-item
               key="import"
-              v-hasPermit="['system:branch:import']"
+              v-hasPermit="['collect:examsinfo:import']"
             >导入</a-menu-item>
             <a-menu-item
               key="export"
-              v-hasPermit="['system:branch:export']"
+              v-hasPermit="['collect:examsinfo:export']"
             >导出</a-menu-item>
           </a-menu>
           <a-button>
@@ -97,35 +97,35 @@
           width="60"
         ></vxe-table-column>
         <vxe-table-column
-          field="branchNo"
+          field="examsNo"
           title="编号"
           width="120"
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column
-          field="branchName"
-          title="分支名称"
+          field="examsTitle"
+          title="测评名称"
         ></vxe-table-column>
         <vxe-table-column
-          field="branchType"
-          title="分支类型"
+          field="classNo"
+          title="类型"
         ></vxe-table-column>
         <vxe-table-column
-          field="summary"
-          title="简介"
+          field="checkState"
+          title="状态"
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button
               type="text"
-              @click="handleEdt(row.branchNo)"
-              v-hasPermit="['system:branch:update']"
+              @click="handleEdt(row.examsNo)"
+              v-hasPermit="['collect:examsinfo:update']"
             >编辑</vxe-button>
             <vxe-button
               type="text"
-              @click="handleDet(row.branchNo)"
-              v-hasPermit="['system:branch:detail']"
+              @click="handleDet(row.examsNo)"
+              v-hasPermit="['collect:examsinfo:detail']"
             >详细</vxe-button>
           </template>
         </vxe-table-column>
@@ -159,7 +159,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        branchName: ''
+        examsTitle: ''
       },
       // 查询参数
       pageParam: {
@@ -179,8 +179,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.branchName !== '') {
-        this.pageParam.condition = " branch_name like '%" + this.queryParam.branchName + "%'"
+      if (this.queryParam.examsTitle !== '') {
+        this.pageParam.condition = " exams_title like '%" + this.queryParam.examsTitle + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -215,7 +215,7 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.branchNo)
+              selectedRowKeys.push(item.examsNo)
             })
             delExamsinfo(selectedRowKeys).then(response => {
               that.getDataSource()
