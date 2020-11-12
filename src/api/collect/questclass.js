@@ -9,7 +9,7 @@ export function listQuestclass (data) {
   })
 }
 
-// 查询测题类型树结构
+// 查询问卷类型树结构
 export function treeQuestclass () {
   return request({
     url: '/collect/questclass/tree',

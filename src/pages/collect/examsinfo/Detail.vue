@@ -9,7 +9,7 @@
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.paperNo}}
+            {{model.branchNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -17,66 +17,33 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="spanCol">
           <a-form-item
-            label="标题"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
+            label="名称"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
           >
-            {{model.paperTitle}}
+            {{model.branchName}}
           </a-form-item>
         </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
           <a-form-item
             label="类型"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.classNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="类别"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.paperType}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item
-            label="图片"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-          >
-            {{model.paperPoster}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item
-            label="描述"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-          >
-            {{model.paperDesc}}
+            {{model.branchType}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
           <a-form-item
-            label="得分"
+            label="负责人"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.paperTscore}}
+            {{model.master}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -92,13 +59,35 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-item
-            label="试题数量"
+            label="电话"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.questNums}}
+            {{model.telephone}}
           </a-form-item>
         </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="邮箱"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.email}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item
+            label="简介"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            {{model.summary}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
           <a-form-item
             label="状态"
@@ -107,6 +96,9 @@
           >
             {{model.checkState}}
           </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -124,12 +116,12 @@
     <a-divider />
     <div class="btnbox">
       <a-button @click="doClose">关闭</a-button>
-    </div><br /><br />
+    </div>
   </div>
 </template>
 
 <script>
-import { getPaperinfo } from '@/api/collect/paperinfo'
+import { getExamsinfo } from '@/api/collect/examsinfo'
 
 export default {
   name: 'Detail',
@@ -153,19 +145,14 @@ export default {
     return {
       spanCol: 12,
       model: {
-        paperNo: '0',
-        paperTitle: '',
-        paperPoster: '',
-        paperDesc: '',
-        paperType: '1',
-        dataFrom: '',
-        viewType: '',
-        classNo: undefined,
+        branchNo: '0',
+        branchName: '',
+        branchType: '00',
         orderNo: 1,
-        questNums: 1,
-        paperQuests: '',
-        paperTscore: 1,
-        paperRusers: '',
+        master: '',
+        telephone: '',
+        email: '',
+        summary: '',
         checkState: '1',
         comments: ''
       }
@@ -179,7 +166,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getPaperinfo(this.id).then(response => {
+      getExamsinfo(this.id).then(response => {
         that.model = response.data
       })
     }

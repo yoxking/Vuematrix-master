@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { getPaperclass } from '@/api/collect/paperclass'
+import { getExamclass } from '@/api/collect/examclass'
 
 export default {
   name: 'Detail',
@@ -100,7 +100,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getPaperclass(this.id).then(response => {
+      getExamclass(this.id).then(response => {
         that.model = response.data
       })
     }

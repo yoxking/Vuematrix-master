@@ -4,81 +4,91 @@
     <a-form>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="编号"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.pflowNo}}
+          <a-form-item
+            label="编号"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.mflowNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          &nbsp;
+          <a-form-item
+            label="测评"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsNo}}
+          </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="问卷"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="问卷"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.paperNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="对象"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="对象"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.ruserNo}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="试题"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.questNo}}
+          <a-form-item
+            label="时长"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examDuration}}
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          &nbsp;
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
-          <a-form-item label="答案"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.optNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="得分"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.optScore}}
+          <a-form-item
+            label="得分"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examTscore}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="开始时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="开始时间"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.startTime}}
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="结束时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="结束时间"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.enditTime}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="状态"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="状态"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.checkState}}
           </a-form-item>
         </a-col>
@@ -88,9 +98,11 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
+          <a-form-item
+            label="备注"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
             {{model.comments}}
           </a-form-item>
         </a-col>
@@ -104,7 +116,7 @@
 </template>
 
 <script>
-import { getPaperflows } from '@/api/collect/paperflows'
+import { getExamflows } from '@/api/collect/examflows'
 
 export default {
   name: 'Detail',
@@ -128,14 +140,14 @@ export default {
     return {
       spanCol: 12,
       model: {
-        pflowNo: '0',
+        mflowNo: '0',
+        examsNo: '',
         paperNo: '',
         ruserNo: '00',
-        questNo: 1,
-        optNo: '',
-        optScore: '',
         startTime: '',
         enditTime: '',
+        examDuration: 1,
+        examTscore: '',
         checkState: '1',
         comments: ''
       }
@@ -149,7 +161,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getPaperflows(this.id).then(response => {
+      getExamflows(this.id).then(response => {
         that.model = response.data
       })
     }
@@ -158,12 +170,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .wrapbox {
-    margin: 0;
-    padding: 10px;
-    width:100%;
-  }
-  .btnbox {
-    text-align: center;
-  }
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+.btnbox {
+  text-align: center;
+}
 </style>

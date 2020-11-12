@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapbox">
-        test
-    </div>
+  <div class="wrapbox">
+    test
+  </div>
 </template>
 
 <script>
@@ -16,9 +16,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .wrapbox {
-        margin: 0;
-        padding: 10px;
-        width:100%;
-    }
+.wrapbox {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
 </style>

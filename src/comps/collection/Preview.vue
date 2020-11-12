@@ -1,14 +1,18 @@
 <template>
   <div class="design-wrapper">
     <h3>{{paper.paperTitle}}</h3>
-    <div class="top"
-         v-if="paper.paperDesc!=''">
+    <div
+      class="top"
+      v-if="paper.paperDesc!=''"
+    >
       {{paper.paperDesc}}
     </div>
-    <a-card :loading="loading"
-            class="box-card"
-            v-for="(item,index) in quests"
-            :key="item.questNo">
+    <a-card
+      :loading="loading"
+      class="box-card"
+      v-for="(item,index) in quests"
+      :key="item.questNo"
+    >
       <div class="box-header">
         <div class="qustitle">
           <!--显示必填标识-->
@@ -23,16 +27,20 @@
 
       <!--填空题展示-->
       <template v-if="item.questType==='1'">
-        <a-textarea placeholder="请输入内容"
-                    :auto-size="{ minRows: 2, maxRows: 5 }" />
+        <a-textarea
+          placeholder="请输入内容"
+          :auto-size="{ minRows: 2, maxRows: 5 }"
+        />
       </template>
 
       <!--单选题展示-->
       <template v-if="item.questType==='2'">
         <a-radio-group v-model="item.radioValue">
-          <div class="box-item"
-               v-for="(option,index) in item.options"
-               :key="option.optNo">
+          <div
+            class="box-item"
+            v-for="(option,index) in item.options"
+            :key="option.optNo"
+          >
             <a-radio :value="option.optNo">{{index}}.{{ option.optTitle }}</a-radio>
           </div>
         </a-radio-group>
@@ -41,9 +49,11 @@
       <!--多选题展示-->
       <template v-if="item.questType==='3'">
         <a-checkbox-group v-model="item.checkboxValue">
-          <div class="box-item"
-               v-for="(option,index) in item.options"
-               :key="option.optNo">
+          <div
+            class="box-item"
+            v-for="(option,index) in item.options"
+            :key="option.optNo"
+          >
             <a-checkbox :value="option.optNo">{{index}}.{{ option.optTitle }}</a-checkbox>
           </div>
         </a-checkbox-group>
@@ -57,7 +67,7 @@
 </template>
 
 <script>
-import { getPaperinfo, getPaperQuests } from '@/api/collect/paperinfo'
+import { getPaperinfo } from '@/api/collect/paperinfo'
 
 export default {
   name: 'Preview',
@@ -107,9 +117,6 @@ export default {
     if (this.id !== '') {
       getPaperinfo(this.id).then(response => {
         that.paper = response.data
-      })
-      getPaperQuests(this.id).then(response => {
-        that.quests = response.data
       })
     }
   },

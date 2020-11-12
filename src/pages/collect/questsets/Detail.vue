@@ -4,10 +4,12 @@
     <a-form>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="编号"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.registNo}}
+          <a-form-item
+            label="编号"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.setsNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,26 +18,32 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="来源"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="名称"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.setsName}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="来源"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.dataFrom}}
           </a-form-item>
         </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="类型"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.registType}}
-          </a-form-item>
-        </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="预约时间"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.registTime}}
+          <a-form-item
+            label="数量"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.questNums}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -44,25 +52,11 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="对象"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.expertNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item label="预约人员"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.ruserNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="状态"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
+          <a-form-item
+            label="状态"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
             {{model.checkState}}
           </a-form-item>
         </a-col>
@@ -72,9 +66,11 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-item label="备注"
-                       :labelCol="{span: 3}"
-                       :wrapperCol="{span: 20}">
+          <a-form-item
+            label="备注"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
             {{model.comments}}
           </a-form-item>
         </a-col>
@@ -88,7 +84,7 @@
 </template>
 
 <script>
-import { getRegistflows } from '@/api/collect/registflows'
+import { getQuestsets } from '@/api/collect/questsets'
 
 export default {
   name: 'Detail',
@@ -112,12 +108,10 @@ export default {
     return {
       spanCol: 12,
       model: {
-        registNo: '',
-        registType: '',
-        registTime: '',
-        dataFrom: 1,
-        expertNo: '',
-        ruserNo: '',
+        setsNo: '0',
+        setsName: '',
+        dataFrom: '',
+        questNums: 1,
         checkState: '1',
         comments: ''
       }
@@ -131,7 +125,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getRegistflows(this.id).then(response => {
+      getQuestsets(this.id).then(response => {
         that.model = response.data
       })
     }

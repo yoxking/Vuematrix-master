@@ -12,11 +12,11 @@
         <a-col :span="spanCol">
           <a-form-model-item
             label="编号"
-            prop="paperNo"
-            ref="paperNo"
+            prop="branchNo"
+            ref="branchNo"
           >
             <a-input
-              v-model="form.paperNo"
+              v-model="form.branchNo"
               readOnly
             />
           </a-form-model-item>
@@ -26,79 +26,36 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="spanCol">
           <a-form-model-item
-            label="标题"
-            prop="paperTitle"
-            ref="paperTitle"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
+            label="名称"
+            prop="branchName"
+            ref="branchName"
           >
-            <a-input v-model="form.paperTitle" />
+            <a-input v-model="form.branchName" />
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
             label="类型"
-            prop="classNo"
-            ref="classNo"
+            prop="branchType"
+            ref="branchType"
           >
-            <a-tree-select
-              v-model="form.classNo"
-              :multiple="false"
-              :allow-clear="false"
-              :show-search="false"
-              :tree-data="pclassTree"
-              placeholder="请选择类型"
-            />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-model-item
-            label="类别"
-            prop="paperType"
-            ref="paperType"
-          >
-            <a-radio-group v-model="form.paperType">
-              <a-radio value="1">公开</a-radio>
-              <a-radio value="2">私有</a-radio>
+            <a-radio-group v-model="form.branchType">
+              <a-radio value="00">行政</a-radio>
+              <a-radio value="01">市场</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="18">
-          <a-form-model-item
-            label="图片"
-            prop="paperPoster"
-            ref="paperPoster"
-            :labelCol="{span: 4}"
-            :wrapperCol="{span: 19}"
-          >
-            <a-input v-model="form.paperPoster" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="6">
-          <a-upload
-            name="file"
-            :multiple="true"
-          >
-            <a-button>
-              <a-icon type="upload" /> 上传图片
-            </a-button>
-          </a-upload>
-        </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="得分"
-            prop="paperTscore"
-            ref="paperTscore"
+            label="负责人"
+            prop="master"
+            ref="master"
           >
-            <a-input-number v-model="form.paperTscore" />
+            <a-input v-model="form.master" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -112,28 +69,41 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="spanCol">
           <a-form-model-item
-            label="题库"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-            prop="paperQuests"
-            ref="paperQuests"
+            label="电话"
+            prop="telephone"
+            ref="telephone"
           >
-            <a-input v-model="form.paperQuests" />
+            <a-input v-model="form.telephone" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="邮箱"
+            prop="email"
+            ref="email"
+          >
+            <a-input v-model="form.email" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item
-            label="试题数量"
-            prop="questNums"
-            ref="questNums"
+        <a-col :span="24">
+          <a-form-item
+            label="简介"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
           >
-            <a-input-number v-model="form.questNums" />
-          </a-form-model-item>
+            <a-textarea
+              v-model="form.summary"
+              placeholder="简介"
+              :autoSize="{ minRows: 3, maxRows: 5 }"
+            />
+          </a-form-item>
         </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
             label="状态"
@@ -146,22 +116,23 @@
             </a-radio-group>
           </a-form-model-item>
         </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-form-model-item
+          <a-form-item
             label="备注"
-            prop="paperDesc"
-            ref="paperDesc"
             :labelCol="{span: 3}"
             :wrapperCol="{span: 20}"
           >
             <a-textarea
-              v-model="form.paperDesc"
-              placeholder="备注"
+              v-model="form.comments"
+              placeholder="备注信息"
               :autoSize="{ minRows: 3, maxRows: 5 }"
             />
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form-model>
@@ -172,13 +143,12 @@
         type="primary"
       >确定</a-button>
       <a-button @click="doCancel">取消</a-button>
-    </div><br /><br />
+    </div>
   </div>
 </template>
 
 <script>
-import { treePaperclass } from '@/api/collect/paperclass'
-import { getPaperinfo, addPaperinfo, uptPaperinfo } from '@/api/collect/paperinfo'
+import { getExamsinfo, addExamsinfo, uptExamsinfo } from '@/api/collect/examsinfo'
 
 export default {
   name: 'Edit',
@@ -203,39 +173,23 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 },
       spanCol: 12,
-      dateFormat: 'YYYY-MM-DD',
       form: {
-        paperNo: '0',
-        paperTitle: '',
-        paperPoster: '',
-        paperDesc: '',
-        paperType: '1',
-        dataFrom: '',
-        viewType: '',
-        classNo: undefined,
+        branchNo: '0',
+        branchName: '',
+        branchType: '00',
         orderNo: 1,
-        questNums: 1,
-        paperQuests: '',
-        paperTscore: 1,
-        paperRusers: '',
+        master: '',
+        telephone: '',
+        email: '',
+        summary: '',
         checkState: '1',
         comments: ''
       },
       rules: {
-        paperTitle: [
-          { required: true, message: '请输入标题', trigger: 'blur' }
-        ],
-        classNo: [
-          { required: true, message: '请选择类型', trigger: 'change' }
-        ],
-        orderNo: [
-          { required: true, message: '请输入排序值', trigger: 'blur' }
-        ],
-        paperScore: [
-          { required: true, message: '请输入总得分', trigger: 'blur' }
+        branchName: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ]
-      },
-      pclassTree: []
+      }
     }
   },
   methods: {
@@ -243,14 +197,14 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.paperNo === '0') {
-            addPaperinfo(that.form).then(response => {
+          if (that.form.branchNo === '0') {
+            addExamsinfo(that.form).then(response => {
               that.$layer.msg(response.msg)
               that.$parent.getDataSource()
               that.$layer.close(that.layerid)
             })
           } else {
-            uptPaperinfo(that.form).then(response => {
+            uptExamsinfo(that.form).then(response => {
               that.$layer.msg(response.msg)
               that.$parent.getDataSource()
               that.$layer.close(that.layerid)
@@ -267,15 +221,12 @@ export default {
     }
   },
   mounted () {
-    const that = this
     if (this.id !== '') {
-      getPaperinfo(this.id).then(response => {
+      const that = this
+      getExamsinfo(this.id).then(response => {
         that.form = response.data
       })
     }
-    treePaperclass().then(response => {
-      that.pclassTree = response.rows
-    })
   }
 }
 </script>

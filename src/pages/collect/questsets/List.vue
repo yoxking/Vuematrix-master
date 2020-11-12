@@ -4,24 +4,36 @@
       <a-form layout="horizontal">
         <div :class="advanced ? null: 'fold'">
           <a-row>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="类型名称"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-input placeholder="请输入"
-                         v-model="queryParam.className" />
+            <a-col
+              :md="8"
+              :sm="24"
+            >
+              <a-form-item
+                label="分支名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}"
+              >
+                <a-input
+                  placeholder="请输入"
+                  v-model="queryParam.setsName"
+                />
               </a-form-item>
             </a-col>
           </a-row>
         </div>
         <span style="float: right; margin-top: 3px;">
-          <a-button type="primary"
-                    @click="doQuery()">查询</a-button>
-          <a-button style="margin-left: 8px"
-                    @click="doReset()">重置</a-button>
-          <a @click="toggleAdvanced"
-             style="margin-left: 8px">
+          <a-button
+            type="primary"
+            @click="doQuery()"
+          >查询</a-button>
+          <a-button
+            style="margin-left: 8px"
+            @click="doReset()"
+          >重置</a-button>
+          <a
+            @click="toggleAdvanced"
+            style="margin-left: 8px"
+          >
             {{advanced ? '收起' : '展开'}}
             <a-icon :type="advanced ? 'up' : 'down'" />
           </a>
@@ -30,14 +42,32 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleAdd" v-hasPermit="['collect:paperclass:addnew']" type="primary">新增</a-button>
-        <a-button @click="handleDel" v-hasPermit="['collect:paperclass:delete']">删除</a-button>
+        <a-button
+          @click="handleAdd"
+          v-hasPermit="['collect:qeustsets:addnew']"
+          type="primary"
+        >新增</a-button>
+        <a-button
+          @click="handleDel"
+          v-hasPermit="['collect:qeustsets:delete']"
+        >删除</a-button>
         <a-dropdown>
-          <a-menu @click="handleMenu"
-                  slot="overlay">
-            <a-menu-item key="audit" v-hasPermit="['collect:paperclass:audit']">审批</a-menu-item>
-            <a-menu-item key="import" v-hasPermit="['collect:paperclass:import']">导入</a-menu-item>
-            <a-menu-item key="export" v-hasPermit="['collect:paperclass:export']">导出</a-menu-item>
+          <a-menu
+            @click="handleMenu"
+            slot="overlay"
+          >
+            <a-menu-item
+              key="audit"
+              v-hasPermit="['collect:qeustsets:audit']"
+            >审批</a-menu-item>
+            <a-menu-item
+              key="import"
+              v-hasPermit="['collect:qeustsets:import']"
+            >导入</a-menu-item>
+            <a-menu-item
+              key="export"
+              v-hasPermit="['collect:qeustsets:export']"
+            >导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -45,52 +75,78 @@
           </a-button>
         </a-dropdown>
       </div>
-      <vxe-table ref="myTable"
-                 border
-                 stripe
-                 resizable
-                 highlight-current-row
-                 highlight-hover-row
-                 :loading="loading"
-                 class="mytable-scrollbar"
-                 height="400"
-                 :data="dataSource">
-        <vxe-table-column type="checkbox"
-                          width="60"></vxe-table-column>
-        <vxe-table-column type="seq"
-                          title="序号"
-                          width="60"></vxe-table-column>
-        <vxe-table-column field="classNo"
-                          title="编号" width="120" show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="className"
-                          title="类型名称"></vxe-table-column>
-        <vxe-table-column field="parentNo"
-                          title="上级类型"></vxe-table-column>
-        <vxe-table-column field="orderNo"
-                          title="排序"
-                          show-overflow="tooltip"></vxe-table-column>
+      <vxe-table
+        ref="myTable"
+        border
+        stripe
+        resizable
+        highlight-current-row
+        highlight-hover-row
+        :loading="loading"
+        class="mytable-scrollbar"
+        height="400"
+        :data="dataSource"
+      >
+        <vxe-table-column
+          type="checkbox"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          title="序号"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="setsNo"
+          title="编号"
+          width="120"
+          show-overflow="tooltip"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="setsName"
+          title="题库名称"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="dataFrom"
+          title="来源"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="checkState"
+          title="状态"
+          show-overflow="tooltip"
+        ></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" @click="handleEdt(row.classNo)" v-hasPermit="['collect:paperclass:update']">编辑</vxe-button>
-            <vxe-button type="text" @click="handleDet(row.classNo)" v-hasPermit="['collect:paperclass:detail']">详细</vxe-button>
+            <vxe-button
+              type="text"
+              @click="handleEdt(row.setsNo)"
+              v-hasPermit="['collect:qeustsets:update']"
+            >编辑</vxe-button>
+            <vxe-button
+              type="text"
+              @click="handleDet(row.setsNo)"
+              v-hasPermit="['collect:qeustsets:detail']"
+            >详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
-      <vxe-pager border
-                 size="medium"
-                 :loading="loading"
-                 :current-page="pageParam.pageIndex"
-                 :page-size="pageParam.pageSize"
-                 :total="pageParam.pageTotal"
-                 :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
-                 @page-change="onPageChange">
+      <vxe-pager
+        border
+        size="medium"
+        :loading="loading"
+        :current-page="pageParam.pageIndex"
+        :page-size="pageParam.pageSize"
+        :total="pageParam.pageTotal"
+        :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
+        @page-change="onPageChange"
+      >
       </vxe-pager>
     </div>
   </a-card>
 </template>
 
 <script>
-import { listPaperclass, delPaperclass, exptPaperclass } from '@/api/collect/paperclass'
+import { listQuestsets, delQuestsets, exptQuestsets } from '@/api/collect/questsets'
 import edit from './Edit'
 import detail from './Detail'
 
@@ -103,7 +159,7 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        className: ''
+        setsName: ''
       },
       // 查询参数
       pageParam: {
@@ -123,8 +179,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.className !== '') {
-        this.pageParam.condition = " class_name like '%" + this.queryParam.className + "%'"
+      if (this.queryParam.setsName !== '') {
+        this.pageParam.condition = " sets_name like '%" + this.queryParam.setsName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -159,9 +215,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.classNo)
+              selectedRowKeys.push(item.setsNo)
             })
-            delPaperclass(selectedRowKeys).then(response => {
+            delQuestsets(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -203,7 +259,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptPaperclass(this.pageParam).then(response => {
+        exptQuestsets(this.pageParam).then(response => {
           that.download(response.msg)
           that.$message.success('导出成功!')
         })
@@ -218,7 +274,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listPaperclass(this.pageParam).then(response => {
+      listQuestsets(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

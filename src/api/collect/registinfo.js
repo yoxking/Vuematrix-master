@@ -1,52 +1,52 @@
 import request from '@/myutil/request'
 
 // 查询预约信息列表
-export function listRegistflows (data) {
+export function listRegistinfo (data) {
   return request({
-    url: '/collect/registflows/list',
+    url: '/collect/registinfo/list',
     method: 'post',
     data: data
   })
 }
 
 // 查询预约信息详细
-export function getRegistflows (id) {
+export function getRegistinfo (id) {
   return request({
-    url: '/collect/registflows/' + id,
+    url: '/collect/registinfo/' + id,
     method: 'get'
   })
 }
 
 // 新增预约信息
-export function addRegistflows (data) {
+export function addRegistinfo (data) {
   return request({
-    url: '/collect/registflows',
+    url: '/collect/registinfo',
     method: 'post',
     data: data
   })
 }
 
 // 修改预约信息
-export function uptRegistflows (data) {
+export function uptRegistinfo (data) {
   return request({
-    url: '/collect/registflows',
+    url: '/collect/registinfo',
     method: 'put',
     data: data
   })
 }
 
 // 删除预约信息
-export function delRegistflows (ids) {
+export function delRegistinfo (ids) {
   return request({
-    url: '/collect/registflows/' + ids,
+    url: '/collect/registinfo/' + ids,
     method: 'delete'
   })
 }
 
 // 导出预约信息
-export function exptRegistflows (data) {
+export function exptRegistinfo (data) {
   return request({
-    url: '/collect/registflows/export',
+    url: '/collect/registinfo/export',
     method: 'post',
     data: data
   })

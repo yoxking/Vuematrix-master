@@ -7,7 +7,7 @@
           <a-form-item label="编号"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.classNo}}
+            {{model.registNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -16,10 +16,26 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="名称"
+          <a-form-item label="来源"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.className}}
+            {{model.dataFrom}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item label="类型"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.registType}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="预约时间"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.registTime}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -28,18 +44,30 @@
       </a-row>
       <a-row>
         <a-col :span="spanCol">
-          <a-form-item label="上级类型"
+          <a-form-item label="对象"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.parentNo}}
+            {{model.expertNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item label="排序"
+          <a-form-item label="预约人员"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
-            {{model.orderNo}}
+            {{model.ruserNo}}
           </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item label="状态"
+                       :labelCol="{span: 6}"
+                       :wrapperCol="{span: 16}">
+            {{model.checkState}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -60,7 +88,7 @@
 </template>
 
 <script>
-import { getPaperclass } from '@/api/collect/paperclass'
+import { getRegistinfo } from '@/api/collect/registinfo'
 
 export default {
   name: 'Detail',
@@ -84,10 +112,13 @@ export default {
     return {
       spanCol: 12,
       model: {
-        classNo: '0',
-        className: '',
-        parentNo: '0',
-        orderNo: 1,
+        registNo: '',
+        registType: '',
+        registTime: '',
+        dataFrom: 1,
+        expertNo: '',
+        ruserNo: '',
+        checkState: '1',
         comments: ''
       }
     }
@@ -100,7 +131,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getPaperclass(this.id).then(response => {
+      getRegistinfo(this.id).then(response => {
         that.model = response.data
       })
     }

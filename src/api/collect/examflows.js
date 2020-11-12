@@ -1,52 +1,52 @@
 import request from '@/myutil/request'
 
 // 查询测评结果列表
-export function listPaperflows (data) {
+export function listExamflows (data) {
   return request({
-    url: '/collect/paperflows/list',
+    url: '/collect/examflows/list',
     method: 'post',
     data: data
   })
 }
 
 // 查询测评结果详细
-export function getPaperflows (id) {
+export function getExamflows (id) {
   return request({
-    url: '/collect/paperflows/' + id,
+    url: '/collect/examflows/' + id,
     method: 'get'
   })
 }
 
 // 新增测评结果
-export function addPaperflows (data) {
+export function addExamflows (data) {
   return request({
-    url: '/collect/paperflows',
+    url: '/collect/examflows',
     method: 'post',
     data: data
   })
 }
 
 // 修改测评结果
-export function uptPaperflows (data) {
+export function uptExamflows (data) {
   return request({
-    url: '/collect/paperflows',
+    url: '/collect/examflows',
     method: 'put',
     data: data
   })
 }
 
 // 删除测评结果
-export function delPaperflows (ids) {
+export function delExamflows (ids) {
   return request({
-    url: '/collect/paperflows/' + ids,
+    url: '/collect/examflows/' + ids,
     method: 'delete'
   })
 }
 
 // 导出测评结果
-export function exptPaperflows (data) {
+export function exptExamflows (data) {
   return request({
-    url: '/collect/paperflows/export',
+    url: '/collect/examflows/export',
     method: 'post',
     data: data
   })
