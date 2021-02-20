@@ -9,91 +9,65 @@
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.mflowNo}}
+            {{model.prodNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
-          <a-form-item
-            label="测评"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.examsNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="问卷"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.paperNo}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="对象"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.ruserNo}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
-          <a-form-item
-            label="时长"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.examDuration}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item
-            label="得分"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.examTscore}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
-          <a-form-item
-            label="开始时间"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.startTime}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item
-            label="结束时间"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.enditTime}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
-          <a-form-item
-            label="状态"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.checkState}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
           &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="名称"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.prodName}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          &nbsp;
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="联系人"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.contacts}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="电话"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.telephone}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="邮箱"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.email}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="排序"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.orderNo}}
+          </a-form-item>
         </a-col>
       </a-row>
       <a-row>
@@ -116,7 +90,7 @@
 </template>
 
 <script>
-import { getExamflows } from '@/api/collect/examflows'
+import { getProducerinfo } from '@/api/process/producerinfo'
 
 export default {
   name: 'Detail',
@@ -140,15 +114,13 @@ export default {
     return {
       spanCol: 12,
       model: {
-        mflowNo: '0',
-        examsNo: '',
-        paperNo: '',
-        ruserNo: '00',
-        startTime: '',
-        enditTime: '',
-        examDuration: 1,
-        examTscore: '',
-        checkState: '1',
+        prodNo: '0',
+        prodName: '',
+        prodDesc: '',
+        contacts: '',
+        telephone: '',
+        email: '',
+        orderNo: 1,
         comments: ''
       }
     }
@@ -161,7 +133,7 @@ export default {
   mounted () {
     if (this.id !== '') {
       const that = this
-      getExamflows(this.id).then(response => {
+      getProducerinfo(this.id).then(response => {
         that.model = response.data
       })
     }

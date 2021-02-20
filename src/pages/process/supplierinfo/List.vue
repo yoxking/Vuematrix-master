@@ -9,13 +9,13 @@
               :sm="24"
             >
               <a-form-item
-                label="标题"
+                label="类型名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}"
               >
                 <a-input
                   placeholder="请输入"
-                  v-model="queryParam.examsNo"
+                  v-model="queryParam.suppName"
                 />
               </a-form-item>
             </a-col>
@@ -43,8 +43,13 @@
     <div>
       <div class="operator">
         <a-button
+          @click="handleAdd"
+          v-hasPermit="['process:supplierinfo:addnew']"
+          type="primary"
+        >新增</a-button>
+        <a-button
           @click="handleDel"
-          v-hasPermit="['collect:examflows:delete']"
+          v-hasPermit="['process:supplierinfo:delete']"
         >删除</a-button>
         <a-dropdown>
           <a-menu
@@ -53,15 +58,15 @@
           >
             <a-menu-item
               key="audit"
-              v-hasPermit="['collect:examflows:audit']"
+              v-hasPermit="['process:supplierinfo:audit']"
             >审批</a-menu-item>
             <a-menu-item
               key="import"
-              v-hasPermit="['collect:examflows:import']"
+              v-hasPermit="['process:supplierinfo:import']"
             >导入</a-menu-item>
             <a-menu-item
               key="export"
-              v-hasPermit="['collect:examflows:export']"
+              v-hasPermit="['process:supplierinfo:export']"
             >导出</a-menu-item>
           </a-menu>
           <a-button>
@@ -92,30 +97,34 @@
           width="60"
         ></vxe-table-column>
         <vxe-table-column
-          field="mflowNo"
+          field="suppNo"
           title="编号"
           width="120"
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column
-          field="examsNo"
-          title="测评名称"
+          field="suppName"
+          title="名称"
         ></vxe-table-column>
         <vxe-table-column
-          field="paperNo"
-          title="问卷标题"
+          field="contacts"
+          title="联系人"
         ></vxe-table-column>
         <vxe-table-column
-          field="checkState"
-          title="状态"
-          show-overflow="tooltip"
+          field="telephone"
+          title="电话"
         ></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
             <vxe-button
               type="text"
-              @click="handleDet(row.mflowNo)"
-              v-hasPermit="['collect:examflows:detail']"
+              @click="handleEdt(row.suppNo)"
+              v-hasPermit="['process:supplierinfo:update']"
+            >编辑</vxe-button>
+            <vxe-button
+              type="text"
+              @click="handleDet(row.suppNo)"
+              v-hasPermit="['process:supplierinfo:detail']"
             >详细</vxe-button>
           </template>
         </vxe-table-column>
@@ -136,7 +145,8 @@
 </template>
 
 <script>
-import { listExamflows, delExamflows, exptExamflows } from '@/api/collect/examflows'
+import { listSupplierinfo, delSupplierinfo, exptSupplierinfo } from '@/api/process/supplierinfo'
+import edit from './Edit'
 import detail from './Detail'
 
 export default {
@@ -148,14 +158,15 @@ export default {
       dataSource: [],
       // 查询参数
       queryParam: {
-        examsNo: ''
+        suppName: ''
       },
       // 查询参数
       pageParam: {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },
@@ -168,8 +179,8 @@ export default {
     },
     doQuery () {
       this.pageParam.pageIndex = 1
-      if (this.queryParam.examsNo !== '') {
-        this.pageParam.condition = " exams_no like '%" + this.queryParam.examsNo + "%'"
+      if (this.queryParam.suppName !== '') {
+        this.pageParam.condition = " supp_name like '%" + this.queryParam.suppName + "%'"
       } else {
         this.pageParam.condition = ''
       }
@@ -177,6 +188,20 @@ export default {
     },
     doReset () {
       console.log('reset')
+    },
+    handleAdd () {
+      this.$layer.iframe({
+        content: {
+          content: edit,
+          parent: this,
+          data: { id: '' }
+        },
+        area: ['950px', '700px'],
+        title: '新增',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
+      })
     },
     handleDel () {
       const that = this
@@ -190,9 +215,9 @@ export default {
           onOk () {
             let selectedRowKeys = []
             selectedRecords.map(function (item) {
-              selectedRowKeys.push(item.mflowNo)
+              selectedRowKeys.push(item.suppNo)
             })
-            delExamflows(selectedRowKeys).then(response => {
+            delSupplierinfo(selectedRowKeys).then(response => {
               that.getDataSource()
             })
           }
@@ -200,6 +225,20 @@ export default {
       } else {
         this.$message.warning('请至少选择一条记录!')
       }
+    },
+    handleEdt (val) {
+      this.$layer.iframe({
+        content: {
+          content: edit,
+          parent: this,
+          data: { id: val }
+        },
+        area: ['950px', '700px'],
+        title: '编辑',
+        maxmin: true,
+        shade: true,
+        shadeClose: false
+      })
     },
     handleDet (val) {
       this.$layer.iframe({
@@ -220,7 +259,7 @@ export default {
       if (e.key === 'audit') {
         console.log(this.pagination)
       } else if (e.key === 'export') {
-        exptExamflows(this.pageParam).then(response => {
+        exptSupplierinfo(this.pageParam).then(response => {
           that.download(response.msg)
           that.$message.success('导出成功!')
         })
@@ -235,7 +274,7 @@ export default {
     getDataSource () {
       const that = this
       this.loading = true
-      listExamflows(this.pageParam).then(response => {
+      listSupplierinfo(this.pageParam).then(response => {
         that.dataSource = response.rows
         that.pageParam.pageTotal = response.total
         that.loading = false

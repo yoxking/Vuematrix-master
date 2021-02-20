@@ -9,6 +9,14 @@ export function listQuestsets (data) {
   })
 }
 
+// 查询题库树结构
+export function treeQuestsets () {
+  return request({
+    url: '/collect/questsets/tree',
+    method: 'get'
+  })
+}
+
 // 查询题库信息详细
 export function getQuestsets (id) {
   return request({

@@ -39,15 +39,21 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-item
-            label="数量"
+            label="浏览类型"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.viewType}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="题数"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
             {{model.questNums}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -110,7 +116,9 @@ export default {
       model: {
         setsNo: '0',
         setsName: '',
-        dataFrom: '',
+        setsType: '',
+        dataFrom: '管理后台',
+        viewType: '1',
         questNums: 1,
         checkState: '1',
         comments: ''

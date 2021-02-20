@@ -1,44 +1,68 @@
 <template>
   <a-layout-header :class="[theme, 'global-header']">
     <div :class="['global-header-wide', layout]">
-      <router-link v-if="isMobile || layout === 'head'"
-                   to="/"
-                   :class="['logo', isMobile ? null : 'pc', theme]">
-        <img width="32"
-             src="static/images/vmatrix-logo.png" />
+      <router-link
+        v-if="isMobile || layout === 'head'"
+        to="/"
+        :class="['logo', isMobile ? null : 'pc', theme]"
+      >
+        <img
+          width="60"
+          src="static/images/vmatrix-logo.png"
+        />
         <h1 v-if="!isMobile">{{systemName}}</h1>
       </router-link>
-      <a-divider v-if="isMobile"
-                 type="vertical" />
-      <a-icon v-if="layout === 'side'"
-              class="trigger"
-              :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-              @click="toggleCollapse" />
-      <div v-if="layout === 'head'"
-           class="global-header-menu">
-        <i-menu style="height: 64px; line-height: 64px;"
-                :theme="theme"
-                mode="horizontal"
-                :menuData="menuData"
-                @select="onSelect" />
+      <a-divider
+        v-if="isMobile"
+        type="vertical"
+      />
+      <a-icon
+        v-if="layout === 'side'"
+        class="trigger"
+        :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+        @click="toggleCollapse"
+      />
+      <div
+        v-if="layout === 'head'"
+        class="global-header-menu"
+      >
+        <i-menu
+          style="height: 64px; line-height: 64px;"
+          :theme="theme"
+          mode="horizontal"
+          :menuData="menuData"
+          @select="onSelect"
+        />
       </div>
       <a-dropdown>
-        <a class="ant-dropdown-link"
-           @click="e => e.preventDefault()" style="font-size:18px;">
+        <a
+          class="ant-dropdown-link"
+          @click="e => e.preventDefault()"
+          style="font-size:18px;"
+        >
           功能列表
           <a-icon type="down" />
         </a>
-        <a-menu slot="overlay" style="width: 180px" @click="handleTopMenu">
-          <a-menu-item v-for="tmenu in tMenuData" :key="tmenu.no" >
+        <a-menu
+          slot="overlay"
+          style="width: 180px"
+          @click="handleTopMenu"
+        >
+          <a-menu-item
+            v-for="tmenu in tMenuData"
+            :key="tmenu.no"
+          >
             <a-icon :type="tmenu.icon" />{{tmenu.name}}
           </a-menu-item>
         </a-menu>
       </a-dropdown>
       <div :class="['global-header-right', theme]">
         <header-search class="header-item" />
-        <a-tooltip class="header-item"
-                   title="帮助文档"
-                   placement="bottom">
+        <a-tooltip
+          class="header-item"
+          title="帮助文档"
+          placement="bottom"
+        >
           <a>
             <a-icon type="question-circle-o" />
           </a>

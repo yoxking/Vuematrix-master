@@ -111,8 +111,8 @@
           title="来源"
         ></vxe-table-column>
         <vxe-table-column
-          field="checkState"
-          title="状态"
+          field="questNums"
+          title="题数"
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column title="操作">
@@ -166,7 +166,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },

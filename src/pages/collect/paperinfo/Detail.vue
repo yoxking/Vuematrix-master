@@ -48,6 +48,26 @@
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="来源"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.dataFrom}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="浏览类型"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.viewType}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="24">
           <a-form-item
             label="图片"
@@ -61,31 +81,11 @@
       <a-row>
         <a-col :span="24">
           <a-form-item
-            label="描述"
+            label="题目"
             :labelCol="{span: 3}"
             :wrapperCol="{span: 20}"
           >
-            {{model.paperDesc}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="得分"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.paperTscore}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="排序"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.orderNo}}
+            {{model.paperQsets}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -96,7 +96,27 @@
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.questNums}}
+            {{model.paperQnums}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="总分"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.paperTscore}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="排序"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.orderNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -112,11 +132,11 @@
       <a-row>
         <a-col :span="24">
           <a-form-item
-            label="备注"
+            label="简介"
             :labelCol="{span: 3}"
             :wrapperCol="{span: 20}"
           >
-            {{model.comments}}
+            {{model.paperDesc}}
           </a-form-item>
         </a-col>
       </a-row>
@@ -158,14 +178,15 @@ export default {
         paperPoster: '',
         paperDesc: '',
         paperType: '1',
-        dataFrom: '',
-        viewType: '',
-        classNo: undefined,
+        dataFrom: '管理后台',
+        viewType: '1',
+        classNo: '0',
         orderNo: 1,
-        questNums: 1,
+        paperQnums: 1,
+        paperQsets: '',
         paperQuests: '',
+        paperQrules: '',
         paperTscore: 1,
-        paperRusers: '',
         checkState: '1',
         comments: ''
       }

@@ -9,6 +9,14 @@ export function listRuserinfo (data) {
   })
 }
 
+// 查询类型树结构
+export function treeRuserinfo () {
+  return request({
+    url: '/system/ruserinfo/tree',
+    method: 'get'
+  })
+}
+
 // 查询注册用户信息详细
 export function getRuserinfo (id) {
   return request({

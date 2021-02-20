@@ -19,6 +19,7 @@ import 'moment/locale/zh-cn'
 
 import './assets/icons' // icon
 import './comm/authority' // permission access control
+import Print from './comm/vueprint'
 import { parseTime, currentDate } from './myutil/public'
 import { download } from './myutil/zipload'
 
@@ -30,6 +31,7 @@ Vue.prototype.currentDate = currentDate
 Vue.prototype.download = download
 Vue.config.productionTip = false
 Vue.use(permit)
+Vue.use(Print) // 注册
 Vue.use(Antd)
 Vue.use(VXETable)
 Vue.use(VueCropper)

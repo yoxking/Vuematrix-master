@@ -50,6 +50,15 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
+            label="题库"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.qsetsNo}}
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
             label="是否必填"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
@@ -57,14 +66,11 @@
             {{model.questMust}}
           </a-form-model-item>
         </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
-        </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
           <a-form-item
-            label="得分"
+            label="总得分"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
@@ -109,16 +115,16 @@
       </a-row>
       <template v-if="model.questType!=='1'">
         <a-row
-          v-for="(item,index) in model.options"
+          v-for="item in model.options"
           :key="item.optNo"
         >
           <a-col :span="spanCol">
             <a-form-model-item
-              :label="'选项'+(index+1)"
+              :label="item.optsIndex+':'"
               :labelCol="{span: 6}"
               :wrapperCol="{span: 16}"
             >
-              {{item.optTitle}}
+              {{item.optsTitle}}
             </a-form-model-item>
           </a-col>
           <a-col :span="spanCol">
@@ -127,11 +133,37 @@
               :labelCol="{span: 6}"
               :wrapperCol="{span: 16}"
             >
-              {{item.optScore}}
+              {{item.optsScore}}
             </a-form-model-item>
           </a-col>
         </a-row>
       </template>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item
+            label="答案"
+            prop="questAnswer"
+            ref="questAnswer"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            {{model.questAnswer}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-model-item
+            label="答案解析"
+            prop="questExplain"
+            ref="questExplain"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            {{model.questExplain}}
+          </a-form-model-item>
+        </a-col>
+      </a-row>
     </a-form>
     <a-divider />
     <div class="btnbox">
@@ -167,16 +199,25 @@ export default {
       model: {
         questNo: '0',
         questTitle: '',
-        questDesc: '',
+        questImage: '',
         questType: '1',
-        questMust: '1',
+        questDesc: '',
         classNo: undefined,
+        qsetsNo: undefined,
         orderNo: 1,
+        questMust: '1',
         questTscore: 0,
         questAnswer: '',
         questKeyword: '',
         questExplain: '',
-        options: [],
+        options: [{
+          optsNo: '1',
+          optsTitle: '选项内容',
+          optsIndex: 'A',
+          optsImage: '',
+          optsDesc: '',
+          optsScore: 0
+        }],
         checkState: '1',
         comments: ''
       }

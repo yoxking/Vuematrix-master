@@ -9,7 +9,7 @@
               :sm="24"
             >
               <a-form-item
-                label="分支名称"
+                label="测评名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}"
               >
@@ -107,12 +107,21 @@
           title="测评名称"
         ></vxe-table-column>
         <vxe-table-column
+<<<<<<< HEAD
           field="classNo"
           title="类型"
         ></vxe-table-column>
         <vxe-table-column
           field="checkState"
           title="状态"
+=======
+          field="startTime"
+          title="开始时间"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="enditTime"
+          title="结束时间"
+>>>>>>> dev
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column title="操作">
@@ -166,7 +175,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },
