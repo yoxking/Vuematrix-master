@@ -44,12 +44,12 @@
       <div class="operator">
         <a-button
           @click="handleAdd"
-          v-hasPermit="['collect:qeustsets:addnew']"
+          v-hasPermit="['collect:questsets:addnew']"
           type="primary"
         >新增</a-button>
         <a-button
           @click="handleDel"
-          v-hasPermit="['collect:qeustsets:delete']"
+          v-hasPermit="['collect:questsets:delete']"
         >删除</a-button>
         <a-dropdown>
           <a-menu
@@ -58,15 +58,15 @@
           >
             <a-menu-item
               key="audit"
-              v-hasPermit="['collect:qeustsets:audit']"
+              v-hasPermit="['collect:questsets:audit']"
             >审批</a-menu-item>
             <a-menu-item
               key="import"
-              v-hasPermit="['collect:qeustsets:import']"
+              v-hasPermit="['collect:questsets:import']"
             >导入</a-menu-item>
             <a-menu-item
               key="export"
-              v-hasPermit="['collect:qeustsets:export']"
+              v-hasPermit="['collect:questsets:export']"
             >导出</a-menu-item>
           </a-menu>
           <a-button>
@@ -111,8 +111,8 @@
           title="来源"
         ></vxe-table-column>
         <vxe-table-column
-          field="checkState"
-          title="状态"
+          field="questNums"
+          title="题数"
           show-overflow="tooltip"
         ></vxe-table-column>
         <vxe-table-column title="操作">
@@ -120,12 +120,12 @@
             <vxe-button
               type="text"
               @click="handleEdt(row.setsNo)"
-              v-hasPermit="['collect:qeustsets:update']"
+              v-hasPermit="['collect:questsets:update']"
             >编辑</vxe-button>
             <vxe-button
               type="text"
               @click="handleDet(row.setsNo)"
-              v-hasPermit="['collect:qeustsets:detail']"
+              v-hasPermit="['collect:questsets:detail']"
             >详细</vxe-button>
           </template>
         </vxe-table-column>
@@ -166,7 +166,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },

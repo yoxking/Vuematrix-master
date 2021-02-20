@@ -41,24 +41,31 @@
             prop="dataFrom"
             ref="dataFrom"
           >
-            <a-radio-group v-model="form.dataFrom">
-              <a-radio value="0">默认</a-radio>
-            </a-radio-group>
+            <a-input v-model="form.dataFrom" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="数量"
+            label="浏览类型"
+            prop="viewType"
+            ref="viewType"
+          >
+            <a-radio-group v-model="form.viewType">
+              <a-radio value="1">公开</a-radio>
+              <a-radio value="2">私有</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="题数"
             prop="questNums"
             ref="questNums"
           >
             <a-input v-model="form.questNums" />
           </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -134,7 +141,9 @@ export default {
       form: {
         setsNo: '0',
         setsName: '',
-        dataFrom: '',
+        setsType: '',
+        dataFrom: '管理后台',
+        viewType: '1',
         questNums: 1,
         checkState: '1',
         comments: ''

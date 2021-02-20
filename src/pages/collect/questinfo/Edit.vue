@@ -41,7 +41,7 @@
                   :multiple="false"
                   :allow-clear="false"
                   :show-search="false"
-                  :tree-data="treeData"
+                  :tree-data="classData"
                   placeholder="请选择类型"
                 />
               </a-form-model-item>
@@ -59,7 +59,30 @@
           <a-row>
             <a-col :span="spanCol">
               <a-form-model-item
-                label="类别"
+                label="题库"
+                prop="qsetsNo"
+                ref="qsetsNo"
+              >
+                <a-tree-select
+                  v-model="form.qsetsNo"
+                  :multiple="false"
+                  :allow-clear="false"
+                  :show-search="false"
+                  :tree-data="qsetsData"
+                  placeholder="请选择题库"
+                />
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="spanCol">
+              &nbsp;
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="24">
+              <a-form-model-item
+                label="题目类别"
+                :labelCol="{span: 3}"
+                :wrapperCol="{span: 20}"
                 prop="questType"
                 ref="questType"
               >
@@ -69,9 +92,6 @@
                   <a-radio value="3">多选题</a-radio>
                 </a-radio-group>
               </a-form-model-item>
-            </a-col>
-            <a-col :span="spanCol">
-              &nbsp;
             </a-col>
           </a-row>
           <a-row>
@@ -115,7 +135,7 @@
         </a-tab-pane>
         <a-tab-pane
           key="2"
-          tab="配置信息"
+          tab="题目信息"
         >
           <a-row>
             <a-col :span="24">
@@ -150,17 +170,17 @@
           <template v-if="form.questType!=='1'">
             <a-row
               v-for="(item,index) in form.options"
-              :key="item.optNo"
+              :key="item.optsNo"
             >
               <a-col :span="spanCol">
-                <a-form-model-item :label="'选项'+(index+1)">
-                  <a-input v-model="item.optTitle" />
+                <a-form-model-item :label="item.optsIndex+':'">
+                  <a-input v-model="item.optsTitle" />
                 </a-form-model-item>
               </a-col>
               <a-col :span="spanCol">
                 <a-form-model-item label="得分">
                   <a-input-number
-                    v-model="item.optScore"
+                    v-model="item.optsScore"
                     style="margin-right:10px;"
                   />
                   <a-button
@@ -181,6 +201,36 @@
               </a-col>
             </a-row>
           </template>
+          <a-row>
+            <a-col :span="24">
+              <a-form-model-item
+                label="答案"
+                prop="questAnswer"
+                ref="questAnswer"
+                :labelCol="{span: 3}"
+                :wrapperCol="{span: 20}"
+              >
+                <a-input v-model="form.questAnswer" />
+              </a-form-model-item>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="24">
+              <a-form-model-item
+                label="答案解析"
+                prop="questExplain"
+                ref="questExplain"
+                :labelCol="{span: 3}"
+                :wrapperCol="{span: 20}"
+              >
+                <a-textarea
+                  v-model="form.questExplain"
+                  placeholder="答案解析"
+                  :autoSize="{ minRows: 3, maxRows: 5 }"
+                />
+              </a-form-model-item>
+            </a-col>
+          </a-row>
         </a-tab-pane>
       </a-tabs>
     </a-form-model>
@@ -197,6 +247,7 @@
 
 <script>
 import { treeQuestclass } from '@/api/collect/questclass'
+import { treeQuestsets } from '@/api/collect/questsets'
 import { getQuestinfo, addQuestinfo, uptQuestinfo } from '@/api/collect/questinfo'
 
 export default {
@@ -228,17 +279,21 @@ export default {
         questImage: '',
         questType: '1',
         questDesc: '',
-        questMust: '1',
         classNo: undefined,
+        qsetsNo: undefined,
         orderNo: 1,
+        questMust: '1',
         questTscore: 0,
         questAnswer: '',
         questKeyword: '',
         questExplain: '',
         options: [{
-          optNo: '12',
-          optTitle: '选项内容',
-          optScore: 0
+          optsNo: '1',
+          optsTitle: '选项内容',
+          optsIndex: 'A',
+          optsImage: '',
+          optsDesc: '',
+          optsScore: 0
         }],
         checkState: '1',
         comments: ''
@@ -257,7 +312,8 @@ export default {
           { required: true, message: '请输入总得分', trigger: 'blur' }
         ]
       },
-      treeData: []
+      classData: [],
+      qsetsData: []
     }
   },
   methods: {
@@ -266,12 +322,20 @@ export default {
       const randomNum = parseInt((1 + Math.random()) * 100) + ''
       return randomNum
     },
+    setOptsIndex () {
+      let indexStr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+      for (let i = 0; i < this.form.options.length; i++) {
+        this.form.options[i].optsIndex = indexStr[i]
+      }
+    },
     onAddOpt (val) {
-      let temp = { optNo: this.getUuid(), optTitle: '选项内容', optScore: 0 }
+      let temp = { optsNo: this.getUuid(), optsTitle: '选项内容', optsIndex: 'A', optsImage: '', optsDesc: '', optsScore: 0 }
       this.form.options.splice(val + 1, 0, temp)
+      this.setOptsIndex()
     },
     onDelOpt (val) {
       this.form.options.splice(val, 1)
+      this.setOptsIndex()
     },
     doOk () {
       const that = this
@@ -308,7 +372,10 @@ export default {
       })
     }
     treeQuestclass().then(response => {
-      that.treeData = response.rows
+      that.classData = response.rows
+    })
+    treeQuestsets().then(response => {
+      that.qsetsData = response.rows
     })
   }
 }

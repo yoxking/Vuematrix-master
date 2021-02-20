@@ -12,11 +12,11 @@
         <a-col :span="spanCol">
           <a-form-model-item
             label="编号"
-            prop="branchNo"
-            ref="branchNo"
+            prop="examsNo"
+            ref="examsNo"
           >
             <a-input
-              v-model="form.branchNo"
+              v-model="form.examsNo"
               readOnly
             />
           </a-form-model-item>
@@ -26,24 +26,44 @@
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="24">
+          <a-form-model-item
+            label="测评名称"
+            prop="examsTitle"
+            ref="examsTitle"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            <a-input v-model="form.examsTitle" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="名称"
-            prop="branchName"
-            ref="branchName"
+            label="类型"
+            prop="classNo"
+            ref="classNo"
           >
-            <a-input v-model="form.branchName" />
+            <a-tree-select
+              v-model="form.classNo"
+              :multiple="false"
+              :allow-clear="false"
+              :show-search="false"
+              :tree-data="classTree"
+              placeholder="请选择类型"
+            />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="类型"
-            prop="branchType"
-            ref="branchType"
+            label="类别"
+            prop="examsType"
+            ref="examsType"
           >
-            <a-radio-group v-model="form.branchType">
-              <a-radio value="00">行政</a-radio>
-              <a-radio value="01">市场</a-radio>
+            <a-radio-group v-model="form.examsType">
+              <a-radio value="1">免费</a-radio>
+              <a-radio value="2">收费</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
@@ -51,13 +71,152 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="负责人"
-            prop="master"
-            ref="master"
+            label="来源"
+            prop="dataFrom"
+            ref="dataFrom"
           >
-            <a-input v-model="form.master" />
+            <a-input v-model="form.dataFrom" />
           </a-form-model-item>
         </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="浏览类型"
+            prop="viewType"
+            ref="viewType"
+          >
+            <a-radio-group v-model="form.viewType">
+              <a-radio value="1">公开</a-radio>
+              <a-radio value="2">私有</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="18">
+          <a-form-model-item
+            label="图片"
+            prop="examsPoster"
+            ref="examsPoster"
+            :labelCol="{span: 4}"
+            :wrapperCol="{span: 19}"
+          >
+            <a-input v-model="form.examsPoster" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="6">
+          <a-upload
+            name="file"
+            :multiple="true"
+          >
+            <a-button>
+              <a-icon type="upload" /> 上传图片
+            </a-button>
+          </a-upload>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item
+            label="考试说明"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            <a-textarea
+              v-model="form.examsDesc"
+              placeholder="考试说明"
+              :autoSize="{ minRows: 3, maxRows: 5 }"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="问卷"
+            prop="paperNo"
+            ref="paperNo"
+          >
+            <a-tree-select
+              v-model="form.paperNo"
+              :multiple="false"
+              :allow-clear="false"
+              :show-search="false"
+              :tree-data="paperTree"
+              placeholder="请选择问卷"
+            />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="考试次数"
+            prop="examsTimes"
+            ref="examsTimes"
+          >
+            <a-input-number v-model="form.examsTimes" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="开始时间"
+            prop="startTime"
+            ref="startTime"
+          >
+            <a-input v-model="form.startTime" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="结束时间"
+            prop="enditTime"
+            ref="enditTime"
+          >
+            <a-input v-model="form.enditTime" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="考试限时"
+            prop="examsDuration"
+            ref="examsDuration"
+          >
+            <a-input-number v-model="form.examsDuration" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="合格分数"
+            prop="examsPassmark"
+            ref="examsPassmark"
+          >
+            <a-input-number v-model="form.examsPassmark" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="测评人员"
+            prop="examsRusers"
+            ref="examsRusers"
+          >
+            <a-input v-model="form.examsRusers" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="管理员"
+            prop="examsAdmin"
+            ref="examsAdmin"
+          >
+            <a-input v-model="form.examsAdmin" />
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
             label="排序"
@@ -67,43 +226,6 @@
             <a-input-number v-model="form.orderNo" />
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item
-            label="电话"
-            prop="telephone"
-            ref="telephone"
-          >
-            <a-input v-model="form.telephone" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-model-item
-            label="邮箱"
-            prop="email"
-            ref="email"
-          >
-            <a-input v-model="form.email" />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item
-            label="简介"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-          >
-            <a-textarea
-              v-model="form.summary"
-              placeholder="简介"
-              :autoSize="{ minRows: 3, maxRows: 5 }"
-            />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
             label="状态"
@@ -115,9 +237,6 @@
               <a-radio value="0">停用</a-radio>
             </a-radio-group>
           </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -148,6 +267,8 @@
 </template>
 
 <script>
+import { treeExamclass } from '@/api/collect/examclass'
+import { treePaperinfo } from '@/api/collect/paperinfo'
 import { getExamsinfo, addExamsinfo, uptExamsinfo } from '@/api/collect/examsinfo'
 
 export default {
@@ -174,22 +295,36 @@ export default {
       wrapperCol: { span: 16 },
       spanCol: 12,
       form: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '00',
+        examsNo: '0',
+        examsTitle: '',
+        examsPoster: '',
+        examsDesc: '',
+        examsType: '1',
+        dataFrom: '管理后台',
+        viewType: '1',
+        classNo: undefined,
         orderNo: 1,
-        master: '',
-        telephone: '',
-        email: '',
-        summary: '',
+        papaerNo: undefined,
+        startTime: '',
+        enditTime: '',
+        examsTimes: 1,
+        examsProfile: '',
+        examsDuration: 60,
+        examsPassmark: 60,
+        examsRusers: '',
+        examsAdmin: '',
+        examsRules: '',
+        examsState: '1',
         checkState: '1',
         comments: ''
       },
       rules: {
-        branchName: [
+        examsTitle: [
           { required: true, message: '请输入名称', trigger: 'blur' }
         ]
-      }
+      },
+      classTree: [],
+      paperTree: []
     }
   },
   methods: {
@@ -197,7 +332,7 @@ export default {
       const that = this
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          if (that.form.branchNo === '0') {
+          if (that.form.examsNo === '0') {
             addExamsinfo(that.form).then(response => {
               that.$layer.msg(response.msg)
               that.$parent.getDataSource()
@@ -221,12 +356,18 @@ export default {
     }
   },
   mounted () {
+    const that = this
     if (this.id !== '') {
-      const that = this
       getExamsinfo(this.id).then(response => {
         that.form = response.data
       })
     }
+    treeExamclass().then(response => {
+      that.classTree = response.rows
+    })
+    treePaperinfo().then(response => {
+      that.paperTree = response.rows
+    })
   }
 }
 </script>

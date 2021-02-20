@@ -9,7 +9,7 @@
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.branchNo}}
+            {{model.examsNo}}
           </a-form-item>
         </a-col>
         <a-col :span="spanCol">
@@ -17,35 +17,159 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
+        <a-col :span="24">
           <a-form-item
-            label="名称"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
+            label="测评名称"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
           >
-            {{model.branchName}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="类型"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.branchType}}
+            {{model.examsTitle}}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="spanCol">
           <a-form-item
-            label="负责人"
+            label="类型"
             :labelCol="{span: 6}"
             :wrapperCol="{span: 16}"
           >
-            {{model.master}}
+            {{model.classNo}}
           </a-form-item>
         </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="类别"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsType}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="来源"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.dataFrom}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="浏览类型"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.viewType}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item
+            label="图片"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            {{model.examsPoster}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item
+            label="考试说明"
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 20}"
+          >
+            {{model.examsDesc}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="问卷"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.paperNo}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="考试次数"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsTimes}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="开始时间"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.startTime}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="结束时间"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.enditTime}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="考试限时"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsDuration}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="合格分数"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsPassmark}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="测评人员"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsRusers}}
+          </a-form-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-item
+            label="管理员"
+            :labelCol="{span: 6}"
+            :wrapperCol="{span: 16}"
+          >
+            {{model.examsAdmin}}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
         <a-col :span="spanCol">
           <a-form-item
             label="排序"
@@ -55,39 +179,6 @@
             {{model.orderNo}}
           </a-form-item>
         </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="电话"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.telephone}}
-          </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-item
-            label="邮箱"
-            :labelCol="{span: 6}"
-            :wrapperCol="{span: 16}"
-          >
-            {{model.email}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-item
-            label="简介"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-          >
-            {{model.summary}}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="spanCol">
           <a-form-item
             label="状态"
@@ -96,9 +187,6 @@
           >
             {{model.checkState}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
       <a-row>
@@ -145,14 +233,26 @@ export default {
     return {
       spanCol: 12,
       model: {
-        branchNo: '0',
-        branchName: '',
-        branchType: '00',
+        examsNo: '0',
+        examsTitle: '',
+        examsPoster: '',
+        examsDesc: '',
+        examsType: '1',
+        dataFrom: '管理后台',
+        viewType: '1',
+        classNo: '',
         orderNo: 1,
-        master: '',
-        telephone: '',
-        email: '',
-        summary: '',
+        papaerNo: '',
+        startTime: '',
+        enditTime: '',
+        examsTimes: 1,
+        examsProfile: '',
+        examsDuration: 60,
+        examsPassmark: 60,
+        examsRusers: '',
+        examsAdmin: '',
+        examsRules: '',
+        examsState: '1',
         checkState: '1',
         comments: ''
       }

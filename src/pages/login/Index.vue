@@ -3,80 +3,170 @@
     <div class="content">
       <div class="top">
         <div class="header">
-          <img alt="logo"
-               class="logo"
-               src="static/images/vmatrix-logo.png" />
-          <span class="title">{{systemName}}</span>
+          <img
+            alt="logo"
+            class="logo"
+            src="static/images/vmatrix-logo2.png"
+          />
         </div>
-        <div class="desc">热度空间管理系统 v1.0</div>
+        <div class="desc">&nbsp;</div>
       </div>
       <div class="login">
-        <a-form-model ref="ruleForm" :model="form" :rules="rules">
-          <a-tabs size="large" default-active-key="1"
-                  :tabBarStyle="{textAlign: 'center'}"
-                  style="padding: 0 2px;">
-            <a-tab-pane tab="账户密码登录" key="1">
-              <a-form-model-item  prop="username" ref="username">
-                <a-input size="large" v-model="form.username" placeholder="admin">
-                  <a-icon slot="prefix" type="user" />
+        <a-form-model
+          ref="ruleForm"
+          :model="form"
+          :rules="rules"
+        >
+          <a-tabs
+            size="large"
+            default-active-key="1"
+            :tabBarStyle="{textAlign: 'center'}"
+            style="padding: 0 2px;"
+          >
+            <a-tab-pane
+              tab="账户密码登录"
+              key="1"
+            >
+              <a-form-model-item
+                prop="username"
+                ref="username"
+              >
+                <a-input
+                  size="large"
+                  v-model="form.username"
+                  placeholder="admin"
+                >
+                  <a-icon
+                    slot="prefix"
+                    type="user"
+                  />
                 </a-input>
               </a-form-model-item>
-              <a-form-model-item prop="password" ref="password">
-                <a-input size="large" v-model="form.password" placeholder="123" type="password">
-                  <a-icon slot="prefix" type="lock" />
+              <a-form-model-item
+                prop="password"
+                ref="password"
+              >
+                <a-input
+                  size="large"
+                  v-model="form.password"
+                  placeholder="123"
+                  type="password"
+                >
+                  <a-icon
+                    slot="prefix"
+                    type="lock"
+                  />
                 </a-input>
               </a-form-model-item>
-              <a-form-model-item prop="txtcode" ref="txtcode">
-                <a-row :gutter="8" style="margin: 0 -4px">
+              <a-form-model-item
+                prop="txtcode"
+                ref="txtcode"
+              >
+                <a-row
+                  :gutter="8"
+                  style="margin: 0 -4px"
+                >
                   <a-col :span="16">
-                    <a-input size="large" v-model="form.txtcode" placeholder="验证码">
-                      <a-icon slot="prefix" type="safety-certificate" />
+                    <a-input
+                      size="large"
+                      v-model="form.txtcode"
+                      placeholder="验证码"
+                    >
+                      <a-icon
+                        slot="prefix"
+                        type="safety-certificate"
+                      />
                     </a-input>
                   </a-col>
-                  <a-col :span="8" style="padding-left: 4px">
-                    <img :src="codeUrl" @click="getTxtCode" />
+                  <a-col
+                    :span="8"
+                    style="padding-left: 4px"
+                  >
+                    <img
+                      :src="codeUrl"
+                      @click="getTxtCode"
+                    />
                   </a-col>
                 </a-row>
               </a-form-model-item>
             </a-tab-pane>
-            <a-tab-pane tab="手机号登录" key="2">
-              <a-form-model-item prop="mobile" ref="mobile">
-                <a-input size="large" placeholder="手机号码">
-                  <a-icon slot="prefix" type="mobile" />
+            <a-tab-pane
+              tab="手机号登录"
+              key="2"
+            >
+              <a-form-model-item
+                prop="mobile"
+                ref="mobile"
+              >
+                <a-input
+                  size="large"
+                  placeholder="手机号码"
+                >
+                  <a-icon
+                    slot="prefix"
+                    type="mobile"
+                  />
                 </a-input>
               </a-form-model-item>
-              <a-form-model-item prop="txtcode2" ref="txtcode2">
-                <a-row :gutter="8" style="margin: 0 -4px">
+              <a-form-model-item
+                prop="txtcode2"
+                ref="txtcode2"
+              >
+                <a-row
+                  :gutter="8"
+                  style="margin: 0 -4px"
+                >
                   <a-col :span="16">
-                    <a-input size="large" placeholder="验证码">
-                      <a-icon slot="prefix" type="mail" />
+                    <a-input
+                      size="large"
+                      placeholder="验证码"
+                    >
+                      <a-icon
+                        slot="prefix"
+                        type="mail"
+                      />
                     </a-input>
                   </a-col>
-                  <a-col :span="8" style="padding-left: 4px">
-                    <a-button style="width: 100%" class="captcha-button" size="large">获取验证码</a-button>
+                  <a-col
+                    :span="8"
+                    style="padding-left: 4px"
+                  >
+                    <a-button
+                      style="width: 100%"
+                      class="captcha-button"
+                      size="large"
+                    >获取验证码</a-button>
                   </a-col>
                 </a-row>
               </a-form-model-item>
             </a-tab-pane>
           </a-tabs>
           <div>
-            <a-checkbox :checked="form.rememberMe"
-                        @change="onRemember">自动登录</a-checkbox>
-            <router-link style="float: right"
-                         :to="{ path: '/forgetpwd' }">忘记密码</router-link>
+            <a-checkbox
+              :checked="form.rememberMe"
+              @change="onRemember"
+            >自动登录</a-checkbox>
+            <router-link
+              style="float: right"
+              :to="{ path: '/forgetpwd' }"
+            >忘记密码</router-link>
           </div>
           <a-form-model-item>
-            <a-button :loading="logging"
-                      style="width: 100%;margin-top: 24px"
-                      size="large"
-                      type="primary"
-                      @click="onLogin"
-                      >登录</a-button>
+            <a-button
+              :loading="logging"
+              style="width: 100%;margin-top: 24px"
+              size="large"
+              type="primary"
+              @click="onLogin"
+            >登录</a-button>
           </a-form-model-item>
         </a-form-model>
       </div>
     </div>
-    <global-footer :link-list="linkList" :copyright="copyright" />
+    <global-footer
+      :link-list="linkList"
+      :copyright="copyright"
+    />
   </div>
 </template>
 
@@ -170,7 +260,7 @@ export default {
   flex-direction: column;
   height: 100vh;
   overflow: auto;
-  background: #f0f2f5 url("/static/images/login-bg-img.svg") no-repeat center
+  background: #f0f2f5 url('/static/images/login-bg-img.svg') no-repeat center
     110px;
   background-size: 100%;
   .content {
@@ -188,14 +278,13 @@ export default {
           text-decoration: none;
         }
         .logo {
-          height: 44px;
-          vertical-align: top;
-          margin-right: 16px;
+          height: 100px;
+          width: 250px;
         }
         .title {
           font-size: 33px;
           color: rgba(0, 0, 0, 0.85);
-          font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica,
+          font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica,
             sans-serif;
           font-weight: 600;
           position: relative;

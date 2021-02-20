@@ -28,7 +28,7 @@
       <a-row>
         <a-col :span="24">
           <a-form-model-item
-            label="标题"
+            label="问卷名称"
             prop="paperTitle"
             ref="paperTitle"
             :labelCol="{span: 3}"
@@ -50,7 +50,7 @@
               :multiple="false"
               :allow-clear="false"
               :show-search="false"
-              :tree-data="pclassTree"
+              :tree-data="classTree"
               placeholder="请选择类型"
             />
           </a-form-model-item>
@@ -62,6 +62,29 @@
             ref="paperType"
           >
             <a-radio-group v-model="form.paperType">
+              <a-radio value="1">固定问卷</a-radio>
+              <a-radio value="2">随机问卷</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="来源"
+            prop="dataFrom"
+            ref="dataFrom"
+          >
+            <a-input v-model="form.dataFrom" />
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="spanCol">
+          <a-form-model-item
+            label="浏览类型"
+            prop="viewType"
+            ref="viewType"
+          >
+            <a-radio-group v-model="form.viewType">
               <a-radio value="1">公开</a-radio>
               <a-radio value="2">私有</a-radio>
             </a-radio-group>
@@ -94,44 +117,11 @@
       <a-row>
         <a-col :span="spanCol">
           <a-form-model-item
-            label="得分"
-            prop="paperTscore"
-            ref="paperTscore"
-          >
-            <a-input-number v-model="form.paperTscore" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="spanCol">
-          <a-form-model-item
             label="排序"
             prop="orderNo"
             ref="orderNo"
           >
             <a-input-number v-model="form.orderNo" />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-form-model-item
-            label="题库"
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 20}"
-            prop="paperQuests"
-            ref="paperQuests"
-          >
-            <a-input v-model="form.paperQuests" />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="spanCol">
-          <a-form-model-item
-            label="试题数量"
-            prop="questNums"
-            ref="questNums"
-          >
-            <a-input-number v-model="form.questNums" />
           </a-form-model-item>
         </a-col>
         <a-col :span="spanCol">
@@ -210,14 +200,15 @@ export default {
         paperPoster: '',
         paperDesc: '',
         paperType: '1',
-        dataFrom: '',
-        viewType: '',
+        dataFrom: '管理后台',
+        viewType: '1',
         classNo: undefined,
         orderNo: 1,
-        questNums: 1,
+        paperQnums: 1,
+        paperQsets: '',
         paperQuests: '',
-        paperTscore: 1,
-        paperRusers: '',
+        paperQrules: '',
+        paperTscore: 100,
         checkState: '1',
         comments: ''
       },
@@ -230,12 +221,9 @@ export default {
         ],
         orderNo: [
           { required: true, message: '请输入排序值', trigger: 'blur' }
-        ],
-        paperScore: [
-          { required: true, message: '请输入总得分', trigger: 'blur' }
         ]
       },
-      pclassTree: []
+      classTree: []
     }
   },
   methods: {
@@ -274,7 +262,7 @@ export default {
       })
     }
     treePaperclass().then(response => {
-      that.pclassTree = response.rows
+      that.classTree = response.rows
     })
   }
 }

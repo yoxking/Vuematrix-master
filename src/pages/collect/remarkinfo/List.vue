@@ -4,24 +4,36 @@
       <a-form layout="horizontal">
         <div :class="advanced ? null: 'fold'">
           <a-row>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="名称"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-input placeholder="请输入"
-                         v-model="queryParam.remarkTitle" />
+            <a-col
+              :md="8"
+              :sm="24"
+            >
+              <a-form-item
+                label="名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}"
+              >
+                <a-input
+                  placeholder="请输入"
+                  v-model="queryParam.remarkTitle"
+                />
               </a-form-item>
             </a-col>
           </a-row>
         </div>
         <span style="float: right; margin-top: 3px;">
-          <a-button type="primary"
-                    @click="doQuery()">查询</a-button>
-          <a-button style="margin-left: 8px"
-                    @click="doReset()">重置</a-button>
-          <a @click="toggleAdvanced"
-             style="margin-left: 8px">
+          <a-button
+            type="primary"
+            @click="doQuery()"
+          >查询</a-button>
+          <a-button
+            style="margin-left: 8px"
+            @click="doReset()"
+          >重置</a-button>
+          <a
+            @click="toggleAdvanced"
+            style="margin-left: 8px"
+          >
             {{advanced ? '收起' : '展开'}}
             <a-icon :type="advanced ? 'up' : 'down'" />
           </a>
@@ -30,17 +42,27 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleDel"
-                  v-hasPermit="['collect:remarkinfo:delete']">删除</a-button>
+        <a-button
+          @click="handleDel"
+          v-hasPermit="['collect:remarkinfo:delete']"
+        >删除</a-button>
         <a-dropdown>
-          <a-menu @click="handleMenu"
-                  slot="overlay">
-            <a-menu-item key="audit"
-                         v-hasPermit="['collect:remarkinfo:audit']">审批</a-menu-item>
-            <a-menu-item key="import"
-                         v-hasPermit="['collect:remarkinfo:import']">导入</a-menu-item>
-            <a-menu-item key="export"
-                         v-hasPermit="['collect:remarkinfo:export']">导出</a-menu-item>
+          <a-menu
+            @click="handleMenu"
+            slot="overlay"
+          >
+            <a-menu-item
+              key="audit"
+              v-hasPermit="['collect:remarkinfo:audit']"
+            >审批</a-menu-item>
+            <a-menu-item
+              key="import"
+              v-hasPermit="['collect:remarkinfo:import']"
+            >导入</a-menu-item>
+            <a-menu-item
+              key="export"
+              v-hasPermit="['collect:remarkinfo:export']"
+            >导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -48,48 +70,66 @@
           </a-button>
         </a-dropdown>
       </div>
-      <vxe-table ref="myTable"
-                 border
-                 stripe
-                 resizable
-                 highlight-current-row
-                 highlight-hover-row
-                 :loading="loading"
-                 class="mytable-scrollbar"
-                 height="400"
-                 :data="dataSource">
-        <vxe-table-column type="checkbox"
-                          width="60"></vxe-table-column>
-        <vxe-table-column type="seq"
-                          title="序号"
-                          width="60"></vxe-table-column>
-        <vxe-table-column field="remarkNo"
-                          title="编号"
-                          width="120"
-                          show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="remarkTitle"
-                          title="名称"></vxe-table-column>
-        <vxe-table-column field="objectNo"
-                          title="对象"></vxe-table-column>
-        <vxe-table-column field="remarkContent"
-                          title="留言内容"
-                          show-overflow="tooltip"></vxe-table-column>
+      <vxe-table
+        ref="myTable"
+        border
+        stripe
+        resizable
+        highlight-current-row
+        highlight-hover-row
+        :loading="loading"
+        class="mytable-scrollbar"
+        height="400"
+        :data="dataSource"
+      >
+        <vxe-table-column
+          type="checkbox"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          title="序号"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="remarkNo"
+          title="编号"
+          width="120"
+          show-overflow="tooltip"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="remarkTitle"
+          title="名称"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="objectNo"
+          title="对象"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="remarkContent"
+          title="留言内容"
+          show-overflow="tooltip"
+        ></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text"
-                        @click="handleDet(row.remarkNo)"
-                        v-hasPermit="['collect:remarkinfo:detail']">详细</vxe-button>
+            <vxe-button
+              type="text"
+              @click="handleDet(row.remarkNo)"
+              v-hasPermit="['collect:remarkinfo:detail']"
+            >详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
-      <vxe-pager border
-                 size="medium"
-                 :loading="loading"
-                 :current-page="pageParam.pageIndex"
-                 :page-size="pageParam.pageSize"
-                 :total="pageParam.pageTotal"
-                 :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
-                 @page-change="onPageChange">
+      <vxe-pager
+        border
+        size="medium"
+        :loading="loading"
+        :current-page="pageParam.pageIndex"
+        :page-size="pageParam.pageSize"
+        :total="pageParam.pageTotal"
+        :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
+        @page-change="onPageChange"
+      >
       </vxe-pager>
     </div>
   </a-card>
@@ -115,7 +155,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },

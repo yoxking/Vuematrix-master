@@ -4,24 +4,36 @@
       <a-form layout="horizontal">
         <div :class="advanced ? null: 'fold'">
           <a-row>
-            <a-col :md="8"
-                   :sm="24">
-              <a-form-item label="表名称"
-                           :labelCol="{span: 5}"
-                           :wrapperCol="{span: 18, offset: 1}">
-                <a-input placeholder="请输入"
-                         v-model="queryParam.tableName" />
+            <a-col
+              :md="8"
+              :sm="24"
+            >
+              <a-form-item
+                label="表名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}"
+              >
+                <a-input
+                  placeholder="请输入"
+                  v-model="queryParam.tableName"
+                />
               </a-form-item>
             </a-col>
           </a-row>
         </div>
         <span style="float: right; margin-top: 3px;">
-          <a-button type="primary"
-                    @click="doQuery()">查询</a-button>
-          <a-button style="margin-left: 8px"
-                    @click="doReset()">重置</a-button>
-          <a @click="toggleAdvanced"
-             style="margin-left: 8px">
+          <a-button
+            type="primary"
+            @click="doQuery()"
+          >查询</a-button>
+          <a-button
+            style="margin-left: 8px"
+            @click="doReset()"
+          >重置</a-button>
+          <a
+            @click="toggleAdvanced"
+            style="margin-left: 8px"
+          >
             {{advanced ? '收起' : '展开'}}
             <a-icon :type="advanced ? 'up' : 'down'" />
           </a>
@@ -30,15 +42,36 @@
     </div>
     <div>
       <div class="operator">
-        <a-button @click="handleGens" v-hasPermit="['system:tableinfo:generate']" ype="primary">生成代码</a-button>
-        <a-button @click="handleImpt" v-hasPermit="['system:tableinfo:dbtable']">导入</a-button>
-        <a-button @click="handleDel" v-hasPermit="['system:tableinfo:delete']">删除</a-button>
+        <a-button
+          @click="handleGens"
+          v-hasPermit="['system:tableinfo:generate']"
+          ype="primary"
+        >生成代码</a-button>
+        <a-button
+          @click="handleImpt"
+          v-hasPermit="['system:tableinfo:dbtable']"
+        >导入</a-button>
+        <a-button
+          @click="handleDel"
+          v-hasPermit="['system:tableinfo:delete']"
+        >删除</a-button>
         <a-dropdown>
-          <a-menu @click="handleMenu"
-                  slot="overlay">
-            <a-menu-item key="audit" v-hasPermit="['system:tableinfo:audit']">审批</a-menu-item>
-            <a-menu-item key="import" v-hasPermit="['system:tableinfo:import']">导入</a-menu-item>
-            <a-menu-item key="export" v-hasPermit="['system:tableinfo:export']">导出</a-menu-item>
+          <a-menu
+            @click="handleMenu"
+            slot="overlay"
+          >
+            <a-menu-item
+              key="audit"
+              v-hasPermit="['system:tableinfo:audit']"
+            >审批</a-menu-item>
+            <a-menu-item
+              key="import"
+              v-hasPermit="['system:tableinfo:import']"
+            >导入</a-menu-item>
+            <a-menu-item
+              key="export"
+              v-hasPermit="['system:tableinfo:export']"
+            >导出</a-menu-item>
           </a-menu>
           <a-button>
             更多操作
@@ -46,54 +79,79 @@
           </a-button>
         </a-dropdown>
       </div>
-      <vxe-table ref="myTable"
-                 border
-                 stripe
-                 resizable
-                 highlight-current-row
-                 highlight-hover-row
-                 :loading="loading"
-                 class="mytable-scrollbar"
-                 height="400"
-                 :data="dataSource">
-        <vxe-table-column type="checkbox"
-                          width="60"></vxe-table-column>
-        <vxe-table-column type="seq"
-                          title="序号"
-                          width="60"></vxe-table-column>
-        <vxe-table-column field="tableNo"
-                          title="编号"
-                          width="120"
-                          show-overflow="tooltip"></vxe-table-column>
-        <vxe-table-column field="tableName"
-                          width="200"
-                          title="表名称"></vxe-table-column>
-        <vxe-table-column field="tableComment"
-                          width="200"
-                          title="表描述"></vxe-table-column>
-        <vxe-table-column field="className"
-                          title="实体"
-                          width="200"
-                          show-overflow="tooltip"></vxe-table-column>
+      <vxe-table
+        ref="myTable"
+        border
+        stripe
+        resizable
+        highlight-current-row
+        highlight-hover-row
+        :loading="loading"
+        class="mytable-scrollbar"
+        height="400"
+        :data="dataSource"
+      >
+        <vxe-table-column
+          type="checkbox"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          title="序号"
+          width="60"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="tableNo"
+          title="编号"
+          width="120"
+          show-overflow="tooltip"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="tableName"
+          width="200"
+          title="表名称"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="tableComment"
+          width="200"
+          title="表描述"
+        ></vxe-table-column>
+        <vxe-table-column
+          field="className"
+          title="实体"
+          width="200"
+          show-overflow="tooltip"
+        ></vxe-table-column>
         <vxe-table-column title="操作">
           <template v-slot="{ row }">
-            <vxe-button type="text" v-hasPermit="['system:tableinfo:preview']" @click="previewCode(row.tableNo)"
-                        >预览</vxe-button>
-            <vxe-button type="text" v-hasPermit="['system:tableinfo:generate']" @click="handleGen(row.tableName)"
-                        >生成代码</vxe-button>
-            <vxe-button type="text" v-hasPermit="['system:tableinfo:detail']" @click="handleDet(row.tableNo)"
-                        >详细</vxe-button>
+            <vxe-button
+              type="text"
+              v-hasPermit="['system:tableinfo:preview']"
+              @click="previewCode(row.tableNo)"
+            >预览</vxe-button>
+            <vxe-button
+              type="text"
+              v-hasPermit="['system:tableinfo:generate']"
+              @click="handleGen(row.tableName)"
+            >生成代码</vxe-button>
+            <vxe-button
+              type="text"
+              v-hasPermit="['system:tableinfo:detail']"
+              @click="handleDet(row.tableNo)"
+            >详细</vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
-      <vxe-pager border
-                 size="medium"
-                 :loading="loading"
-                 :current-page="pageParam.pageIndex"
-                 :page-size="pageParam.pageSize"
-                 :total="pageParam.pageTotal"
-                 :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
-                 @page-change="onPageChange">
+      <vxe-pager
+        border
+        size="medium"
+        :loading="loading"
+        :current-page="pageParam.pageIndex"
+        :page-size="pageParam.pageSize"
+        :total="pageParam.pageTotal"
+        :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
+        @page-change="onPageChange"
+      >
       </vxe-pager>
     </div>
   </a-card>
@@ -122,7 +180,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },

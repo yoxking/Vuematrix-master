@@ -44,7 +44,7 @@
       <div class="operator">
         <a-button
           @click="handleDel"
-          v-hasPermit="['collect:registflows:delete']"
+          v-hasPermit="['collect:registinfo:delete']"
         >删除</a-button>
         <a-dropdown>
           <a-menu
@@ -155,7 +155,8 @@ export default {
         pageIndex: 1, // 第几页
         pageSize: 10, // 每页中显示数据的条数
         pageTotal: 0,
-        condition: ''
+        condition: '',
+        dataParam: ''
       }
     }
   },

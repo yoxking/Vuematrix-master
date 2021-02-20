@@ -9,6 +9,14 @@ export function listSuserinfo (data) {
   })
 }
 
+// 查询类型树结构
+export function treeSuserinfo () {
+  return request({
+    url: '/system/suserinfo/tree',
+    method: 'get'
+  })
+}
+
 // 查询系统用户信息详细
 export function getSuserinfo (id) {
   return request({
